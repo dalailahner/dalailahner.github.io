@@ -1,5 +1,15 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --BilderSize: min(400px, 90vw);
+}
+
+html {
+  scroll-snap-type: y proximity;
 }
 
 body {
@@ -11,55 +21,80 @@ body {
 }
 
 .mainCont {
-  width: 50vw;
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  scroll-snap-align: center;
 }
 
-.itemRow {
-  width: 100%;
-  margin: 150px 0 0 0;
+#BilderScroll {
+  cursor: pointer;
+  overflow-x: hidden;
+  background-image: url("img/shelf.svg");
+  background-repeat: repeat-x;
+  background-size: 1000px;
+}
+
+#BilderScroll.active {
+  cursor: grabbing;
+}
+
+.BilderRow {
+  width: max-content;
+  min-width: 100%;
+  height: 100%;
+  max-height: var(--BilderSize);
+  padding: 0 5vw;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  transform-origin: bottom;
+  justify-content: center;
+  gap: 5rem;
   transform-style: preserve-3d;
-  transform: rotateX(-12deg) rotateY(45deg);
-  perspective: 9999px;
 }
 
-.itemRow:before {
-  content: " ";
-  position: absolute;
-  bottom: -2px;
-  left: -50%;
-  width: 200%;
-  height: 1px;
-  opacity: 0.15;
-  background: transparent;
-  box-shadow: 0px 1px 1px whitesmoke, 0px 3px 3px whitesmoke, 0px 8px 6px whitesmoke, 0px 16px 10px whitesmoke, 0px 25px 15px whitesmoke;
+.BildCont {
+  max-width: var(--BilderSize);
+  max-height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  perspective: 100cm;
+  perspective-origin: 50% -50%;
+  z-index: 0;
 }
 
-.itemRow:after {
-  content: " ";
-  position: absolute;
-  bottom: -2px;
-  left: -50%;
-  width: 200%;
-  height: 1px;
-  opacity: 0.85;
-  background: transparent;
-  box-shadow: -6px -3px 6px black, -16px -8px 6px black, -32px -16px 10px black;
-  transform: translateZ(-5px);
-}
-
-.item {
-  width: 30%;
+.Bild {
+  max-width: 100%;
+  max-height: 100%;
   border: 5px solid whitesmoke;
   transform-origin: bottom;
-  transform: rotateX(10deg);
-  transition: all 0.2s ease;
+  transform: rotateY(18deg) rotateX(10deg);
+  transition: transform 0.2s ease;
 }
 
-.item:hover {
-  transform: rotateX(0deg);
+.Bild:hover {
+  transform: rotateY(18deg) rotateX(0deg);
+}
+
+.Bild.active {
+  max-width: 90vw;
+  max-height: 90vh;
+  position: relative;
+  border: 10px solid whitesmoke;
+}
+
+.overlay {
+  min-width: 100vw;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background-color: rgba(0, 0, 0, 0.6);
 }
