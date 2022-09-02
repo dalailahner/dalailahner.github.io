@@ -36,6 +36,7 @@ for (var i = 0; i < BildElemente.length; i++) {
   BildElemente[i].addEventListener('click', (e) => {
     if (!isMoved) {
       if (!e.target.classList.contains('active')) {
+        navigator.vibrate(100);
         document.querySelectorAll('.Bild.active').forEach(function (currentValue) {
           resetBild(currentValue);
         });
@@ -64,6 +65,7 @@ function centerInViewport(el) {
   var offsetY = (vh / 2 - bildRect.height / 2) - bildRect.y;
   return [offsetX, offsetY];
 }
+// TODO: center image vertically on container >BilderScroll< and not on viewport
 
 
 
