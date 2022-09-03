@@ -20,7 +20,7 @@ body {
   overflow: hidden;
 }
 
-.header {
+#header {
   width: 100%;
   height: 8vh;
   position: sticky;
@@ -47,7 +47,7 @@ body {
   max-width: 6vh;
 }
 
-.header h1 {
+#header h1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 4vh;
   font-weight: 900;
@@ -58,7 +58,7 @@ body {
   color: #f5f5f5;
 }
 
-.social, .social div, .social a, .social a img {
+.social, .social div, .social a, .social img {
   display: none;
 }
 
@@ -78,6 +78,7 @@ body {
   width: 100%;
   max-width: 100vw;
   min-height: 92vh;
+  margin: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -87,21 +88,22 @@ body {
 
 .sectionHeadlineCont {
   width: 100%;
-  padding: 0 1vw;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .sectionHeadline {
-  color: #232323;
+  width: 100%;
+  color: #424242;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
+  font-weight: 400;
   font-size: 3rem;
-  letter-spacing: -0.35rem;
+  letter-spacing: -0.25rem;
+  text-align: center;
   text-transform: uppercase;
+  text-shadow: -1px 2px 1px #181818, -2px 4px 1px #181818, -3px 6px 1px #181818, -4px 8px 1px #181818, -5px 10px 1px #181818, -6px 12px 1px #181818, -7px 14px 1px #181818, -8px 16px 1px #181818, -9px 18px 1px #181818, -10px 20px 1px #181818;
   user-select: none;
-  text-shadow: -3px 0px 6px rgba(0, 0, 0, 0.35), -10px 0px 15px rgba(0, 0, 0, 0.35);
 }
 
 #BilderScroll {
@@ -116,7 +118,7 @@ body {
   cursor: grabbing;
 }
 
-.BilderRow {
+#BilderRow {
   width: max-content;
   min-width: 100%;
   height: 100%;
@@ -174,39 +176,50 @@ body {
 
 /* desktop & tablet */
 @media (min-width: 576px) {
-  .header {
+  #header {
     justify-content: flex-end;
   }
 
   .social {
-    display: inline-block;
-    width: 33.33%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 33.33%;
+    height: 100%;
   }
 
   .social div {
     display: inline-block;
-    height: 41px;
+    height: 55%;
+    max-height: 41px;
     aspect-ratio: 1 / 1;
     background-color: whitesmoke;
-    background-image: url("../img/CodePenLogo.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 66%;
     border-radius: 100%;
-    transition: background-size 0.1s ease;
-  }
-
-  .social div:hover {
-    background-size: 75%;
   }
 
   .social a {
     display: inline-block;
     width: 100%;
     height: 100%;
+  }
+
+  .social img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transform: scale(0.66);
+    transition: transform 0.1s ease;
+  }
+
+  .social div:hover a img {
+    transform: scale(0.75);
+  }
+
+  .sectionHeadline {
+    width: 75%;
+    font-size: 4rem;
+    letter-spacing: -0.5rem;
+    text-align: left;
   }
 }

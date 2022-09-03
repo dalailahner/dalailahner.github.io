@@ -24,6 +24,9 @@ BilderScroll.addEventListener('pointermove', (e) => {
   if (!isDown) return;
   isMoved = true;
   e.preventDefault();
+  document.querySelectorAll('.Bild.active').forEach(function (currentValue) {
+    resetBild(currentValue);
+  });
   const x = e.pageX - BilderScroll.offsetLeft;
   BilderScroll.scrollLeft = scrollLeft - (x - startX);
 });
@@ -68,12 +71,19 @@ function centerInViewport(el) {
 // TODO: center image vertically on container >BilderScroll< and not on viewport
 
 
-
 // shelf positioning
-const BilderRow = document.querySelector(".BilderRow");
+const BilderRow = document.querySelector('#BilderRow');
+
+document.getElementById('sizeRefImg').onload = function () {
+  positionShelf();
+};
 
 function positionShelf() {
-  BilderScroll.style.backgroundPosition = "50% calc(50% + " + BilderRow.offsetHeight * 0.5375 + "px)";
+  var shelfOffset = -500 + (BilderScroll.clientHeight / 2) + (BilderRow.clientHeight * 0.538);
+  BilderScroll.style.backgroundPosition = "0px " + shelfOffset + "px";
 }
 
-window.onresize = positionShelf();
+// resize functions
+window.onresize = function () {
+  positionShelf();
+};
