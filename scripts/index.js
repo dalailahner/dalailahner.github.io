@@ -1,3 +1,7 @@
+/////////////////
+// PHOTOGRAPHY //
+/////////////////
+
 // horizontal drag scroll for images
 const BilderScroll = document.querySelector('#BilderScroll');
 var isDown = false;
@@ -30,7 +34,6 @@ BilderScroll.addEventListener('pointermove', (e) => {
   const x = e.pageX - BilderScroll.offsetLeft;
   BilderScroll.scrollLeft = scrollLeft - (x - startX);
 });
-
 
 // click image and make it big (like a modal/lightbox)
 const BildElemente = document.querySelectorAll('.Bild');
@@ -70,7 +73,6 @@ function centerInViewport(el) {
 }
 // TODO: center image vertically on container >BilderScroll< and not on viewport
 
-
 // shelf positioning
 const BilderRow = document.querySelector('#BilderRow');
 
@@ -87,3 +89,26 @@ function positionShelf() {
 window.onresize = function () {
   positionShelf();
 };
+
+
+////////////////
+// ANIMATIONS //
+////////////////
+
+// ERWEITERE DEN CODE VON ID'S ZU KLASSEN MIT FOREACH UND EVENTUELL BEI TOUCH MIT TOGGLE PLAY/PAUSE
+
+// set thumbnail time
+document.getElementById("myVid").currentTime = document.getElementById("myVid").dataset.thumbtime;
+
+
+// mouseover => go to the beginning of the video and play
+document.getElementById("myVid").addEventListener("mouseover", function () {
+  this.currentTime = 0;
+  this.play();
+});
+
+// mouseleave => go to the thumbnail position time and pause
+document.getElementById("myVid").addEventListener("mouseleave", function () {
+  this.currentTime = this.dataset.thumbtime;
+  this.pause();
+});

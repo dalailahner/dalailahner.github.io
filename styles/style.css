@@ -109,7 +109,7 @@ body {
 #BilderScroll {
   cursor: pointer;
   overflow-x: hidden;
-  background-image: url("../img/shelf.svg");
+  background-image: url('../img/shelf.svg');
   background-repeat: repeat-x;
   background-size: 1000px;
 }
