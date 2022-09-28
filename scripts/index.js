@@ -94,21 +94,17 @@ window.onresize = function () {
 ////////////////
 // ANIMATIONS //
 ////////////////
+document.querySelectorAll('.animVids').forEach(function (currentValue) {
+  // set thumbnail time
+  currentValue.currentTime = currentValue.dataset.thumbtime;
 
-// ERWEITERE DEN CODE VON ID'S ZU KLASSEN MIT FOREACH UND EVENTUELL BEI TOUCH MIT TOGGLE PLAY/PAUSE
+  currentValue.addEventListener("mouseover", function () {
+    this.currentTime = 0;
+    this.play();
+  });
 
-// set thumbnail time
-document.getElementById("myVid").currentTime = document.getElementById("myVid").dataset.thumbtime;
-
-
-// mouseover => go to the beginning of the video and play
-document.getElementById("myVid").addEventListener("mouseover", function () {
-  this.currentTime = 0;
-  this.play();
-});
-
-// mouseleave => go to the thumbnail position time and pause
-document.getElementById("myVid").addEventListener("mouseleave", function () {
-  this.currentTime = this.dataset.thumbtime;
-  this.pause();
+  currentValue.addEventListener("mouseleave", function () {
+    this.currentTime = this.dataset.thumbtime;
+    this.pause();
+  });
 });
