@@ -1,27 +1,29 @@
-/* Montserrat latin-ext */
+/* Montserrat-regular - latin-ext */
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
-  src: url(JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: local(''),
+    url('montserrat-v25-latin-ext-regular.woff2') format('woff2'),
+    url('montserrat-v25-latin-ext-regular.woff') format('woff');
 }
 
+/* Montserrat-semibold - latin-ext */
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
-  font-display: swap;
-  src: url(JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: local(''),
+    url('montserrat-v25-latin-ext-600.woff2') format('woff2'),
+    url('montserrat-v25-latin-ext-600.woff') format('woff');
 }
 
+/* Montserrat-black - latin-ext */
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 900;
-  font-display: swap;
-  src: url(JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: local(''),
+    url('montserrat-v25-latin-ext-900.woff2') format('woff2'),
+    url('montserrat-v25-latin-ext-900.woff') format('woff');
 }
