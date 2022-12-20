@@ -5,6 +5,9 @@
 }
 
 :root {
+  --BGcolor: #2D3237;
+  --TXTcolor: #F5F2EF;
+  --accentColor: #F2200D;
   --BilderSize: min(400px, 90vw);
 }
 
@@ -16,7 +19,7 @@ body {
   display: block;
   width: 100%;
   max-height: 100vh;
-  background-color: #232323;
+  background-color: var(--BGcolor);
   overflow: hidden;
 }
 
@@ -28,7 +31,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #353535;
+  background-color: #394046;
   box-shadow: 0 0 35px 0 #000000;
   z-index: 100;
 }
@@ -55,7 +58,7 @@ body {
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
-  color: #f5f5f5;
+  color: var(--TXTcolor);
 }
 
 .social, .social div, .social a, .social img {
@@ -85,6 +88,14 @@ body {
   align-items: flex-start;
   justify-content: center;
   scroll-snap-align: start;
+}
+
+.mainCont:first-child {
+  margin-top: 0;
+  background-image: url("../img/HeroBG.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .sectionHeadlineCont {
@@ -148,7 +159,7 @@ body {
 .Bild {
   max-width: 100%;
   max-height: 100%;
-  border: 5px solid whitesmoke;
+  border: 5px solid var(--TXTcolor);
   transform-origin: bottom;
   transform: rotateY(18deg) rotateX(10deg);
   transition: transform 0.2s ease;
@@ -162,7 +173,7 @@ body {
   max-width: 90vw;
   max-height: 80vh;
   position: relative;
-  border: 10px solid whitesmoke;
+  border: 10px solid var(--TXTcolor);
 }
 
 .overlay {
@@ -215,7 +226,7 @@ body {
     height: 55%;
     max-height: 41px;
     aspect-ratio: 1 / 1;
-    background-color: whitesmoke;
+    background-color: var(--TXTcolor);
     border-radius: 100%;
   }
 
