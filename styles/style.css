@@ -23,38 +23,40 @@
     align-items: center;
     justify-content: center;
     position: relative;
-  }
-  .tooltipBottom::before,
-  .tooltipBottom::after {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(-5px);
-    transition: all 0.15s ease;
-  }
-  .tooltipBottom::before {
-    content: attr(data-tooltip);
-    width: fit-content;
-    color: var(--TXTcolor);
-    font-size: 0.875rem;
-    font-weight: 400;
-    background-color: #191919;
-    padding: 0.3em 0.5em;
-    border-radius: 4px;
-    top: calc(100% + 5px);
-  }
-  .tooltipBottom::after {
-    content: "";
-    border-bottom: 5px solid #191919;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    top: calc(100% + 1px);
-  }
-  .tooltipBottom:hover::before,
-  .tooltipBottom:hover::after {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
+
+    &::before,
+    &::after {
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: all 0.15s ease;
+    }
+
+    &::before {
+      content: attr(data-tooltip);
+      width: fit-content;
+      color: var(--TXTcolor);
+      font-size: 0.875rem;
+      font-weight: 400;
+      background-color: #191919;
+      padding: 0.3em 0.5em;
+      border-radius: 4px;
+      top: calc(100% + 5px);
+    }
+    &::after {
+      content: "";
+      border-bottom: 5px solid #191919;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      top: calc(100% + 1px);
+    }
+    &:hover::before,
+    &:hover::after {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* MAIN: */
@@ -159,10 +161,10 @@
     background-image: url("../img/shelf.svg");
     background-repeat: repeat-x;
     background-size: 1000px;
-  }
 
-  #BilderScroll.active {
-    cursor: grabbing;
+    &.active {
+      cursor: grabbing;
+    }
   }
 
   #BilderRow {
@@ -196,16 +198,17 @@
     transform-origin: bottom;
     transform: rotateY(18deg) rotateX(10deg);
     transition: transform 0.2s ease;
-  }
-  .Bild:hover {
-    transform: rotateY(18deg) rotateX(0deg);
-  }
 
-  .Bild.active {
-    max-width: 90vw;
-    max-height: 80vh;
-    position: relative;
-    border: 10px solid var(--TXTcolor);
+    &:hover {
+      transform: rotateY(18deg) rotateX(0deg);
+    }
+
+    &.active {
+      max-width: 90vw;
+      max-height: 80vh;
+      position: relative;
+      border: 10px solid var(--TXTcolor);
+    }
   }
 
   /* ANIMATIONS */
