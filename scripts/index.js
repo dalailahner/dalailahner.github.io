@@ -1,14 +1,21 @@
 "use strict";
 
+import bgCanvas from "./bgCanvas.js";
+
 ///////////////////////
 // GLOBAL VARIABLES: //
-///////////////////////
 let windowResizeTimeout;
 const bilderScroll = { el: document.querySelector("#BilderRow"), scrollPos: 0, wasMoved: false };
 
-////////////////////
-// GLOBAL EVENTS: //
-////////////////////
+///////////
+// INIT: //
+bgCanvas.init("#bgCanvas");
+
+/////////////
+// EVENTS: //
+window.addEventListener("DOMContentLoaded", (event) => {
+  bgCanvas.animate();
+});
 window.addEventListener("resize", (event) => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(windowResize(), 100);
@@ -19,7 +26,6 @@ function windowResize() {
 
 /////////////////
 // PHOTOGRAPHY //
-/////////////////
 bilderScroll.el.addEventListener("pointerdown", (event) => {
   bilderScroll.wasMoved = false;
 });
@@ -51,13 +57,12 @@ function setBilderScrollPos() {
 }
 
 function positionShelf() {
-  let shelfOffset = -500 + BilderScroll.clientHeight / 2 + BilderRow.clientHeight * 0.538;
-  BilderScroll.style.backgroundPosition = `0px ${shelfOffset}px`;
+  let shelfOffset = -500 + bilderScroll.clientHeight / 2 + bilderScroll.clientHeight * 0.538;
+  bilderScroll.style.backgroundPosition = `0px ${shelfOffset}px`;
 }
 
 ///////////////////////
 // ANIMATION SECTION //
-///////////////////////
 document.querySelectorAll(".animVids").forEach(function (currentValue) {
   // set thumbnail time
   currentValue.currentTime = currentValue.dataset.thumbtime;
