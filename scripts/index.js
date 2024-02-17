@@ -5,7 +5,7 @@ import bgCanvas from "./bgCanvas.js";
 ///////////////////////
 // GLOBAL VARIABLES: //
 let windowResizeTimeout;
-const bilderScroll = { el: document.querySelector("#BilderRow"), scrollPos: 0, wasMoved: false };
+const bilderRow = { el: document.querySelector("#BilderRow"), scrollPos: 0, wasMoved: false };
 
 ///////////
 // INIT: //
@@ -16,49 +16,51 @@ bgCanvas.init("#bgCanvas");
 window.addEventListener("DOMContentLoaded", (event) => {
   bgCanvas.animate();
 });
+window.addEventListener("load", (event) => {
+  positionShelf();
+});
 window.addEventListener("resize", (event) => {
   clearTimeout(windowResizeTimeout);
-  windowResizeTimeout = setTimeout(windowResize(), 100);
+  windowResizeTimeout = setTimeout(() => {
+    positionShelf();
+    bgCanvas.init("#bgCanvas");
+  }, 100);
 });
-function windowResize() {
-  positionShelf();
-}
 
 /////////////////
 // PHOTOGRAPHY //
-bilderScroll.el.addEventListener("pointerdown", (event) => {
-  bilderScroll.wasMoved = false;
+bilderRow.el.addEventListener("pointerdown", (event) => {
+  bilderRow.wasMoved = false;
 });
-bilderScroll.el.addEventListener("pointermove", (event) => {
+bilderRow.el.addEventListener("pointermove", (event) => {
   event.preventDefault();
   if (event.pressure > 0.1) {
-    bilderScroll.wasMoved = true;
-    bilderScroll.scrollPos -= event.movementX;
+    bilderRow.wasMoved = true;
+    bilderRow.scrollPos -= event.movementX;
     window.requestAnimationFrame(() => {
       setBilderScrollPos();
     });
   }
 });
-bilderScroll.el.addEventListener("pointerup", (event) => {
-  if (!bilderScroll.wasMoved) {
+bilderRow.el.addEventListener("pointerup", (event) => {
+  if (!bilderRow.wasMoved) {
     // TODO: OPEN IMAGE IN MODAL
   } else {
-    bilderScroll.wasMoved = false;
+    bilderRow.wasMoved = false;
     setBilderScrollPos();
   }
 });
-bilderScroll.el.addEventListener("pointerleave", (event) => {
-  bilderScroll.wasMoved = false;
+bilderRow.el.addEventListener("pointerleave", (event) => {
+  bilderRow.wasMoved = false;
   setBilderScrollPos();
 });
 
 function setBilderScrollPos() {
-  bilderScroll.el.style.transform = `translateX(-${bilderScroll.scrollPos}px)`;
+  bilderRow.el.style.transform = `translateX(-${bilderRow.scrollPos}px)`;
 }
 
 function positionShelf() {
-  let shelfOffset = -500 + bilderScroll.clientHeight / 2 + bilderScroll.clientHeight * 0.538;
-  bilderScroll.style.backgroundPosition = `0px ${shelfOffset}px`;
+  document.querySelector("#BilderScroll").style.backgroundPositionY = `calc(50% + ${bilderRow.el.clientHeight * 0.535}px)`;
 }
 
 ///////////////////////
