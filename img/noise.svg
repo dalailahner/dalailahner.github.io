@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
-  <filter id="noise" x="0" y="0">
-    <feTurbulence type="fractalNoise" baseFrequency="0.61" numOctaves="3" seed="1" stitchTiles="stitch">
-      <animate attributeName="seed" values="1;2;3;4;5" dur="417ms" repeatCount="indefinite" />
-    </feTurbulence>
-    <feBlend mode="screen" />
-  </filter>
-  <rect width="500" height="500" filter="url(#noise)" opacity="0.35" />
-</svg>

@@ -24,7 +24,7 @@ const bgCanvas = {
       const point = {
         x: Math.random() * options.canvasWidth,
         y: Math.random() * options.canvasHeight,
-        z: Math.round((Math.random() + 0.5) * 3 - 1),
+        z: Math.floor(Math.random() * 3 + 1),
         pointConstRand: (Math.random() + 0.5) / 2,
         get size() {
           return this.z / 2 + 0.5;
