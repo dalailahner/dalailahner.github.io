@@ -14,8 +14,7 @@
     --tooltipColor: #191919;
     --BilderSize: min(400px, 90vw);
     --headerHeight: 4.5rem;
-    --contentHeight: calc(100lvh - var(--headerHeight));
-    --inFontOfNoise: 2;
+    --contentHeight: calc(100dvh - var(--headerHeight));
   }
 
   /* HELPERS: */
@@ -64,20 +63,9 @@
   body {
     display: block;
     width: 100%;
-    max-height: 100lvh;
+    max-height: 100dvh;
     background-color: var(--BGcolor);
     overflow: hidden;
-
-    &::after {
-      content: "";
-      position: absolute;
-      background: url("../img/noise.svg");
-      mix-blend-mode: overlay;
-      inset: 0;
-      pointer-events: none;
-      filter: grayscale(1) invert(1) brightness(2);
-      z-index: calc(var(--inFontOfNoise) - 1);
-    }
   }
 
   #bgCanvas {
@@ -100,6 +88,7 @@
     justify-content: center;
     background-color: var(--lightBGcolor);
     box-shadow: 0 0 35px 0 var(--shadowColor);
+    z-index: 100;
   }
   .headerLogoCont {
     width: 100%;
@@ -138,7 +127,7 @@
     margin: 2rem 0;
     width: 100%;
     max-width: 100%;
-    flex: 1 0 100lvh;
+    flex: 1 0 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -162,8 +151,8 @@
 
   .sectionHeadline {
     width: 100%;
-    color: oklch(from var(--TXTcolor) 61% c h);
-    font-weight: 300;
+    color: oklch(from var(--TXTcolor) 50% c h);
+    font-weight: 200;
     font-size: 3rem;
     letter-spacing: -0.05em;
     text-align: center;
@@ -179,7 +168,7 @@
     overflow-x: hidden;
     background-image: url("../img/shelf.svg");
     background-repeat: repeat-x;
-    background-size: 1000px;
+    background-size: calc(var(--BilderSize) * 2);
 
     &.active {
       cursor: grabbing;
@@ -198,7 +187,6 @@
     justify-content: center;
     gap: 5rem;
     transform-style: preserve-3d;
-    z-index: var(--inFontOfNoise);
   }
 
   .BildCont {
