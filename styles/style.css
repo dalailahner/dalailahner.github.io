@@ -11,7 +11,7 @@
     --shadowColor: oklch(15% 0.015 225);
     --TXTcolor: oklch(95% 0.01 45);
     --accentColor: oklch(60% 0.25 30);
-    --tooltipColor: #191919;
+    --tooltipColor: oklch(20% 0.015 225);
     --BilderSize: min(400px, 90vw);
     --headerHeight: 4.5rem;
     --contentHeight: calc(100dvh - var(--headerHeight));
@@ -42,12 +42,12 @@
       font-size: 0.875rem;
       font-weight: 400;
       border-radius: 4px;
-      background-color: #191919;
+      background-color: var(--tooltipColor);
     }
     &::after {
       content: "";
       top: calc(100% + 1px);
-      border-bottom: 5px solid #191919;
+      border-bottom: 5px solid var(--tooltipColor);
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
     }
