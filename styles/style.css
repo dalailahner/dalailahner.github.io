@@ -121,6 +121,7 @@
     justify-content: flex-start;
     overflow-x: hidden;
     overflow-y: scroll;
+    scroll-behavior: smooth;
   }
 
   .mainCont {
