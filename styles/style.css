@@ -12,7 +12,7 @@
     --TXTcolor: oklch(95% 0.01 45);
     --accentColor: oklch(60% 0.25 30);
     --tooltipColor: oklch(20% 0.015 225);
-    --BilderSize: min(400px, 90vw);
+    --BilderSize: min(400px, 60vw, 60svh);
     --headerHeight: 4.5rem;
     --contentHeight: calc(100dvh - var(--headerHeight));
   }
@@ -137,6 +137,7 @@
 
   .mainCont:first-of-type {
     margin-top: 0;
+    /* TODO: laggt mobil, idk */
     background-image: url("../img/HeroBG.svg");
     background-size: cover;
     background-position: center;
@@ -152,6 +153,7 @@
 
   .sectionHeadline {
     width: 100%;
+    /* check browser support for this syntax https://caniuse.com/css-relative-colors */
     color: oklch(from var(--TXTcolor) 50% c h);
     font-weight: 200;
     font-size: 3rem;
@@ -166,14 +168,11 @@
   /* PHOTOGRAPHY */
   #BilderScroll {
     cursor: pointer;
-    overflow-x: hidden;
+    overflow: hidden;
     background-image: url("../img/shelf.svg");
     background-repeat: repeat-x;
     background-size: calc(var(--BilderSize) * 2);
-
-    &.active {
-      cursor: grabbing;
-    }
+    -webkit-tap-highlight-color: transparent;
   }
 
   #BilderRow {
@@ -186,19 +185,40 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 5rem;
+    gap: 2rem;
+    cursor: pointer;
     transform-style: preserve-3d;
+    touch-action: pan-y;
+  }
+  @media screen and (min-width: 768px) {
+    #BilderRow {
+      gap: 5rem;
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
   }
 
   .BildCont {
-    max-width: var(--BilderSize);
-    max-height: 100%;
+    width: var(--BilderSize);
+    height: 100%;
+    position: relative;
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: end;
     justify-content: center;
     perspective: 100cm;
     perspective-origin: 50% -50%;
+    z-index: 1;
+
+    &:has(.Bild.active) {
+      top: calc(calc(100vh - var(--BilderSize)) / 2 * -1);
+      align-items: center;
+      min-width: 100vw;
+      min-height: 100vh;
+      z-index: 2;
+    }
   }
 
   .Bild {
@@ -207,17 +227,18 @@
     border: 5px solid var(--TXTcolor);
     transform-origin: bottom;
     transform: rotateY(18deg) rotateX(10deg);
-    transition: transform 0.2s ease;
-
-    &:hover {
-      transform: rotateY(18deg) rotateX(0deg);
-    }
+    transition: all 0.2s ease;
+    user-select: none;
 
     &.active {
-      max-width: 90vw;
-      max-height: 80vh;
-      position: relative;
       border: 10px solid var(--TXTcolor);
+      transform: rotateY(0deg) rotateX(0deg);
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .Bild:hover {
+      /* TODO: touch hover doesn't loose state, so only desktop? */
+      transform: rotateY(18deg) rotateX(0deg);
     }
   }
 
@@ -239,8 +260,9 @@
     height: auto;
   }
 
+  /* TODO: put the media rules directly to the original class */
   /********************/
-  /* DESKTOP & TABLET */
+  /* TABLET & DESKTOP */
   /********************/
   @media screen and (min-width: 768px) {
     .header {
