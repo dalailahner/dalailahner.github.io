@@ -138,7 +138,7 @@
   .mainCont:first-of-type {
     margin-top: 0;
     /* TODO: laggt mobil, idk */
-    background-image: url("../img/HeroBG.svg");
+    /* background-image: url("../img/HeroBG.svg"); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -153,7 +153,7 @@
 
   .sectionHeadline {
     width: 100%;
-    /* check browser support for this syntax https://caniuse.com/css-relative-colors */
+    /* TODO: check browser support for this syntax https://caniuse.com/css-relative-colors */
     color: oklch(from var(--TXTcolor) 50% c h);
     font-weight: 200;
     font-size: 3rem;
@@ -169,6 +169,7 @@
   #BilderScroll {
     cursor: pointer;
     overflow: hidden;
+    /* TODO: maybe make the shelve its own element and fade it out when Bild is open with :has(.Bild.active) */
     background-image: url("../img/shelf.svg");
     background-repeat: repeat-x;
     background-size: calc(var(--BilderSize) * 2);
@@ -227,18 +228,18 @@
     border: 5px solid var(--TXTcolor);
     transform-origin: bottom;
     transform: rotateY(18deg) rotateX(10deg);
-    transition: all 0.2s ease;
+    backface-visibility: hidden;
+    outline: 1px solid transparent; /* <- antialiasing fix for chrome on android */
+    transition: all 0.33s ease;
     user-select: none;
+
+    &.hover {
+      transform: rotateY(18deg) rotateX(0deg);
+    }
 
     &.active {
       border: 10px solid var(--TXTcolor);
       transform: rotateY(0deg) rotateX(0deg);
-    }
-  }
-  @media screen and (min-width: 1024px) {
-    .Bild:hover {
-      /* TODO: touch hover doesn't loose state, so only desktop? */
-      transform: rotateY(18deg) rotateX(0deg);
     }
   }
 

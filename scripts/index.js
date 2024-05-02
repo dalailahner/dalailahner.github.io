@@ -29,27 +29,72 @@ window.addEventListener("resize", (event) => {
 /////////////////
 // PHOTOGRAPHY //
 const bilderRow = document.querySelector("#BilderRow");
-const slider = new Map().set("scrollPos", 0).set("downPos", 0).set("wasMoved", false);
+const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved", false);
 
-bilderRow.querySelectorAll("img").forEach((imgEl) => {
-  setSizeAttributes(imgEl);
-  imgEl.addEventListener("load", function BildLoad(event) {
+bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
+  setSizeAttributes(Bild);
+  Bild.addEventListener("load", function BildLoad(event) {
     setSizeAttributes(event.target);
     event.target.removeEventListener("load", BildLoad);
   });
+  Bild.addEventListener("focus", (event) => {
+    setBilderScrollPos(getOffsetForElementCentering(event.target));
+    event.target.classList.add("hover");
+    event.target.addEventListener("keydown", (keyEvent) => {
+      if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
+        keyEvent.preventDefault();
+        event.target.dispatchEvent(
+          new PointerEvent("pointerdown", {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          })
+        );
+        event.target.dispatchEvent(
+          new PointerEvent("pointerup", {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          })
+        );
+      }
+    });
+  });
+  Bild.addEventListener("blur", (event) => {
+    event.target.classList.remove("hover");
+    if (event.target.classList.contains("active")) {
+      switchImgResolution(event.target);
+      event.target.classList.remove("active");
+    }
+  });
+});
+
+bilderRow.addEventListener("pointerover", (event) => {
+  bilderRow.querySelectorAll(".Bild").forEach((el) => {
+    if (el.classList.contains("hover")) {
+      el.classList.remove("hover");
+    }
+  });
+  if (event.target.classList.contains("Bild")) {
+    event.target.classList.add("hover");
+  }
 });
 
 bilderRow.addEventListener("pointerdown", (event) => {
   event.preventDefault();
-  slider.set("downPos", event.x);
+  slider.set("pointerPos", event.x);
   slider.set("wasMoved", false);
 });
 
 bilderRow.addEventListener("pointermove", (event) => {
   event.preventDefault();
-  if (event.pressure > 0.1 && (event.x > slider.get("downPos") + 2 || event.x < slider.get("downPos") - 2)) {
-    let newPos = slider.get("scrollPos") - event.movementX;
-    slider.set("wasMoved", true);
+  if (event.pressure > 0.1) {
+    if (!slider.get("wasMoved")) {
+      slider.set("wasMoved", event.x > slider.get("pointerPos") + 2 || event.x < slider.get("pointerPos") - 2 ? true : false);
+      return;
+    }
+    let newPos = slider.get("scrollPos") + (slider.get("pointerPos") - event.x) * window.devicePixelRatio;
+    slider.set("pointerPos", event.x);
     if (bilderRow.querySelectorAll(".Bild.active").length > 0) {
       const activeBilder = bilderRow.querySelectorAll(".Bild.active");
       activeBilder.forEach((el) => {
@@ -63,6 +108,11 @@ bilderRow.addEventListener("pointermove", (event) => {
 });
 
 bilderRow.addEventListener("pointerup", (event) => {
+  bilderRow.querySelectorAll(".Bild").forEach((el) => {
+    if (el.classList.contains("hover")) {
+      el.classList.remove("hover");
+    }
+  });
   if (slider.get("wasMoved")) {
     slider.set("wasMoved", false);
     setBilderScrollPos();
@@ -87,12 +137,11 @@ function positionShelf() {
 }
 
 function setSizeAttributes(element) {
-  if (element.getAttribute("width") > 0) {
-    element.setAttribute("width", element.clientWidth);
+  if (element.getAttribute("width") > 0 && element.getAttribute("height") > 0) {
+    return;
   }
-  if (element.getAttribute("height") > 0) {
-    element.setAttribute("height", element.clientHeight);
-  }
+  element.setAttribute("width", element.clientWidth);
+  element.setAttribute("height", element.clientHeight);
 }
 
 function setBilderScrollPos(value) {
