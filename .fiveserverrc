@@ -1,0 +1,10 @@
+{
+  "port": 8085,
+  "root": "./",
+  "open": "index.html",
+  "useLocalIp": true,
+  "https": true,
+  "remoteLogs": true,
+  "logLevel": 3,
+  "navigate": false
+}
