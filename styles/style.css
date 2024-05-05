@@ -1,7 +1,7 @@
 @layer reset, font, main;
 
 @import url("./fonts/font.css") layer(font);
-@import url("./normalize.css") layer(reset);
+@import url("./reset.css") layer(reset);
 
 @layer main {
   /* VARIABLES: */
