@@ -3,7 +3,7 @@
   "root": "./",
   "open": "index.html",
   "useLocalIp": true,
-  "https": true,
+  "https": false,
   "remoteLogs": true,
   "logLevel": 3,
   "navigate": false
