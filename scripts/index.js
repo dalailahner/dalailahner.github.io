@@ -22,21 +22,26 @@ window.addEventListener("resize", (event) => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(() => {
     bgCanvas.init("#bgCanvas");
-    document.querySelectorAll(".Bild.active").forEach((el) => {
-      // TODO: FIX THIS (WEIRD WHEN BILD IS ACTIVE AND THEN RESIZING HAPPENS)
-      switchImgResolution(el);
-      el.classList.remove("active");
-    });
-    document.querySelectorAll(".Bild").forEach((Bild) => {
-      setSizeAttributes(Bild, true);
-      Bild.addEventListener(
-        "load",
-        (event) => {
-          setSizeAttributes(event.target, true);
-        },
-        { once: true }
-      );
-    });
+    if (document.querySelectorAll(".Bild.active").length > 0) {
+      document.querySelectorAll(".Bild.active").forEach((el) => {
+        switchImgResolution(el);
+        el.classList.remove("active");
+        el.addEventListener(
+          "transitionend",
+          (ev) => {
+            document.querySelectorAll(".Bild").forEach((Bild) => {
+              setSizeAttributes(Bild, true);
+            });
+            setBilderScrollPos(getOffsetForElementCentering(ev.target));
+          },
+          { once: true }
+        );
+      });
+    } else {
+      document.querySelectorAll(".Bild").forEach((Bild) => {
+        setSizeAttributes(Bild, true);
+      });
+    }
   }, 100);
 });
 
@@ -150,18 +155,15 @@ bilderRow.addEventListener("pointerleave", () => {
 function setSizeAttributes(element, refresh = false) {
   if (element.getAttribute("width") > 0 && element.getAttribute("height") > 0) {
     if (refresh) {
-      element.setAttribute("width", "");
-      element.setAttribute("height", "");
-      setSizeAttributes(element);
+      element.removeAttribute("width");
+      element.removeAttribute("height");
+      setSizeAttributes(element, false);
       return;
     }
     return;
   }
-  // element.setAttribute("width", element.clientWidth);
-  // element.setAttribute("height", element.clientHeight);
-  const elCompStyle = getComputedStyle(element);
-  element.setAttribute("width", parseInt(elCompStyle.width));
-  element.setAttribute("height", parseInt(elCompStyle.height));
+  element.setAttribute("width", element.clientWidth);
+  element.setAttribute("height", element.clientHeight);
 }
 
 function setBilderScrollPos(value) {
@@ -197,17 +199,18 @@ function switchImgResolution(el) {
       const height = width / imgAspectRatio;
       el.style = `width: ${width}px;max-width: ${width}px;height: ${height}px;max-height: ${height}px`;
     }
-    el.addEventListener("transitionend", function swapImg() {
-      el.src = newImgUrl;
-      el.removeEventListener("transitionend", swapImg);
-    });
+    el.addEventListener(
+      "transitionend",
+      (event) => {
+        el.src = newImgUrl;
+      },
+      { once: true }
+    );
     return;
   }
   if (el.classList.contains("active")) {
     el.src = currentImgUrl.replace("/L/", "/S/");
-    const width = el.getAttribute("width");
-    const height = el.getAttribute("height");
-    el.style = `width: ${width}px;max-width: ${width}px;height: ${height}px;max-height: ${height}px`;
+    el.removeAttribute("style");
     return;
   }
 }
