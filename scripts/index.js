@@ -148,6 +148,11 @@ bilderRow.addEventListener("pointerup", (event) => {
 });
 
 bilderRow.addEventListener("pointerleave", () => {
+  bilderRow.querySelectorAll(".Bild").forEach((el) => {
+    if (el.classList.contains("hover")) {
+      el.classList.remove("hover");
+    }
+  });
   slider.set("wasMoved", false);
   setBilderScrollPos();
 });
