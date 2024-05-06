@@ -15,6 +15,7 @@
     --BilderSize: min(400px, 60vw, 60svh);
     --headerHeight: 4.5rem;
     --contentHeight: calc(100dvh - var(--headerHeight));
+    --easeOut: cubic-bezier(0.22, 1, 0.35, 1);
   }
 
   /* HELPERS: */
@@ -30,7 +31,7 @@
       visibility: hidden;
       opacity: 0;
       transform: translateY(-5px);
-      transition: all 0.15s ease;
+      transition: all 0.15s var(--easeOut);
     }
 
     &::before {
@@ -78,6 +79,7 @@
     z-index: -100;
   }
 
+  /* HEADER */
   .header {
     width: 100%;
     height: var(--headerHeight);
@@ -112,6 +114,53 @@
     display: none;
   }
 
+  @media screen and (min-width: 768px) {
+    .header {
+      justify-content: space-between;
+    }
+    .headerLogoCont,
+    .headerSocialCont {
+      width: 50%;
+    }
+    .headerSocialCont {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .socialBtn {
+      height: 41px;
+      aspect-ratio: 1;
+      background-color: var(--TXTcolor);
+      border-radius: 100px;
+    }
+    .socialBtnLink,
+    .socialBtnImg {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+    .socialBtnImg {
+      transform-origin: center;
+      transform: scale(0.66);
+      isolation: isolate;
+      transition: transform 0.15s var(--easeOut);
+    }
+    .socialBtn:hover .socialBtnImg {
+      transform: scale(0.75);
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .header {
+      justify-content: flex-end;
+    }
+    .headerLogoCont,
+    .headerSocialCont {
+      width: 33.33%;
+    }
+  }
+
+  /* CONTENT */
   .page-wrapper {
     width: 100%;
     max-height: var(--contentHeight);
@@ -163,6 +212,13 @@
     text-shadow: -1px 2px 1px var(--shadowColor), -2px 4px 1px var(--shadowColor), -3px 6px 1px var(--shadowColor), -4px 8px 1px var(--shadowColor), -5px 10px 1px var(--shadowColor), -6px 12px 1px var(--shadowColor), -7px 14px 1px var(--shadowColor),
       -8px 16px 1px var(--shadowColor), -9px 18px 1px var(--shadowColor), -10px 20px 1px var(--shadowColor);
     user-select: none;
+  }
+  @media screen and (min-width: 768px) {
+    .sectionHeadline {
+      width: 75%;
+      font-size: 4rem;
+      text-align: left;
+    }
   }
 
   /* PHOTOGRAPHY */
@@ -244,7 +300,7 @@
     transform: rotateY(18deg) rotateX(10deg);
     backface-visibility: hidden;
     outline: 1px solid transparent; /* <- antialiasing fix for chrome on android */
-    transition: all 0.33s ease;
+    transition: all 0.33s var(--easeOut);
     user-select: none;
 
     &.hover {
@@ -274,65 +330,9 @@
     width: 100%;
     height: auto;
   }
-
-  /* TODO: put the media rules directly to the original class */
-  /********************/
-  /* TABLET & DESKTOP */
-  /********************/
   @media screen and (min-width: 768px) {
-    .header {
-      justify-content: space-between;
-    }
-    .headerLogoCont,
-    .headerSocialCont {
-      width: 50%;
-    }
-    .headerSocialCont {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-    }
-    .socialBtn {
-      height: 41px;
-      aspect-ratio: 1;
-      background-color: var(--TXTcolor);
-      border-radius: 100px;
-    }
-    .socialBtnLink,
-    .socialBtnImg {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-    }
-    .socialBtnImg {
-      transform-origin: center;
-      transform: scale(0.66);
-      isolation: isolate;
-      transition: transform 0.15s ease;
-    }
-    .socialBtn:hover .socialBtnImg {
-      transform: scale(0.75);
-    }
-
-    .sectionHeadline {
-      width: 75%;
-      font-size: 4rem;
-      text-align: left;
-    }
-
     .animVids {
       width: 25%;
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    .header {
-      justify-content: flex-end;
-    }
-    .headerLogoCont,
-    .headerSocialCont {
-      width: 33.33%;
     }
   }
 }
