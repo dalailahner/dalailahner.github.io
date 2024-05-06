@@ -59,50 +59,47 @@ bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
     },
     { once: true }
   );
-  Bild.addEventListener("focus", (event) => {
-    setBilderScrollPos(getOffsetForElementCentering(event.target));
-    event.target.classList.add("hover");
-    event.target.addEventListener("keydown", (keyEvent) => {
-      if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
-        keyEvent.preventDefault();
-        event.target.dispatchEvent(
-          new PointerEvent("pointerdown", {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-          })
-        );
-        event.target.dispatchEvent(
-          new PointerEvent("pointerup", {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-          })
-        );
-      }
-    });
-  });
   Bild.addEventListener("blur", (event) => {
-    event.target.classList.remove("hover");
+    removeHover();
     if (event.target.classList.contains("active")) {
       switchImgResolution(event.target);
       event.target.classList.remove("active");
     }
   });
+  Bild.addEventListener("focus", (event) => {
+    setBilderScrollPos(getOffsetForElementCentering(event.target));
+    event.target.classList.add("hover");
+  });
+  Bild.addEventListener("keydown", (keyEvent) => {
+    if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
+      keyEvent.preventDefault();
+      keyEvent.target.dispatchEvent(
+        new PointerEvent("pointerdown", {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+      );
+      keyEvent.target.dispatchEvent(
+        new PointerEvent("pointerup", {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        })
+      );
+    }
+  });
 });
 
 bilderRow.addEventListener("pointerover", (event) => {
-  bilderRow.querySelectorAll(".Bild").forEach((el) => {
-    if (el.classList.contains("hover")) {
-      el.classList.remove("hover");
-    }
-  });
+  removeHover();
   if (event.target.classList.contains("Bild")) {
     event.target.classList.add("hover");
   }
 });
 
 bilderRow.addEventListener("pointerdown", (event) => {
+  console.log("POINTER DOWN");
   event.preventDefault();
   slider.set("pointerPos", event.x);
   slider.set("wasMoved", false);
@@ -130,11 +127,8 @@ bilderRow.addEventListener("pointermove", (event) => {
 });
 
 bilderRow.addEventListener("pointerup", (event) => {
-  bilderRow.querySelectorAll(".Bild").forEach((el) => {
-    if (el.classList.contains("hover")) {
-      el.classList.remove("hover");
-    }
-  });
+  console.log("POINTER UP");
+  removeHover();
   if (slider.get("wasMoved")) {
     slider.set("wasMoved", false);
     setBilderScrollPos();
@@ -148,11 +142,7 @@ bilderRow.addEventListener("pointerup", (event) => {
 });
 
 bilderRow.addEventListener("pointerleave", () => {
-  bilderRow.querySelectorAll(".Bild").forEach((el) => {
-    if (el.classList.contains("hover")) {
-      el.classList.remove("hover");
-    }
-  });
+  removeHover();
   slider.set("wasMoved", false);
   setBilderScrollPos();
 });
@@ -218,6 +208,14 @@ function switchImgResolution(el) {
     el.removeAttribute("style");
     return;
   }
+}
+
+function removeHover() {
+  bilderRow.querySelectorAll(".Bild").forEach((el) => {
+    if (el.classList.contains("hover")) {
+      el.classList.remove("hover");
+    }
+  });
 }
 
 ///////////////////////
