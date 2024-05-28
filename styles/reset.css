@@ -4,7 +4,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  line-height: 1.15;
   overflow-wrap: break-word;
   border: none;
 
@@ -20,7 +19,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 100%;
-  line-height: 1.15;
+  line-height: 1.5;
   -webkit-text-size-adjust: 100%;
   -moz-tab-size: 4;
   tab-size: 4;

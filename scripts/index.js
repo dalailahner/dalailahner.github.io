@@ -49,6 +49,7 @@ window.addEventListener("resize", (event) => {
 // PHOTOGRAPHY //
 const bilderRow = document.querySelector("#BilderRow");
 const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved", false);
+// TODO: fix bug when open Bild with click and then tab
 
 bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
   setSizeAttributes(Bild);
