@@ -49,7 +49,7 @@ window.addEventListener("resize", (event) => {
 // PHOTOGRAPHY //
 const bilderRow = document.querySelector("#BilderRow");
 const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved", false);
-// TODO: fix bug when open Bild with click and then tab
+// TODO: sometimes the images don't load (caching or the lazy load implementation is shit)
 
 bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
   setSizeAttributes(Bild);
@@ -68,8 +68,10 @@ bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
     }
   });
   Bild.addEventListener("focus", (event) => {
-    setBilderScrollPos(getOffsetForElementCentering(event.target));
-    event.target.classList.add("hover");
+    if (event.target.matches(":focus-visible")) {
+      setBilderScrollPos(getOffsetForElementCentering(event.target));
+      event.target.classList.add("hover");
+    }
   });
   Bild.addEventListener("keydown", (keyEvent) => {
     if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
@@ -100,8 +102,6 @@ bilderRow.addEventListener("pointerover", (event) => {
 });
 
 bilderRow.addEventListener("pointerdown", (event) => {
-  console.log("POINTER DOWN");
-  event.preventDefault();
   slider.set("pointerPos", event.x);
   slider.set("wasMoved", false);
 });
@@ -128,11 +128,9 @@ bilderRow.addEventListener("pointermove", (event) => {
 });
 
 bilderRow.addEventListener("pointerup", (event) => {
-  console.log("POINTER UP");
   removeHover();
   if (slider.get("wasMoved")) {
     slider.set("wasMoved", false);
-    setBilderScrollPos();
     return;
   }
   if (event.target.tagName === "IMG") {
@@ -145,7 +143,6 @@ bilderRow.addEventListener("pointerup", (event) => {
 bilderRow.addEventListener("pointerleave", () => {
   removeHover();
   slider.set("wasMoved", false);
-  setBilderScrollPos();
 });
 
 function setSizeAttributes(element, refresh = false) {
@@ -212,10 +209,8 @@ function switchImgResolution(el) {
 }
 
 function removeHover() {
-  bilderRow.querySelectorAll(".Bild").forEach((el) => {
-    if (el.classList.contains("hover")) {
-      el.classList.remove("hover");
-    }
+  bilderRow.querySelectorAll(".Bild.hover").forEach((el) => {
+    el.classList.remove("hover");
   });
 }
 
