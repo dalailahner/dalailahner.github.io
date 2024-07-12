@@ -13,6 +13,7 @@
     --shadowColor: oklch(15% 0.015 225);
     --tooltipColor: oklch(20% 0.015 225);
     --headerHeight: 4.5rem;
+    --headerMainGap: calc(var(--headerHeight) * 0.15);
     --contentHeight: calc(100dvh - var(--headerHeight));
     --BilderSize: min(400px, 60vw, 60svh);
     --fullBorderRadius: calc(infinity * 1px);
@@ -21,20 +22,17 @@
 
   /* HELPERS: */
   .tooltipBottom {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
 
     &::before,
     &::after {
       position: absolute;
+      left: 50%;
       visibility: hidden;
       opacity: 0;
-      transform: translateY(-5px);
+      transform: translate(-50%, -5px);
       transition: all 0.15s var(--easeOut);
     }
-
     &::before {
       content: attr(data-tooltip);
       padding: 0.3em 0.5em;
@@ -57,7 +55,7 @@
     &:hover::after {
       visibility: visible;
       opacity: 1;
-      transform: translateY(0);
+      transform: translate(-50%, 5px);
     }
   }
 
@@ -82,83 +80,77 @@
 
   /* HEADER */
   .header {
+    padding: var(--headerMainGap) calc(var(--headerMainGap) * 2);
     width: 100%;
     height: var(--headerHeight);
     position: sticky;
     top: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    gap: var(--headerMainGap);
     background-color: var(--lightBGcolor);
     box-shadow: 0 0 35px 0 var(--shadowColor);
     z-index: 100;
-  }
-  .headerLogoCont {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  .headerLogoIcon {
-    max-width: 3rem;
-  }
-  .headerLogoTxt {
-    color: var(--TXTcolor);
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-  .headerSocialCont {
-    display: none;
+    @media screen and (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas: ". logo social";
+      justify-items: center;
+      align-content: center;
+    }
   }
 
-  @media screen and (min-width: 768px) {
-    .header {
-      justify-content: space-between;
-    }
-    .headerLogoCont,
-    .headerSocialCont {
-      width: 50%;
-    }
-    .headerSocialCont {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-    }
-    .socialBtn {
-      height: 41px;
-      aspect-ratio: 1;
-      background-color: var(--TXTcolor);
-      border-radius: var(--fullBorderRadius);
-    }
-    .socialBtnLink,
-    .socialBtnImg {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-    }
-    .socialBtnImg {
-      transform-origin: center;
-      scale: 0.66;
-      isolation: isolate;
-      transition: scale 0.15s var(--easeOut);
-    }
-    .socialBtn:hover .socialBtnImg {
-      scale: 0.75;
+  .headerLogoCont {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: var(--headerMainGap);
+    grid-area: logo;
+  }
+  .headerLogoIcon {
+    height: 100%;
+    color: var(--accentColor);
+  }
+  .headerLogoTxt {
+    display: none;
+    @media screen and (min-width: 768px) {
+      display: initial;
+      color: var(--TXTcolor);
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
   }
-  @media screen and (min-width: 1024px) {
-    .header {
-      justify-content: flex-end;
+
+  .headerSocialCont {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: calc(var(--headerMainGap) * 2);
+    grid-area: social;
+    @media screen and (min-width: 768px) {
+      gap: calc(var(--headerMainGap) * 3);
     }
-    .headerLogoCont,
-    .headerSocialCont {
-      width: 33.33%;
-    }
+  }
+  .socialBtnLink {
+    height: 41px;
+    aspect-ratio: 1;
+    background-color: var(--TXTcolor);
+    border-radius: var(--fullBorderRadius);
+  }
+  .socialBtnImg {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    transform-origin: center;
+    scale: 0.66;
+    transition: scale 0.15s var(--easeOut);
+  }
+  .socialBtnLink:hover .socialBtnImg {
+    scale: 0.75;
   }
 
   /* CONTENT */
