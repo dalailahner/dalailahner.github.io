@@ -65,6 +65,7 @@ bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
     if (event.target.classList.contains("active")) {
       switchImgResolution(event.target);
       event.target.classList.remove("active");
+      setBilderScrollPos();
     }
   });
   Bild.addEventListener("focus", (event) => {
