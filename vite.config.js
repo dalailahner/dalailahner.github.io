@@ -12,6 +12,7 @@ export default defineConfig({
   },
   server: {
     open: true,
+    watch: process.env?.WSL_DISTRO_NAME ? { usePolling: true } : undefined,
   },
   build: {
     cssMinify: "lightningcss",
