@@ -1,0 +1,16 @@
+{
+  "name": "dalailahner.github.io",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "browserslist": "^4.23.2",
+    "lightningcss": "^1.25.1",
+    "vite": "^5.3.3"
+  }
+}
