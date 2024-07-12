@@ -6,15 +6,16 @@
 @layer main {
   /* VARIABLES: */
   :root {
+    --accentColor: oklch(60% 0.25 30);
+    --TXTcolor: oklch(95% 0.01 45);
     --BGcolor: oklch(25% 0.015 225);
     --lightBGcolor: oklch(30% 0.015 225);
     --shadowColor: oklch(15% 0.015 225);
-    --TXTcolor: oklch(95% 0.01 45);
-    --accentColor: oklch(60% 0.25 30);
     --tooltipColor: oklch(20% 0.015 225);
-    --BilderSize: min(400px, 60vw, 60svh);
     --headerHeight: 4.5rem;
     --contentHeight: calc(100dvh - var(--headerHeight));
+    --BilderSize: min(400px, 60vw, 60svh);
+    --fullBorderRadius: calc(infinity * 1px);
     --easeOut: cubic-bezier(0.22, 1, 0.35, 1);
   }
 
@@ -132,7 +133,7 @@
       height: 41px;
       aspect-ratio: 1;
       background-color: var(--TXTcolor);
-      border-radius: 100px;
+      border-radius: var(--fullBorderRadius);
     }
     .socialBtnLink,
     .socialBtnImg {
