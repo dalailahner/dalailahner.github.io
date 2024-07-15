@@ -18,6 +18,7 @@
 }
 html {
   scroll-behavior: smooth;
+  accent-color: var(--accentColor);
   font-size: 100%;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
