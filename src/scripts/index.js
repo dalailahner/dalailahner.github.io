@@ -193,13 +193,20 @@ function switchImgResolution(el) {
       const height = width / imgAspectRatio;
       el.style = `width: ${width}px;max-width: ${width}px;height: ${height}px;max-height: ${height}px`;
     }
-    el.addEventListener(
-      "transitionend",
-      (event) => {
+    if ("decode" in newImage) {
+      newImage.decode().then(() => {
         el.src = newImgUrl;
-      },
-      { once: true }
-    );
+      });
+    } else {
+      el.addEventListener(
+        "transitionend",
+        (event) => {
+          el.src = newImgUrl;
+        },
+        { once: true }
+      );
+    }
+
     return;
   }
   if (el.classList.contains("active")) {
