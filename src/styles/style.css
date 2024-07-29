@@ -338,10 +338,10 @@
     z-index: 1;
 
     &:has(.Bild.active) {
-      top: calc(calc(100vh - var(--BilderSize)) / 2 * -1);
+      width: 100vw;
+      height: var(--contentHeight);
+      top: calc(calc(var(--contentHeight) - var(--BilderSize)) / 2 * -1);
       align-items: center;
-      min-width: 100vw;
-      min-height: 100vh;
       z-index: 2;
     }
   }
