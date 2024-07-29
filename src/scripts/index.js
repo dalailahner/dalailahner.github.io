@@ -146,6 +146,7 @@ bilderRow.addEventListener("pointerleave", () => {
   slider.set("wasMoved", false);
 });
 
+// TODO: sometimes the size doesn't get set properly (results to 0)
 function setSizeAttributes(element, refresh = false) {
   if (element.getAttribute("width") > 0 && element.getAttribute("height") > 0) {
     if (refresh) {
@@ -177,40 +178,56 @@ function getOffsetForElementCentering(targetEl) {
 }
 
 function switchImgResolution(el) {
+  const screenPixelRatio = window.devicePixelRatio;
   const windowAspectRatio = window.innerWidth / window.innerHeight;
   const imgAspectRatio = el.clientWidth / el.clientHeight;
-  const currentImgUrl = el.src;
+  const sourceEls = el.parentElement.querySelectorAll("source");
+  const bilderSizes = [400, 800, 1200, 1600, 2000, 2400];
+
+  function getNewSize(w, h) {
+    if (imgAspectRatio >= 1) {
+      // querformat:
+      return bilderSizes.find((size) => size >= w * screenPixelRatio) || bilderSizes[bilderSizes.length - 1];
+    } else {
+      // hochformat:
+      return bilderSizes.find((size) => size >= h * screenPixelRatio) || bilderSizes[bilderSizes.length - 1];
+    }
+  }
+
+  // from small to big:
   if (!el.classList.contains("active")) {
-    const newImage = new Image();
-    let newImgUrl = currentImgUrl.replace("/S/", "/L/");
-    newImage.src = newImgUrl;
     if (windowAspectRatio > imgAspectRatio) {
       const height = window.innerHeight * 0.8;
       const width = height * imgAspectRatio;
-      el.style = `width: ${width}px;max-width: ${width}px;height: ${height}px;max-height: ${height}px`;
+      // set new img URLs:
+      sourceEls.forEach((sourceEl) => {
+        sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, `${getNewSize(width, height)}.`);
+      });
+      el.src = el.src.replace(/\d+\./, `${getNewSize(width, height)}.`);
+      // set new size for transformation:
+      el.style = `width: ${width}px;height: ${height}px`;
     } else {
       const width = window.innerWidth * 0.9;
       const height = width / imgAspectRatio;
-      el.style = `width: ${width}px;max-width: ${width}px;height: ${height}px;max-height: ${height}px`;
-    }
-    if ("decode" in newImage) {
-      newImage.decode().then(() => {
-        el.src = newImgUrl;
+      // set new img URLs:
+      sourceEls.forEach((sourceEl) => {
+        sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, `${getNewSize(width, height)}.`);
       });
-    } else {
-      el.addEventListener(
-        "transitionend",
-        (event) => {
-          el.src = newImgUrl;
-        },
-        { once: true }
-      );
+      el.src = el.src.replace(/\d+\./, `${getNewSize(width, height)}.`);
+      // set new size for transformation:
+      el.style = `width: ${width}px;height: ${height}px`;
     }
-
     return;
   }
+
+  // from big to small:
   if (el.classList.contains("active")) {
-    el.src = currentImgUrl.replace("/L/", "/S/");
+    // set new img URLs:
+    sourceEls.forEach((sourceEl) => {
+      sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, "400.");
+    });
+    el.src = el.src.replace(/\d+\./, "400.");
+    // set new size for transformation:
     el.removeAttribute("style");
     return;
   }

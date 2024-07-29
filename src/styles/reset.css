@@ -126,5 +126,7 @@ summary {
 }
 img,
 svg {
+  width: auto;
+  height: auto;
   user-select: none;
 }
