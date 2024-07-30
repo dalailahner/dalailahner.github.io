@@ -199,9 +199,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden auto;
     scroll-behavior: smooth;
+
+    @media only screen and (min-width: 768px) {
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background: var(--lightBGcolor);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: var(--accentColor);
+        border-radius: var(--fullBorderRadius);
+      }
+      @supports not selector(::-webkit-scrollbar) {
+        scrollbar-color: var(--accentColor) var(--lightBGcolor);
+      }
+    }
   }
 
   .mainCont {
@@ -265,6 +280,7 @@
   .toolIconCont {
     width: 3rem;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
   .toolIconImg {
     width: 100%;
