@@ -1,7 +1,7 @@
-@layer reset, font, main;
+@layer font, reset, main;
 
 @import url("./font.css") layer(font);
-@import url("./reset.css") layer(reset);
+@import url("noicss.reset") layer(reset);
 
 @layer main {
   /* VARIABLES: */
