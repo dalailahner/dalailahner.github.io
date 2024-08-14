@@ -383,6 +383,28 @@
     }
   }
 
+  .BilderScrollOverlay {
+    height: var(--BilderSize);
+    aspect-ratio: 1 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    background: linear-gradient(to right, transparent, #fff);
+    opacity: 0.666;
+    pointer-events: none;
+    transition: all 0.15s linear;
+  }
+  .BilderScrollOverlayText {
+    color: var(--BGcolor);
+    font-size: calc(var(--BilderSize) / 10);
+    font-weight: 700;
+    text-wrap: nowrap;
+    transform: rotate(-90deg);
+    user-select: none;
+  }
+
   /* ILLUSTRATIONS */
   .illustrations {
     display: flex;
