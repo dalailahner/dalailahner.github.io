@@ -13,11 +13,15 @@ bgCanvas.init("#bgCanvas");
 ////////////////////
 // GLOBAL EVENTS: //
 window.addEventListener("DOMContentLoaded", (event) => {
+  console.log("DOMContentLoaded EVENT TRIGGERED");
   bgCanvas.animate();
+  initSectionHeadlineObserver();
 });
+
 window.addEventListener("load", (event) => {
   console.log("LOAD EVENT TRIGGERED");
 });
+
 window.addEventListener("resize", (event) => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(() => {
@@ -264,3 +268,37 @@ document.querySelectorAll(".animVids").forEach(function (currentValue) {
     this.pause();
   });
 });
+
+//////////////////////
+// GLOBAL FUNCTIONS //
+
+function initSectionHeadlineObserver() {
+  /**
+   *
+   * @param {number} [steps=15] how many entries the array should contain. default: 15
+   * @returns {number[]} an array of floats from 0 to 1 with the lenght of the array being the amount of `steps` provided.
+   * @example buildThresholdList(8) -> [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1]
+   */
+  function buildThresholdList(steps = 15) {
+    const thresholds = [];
+    for (let i = 1.0; i <= steps; i++) {
+      let ratio = i / steps;
+      thresholds.push(ratio);
+    }
+    return thresholds;
+  }
+
+  const sectionHeadlineObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.style.setProperty("--sectionHeadlineBrightness", parseFloat(entry.intersectionRatio * 0.13 + 0.45).toFixed(2));
+        entry.target.style.fontWeight = parseInt(entry.intersectionRatio * 150 + 100);
+      });
+    },
+    { root: null, rootMargin: "-15% 0px -15% 0px", threshold: buildThresholdList() }
+  );
+
+  document.querySelectorAll(".sectionHeadline").forEach((el) => {
+    sectionHeadlineObserver.observe(el);
+  });
+}
