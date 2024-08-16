@@ -16,6 +16,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   console.log("DOMContentLoaded EVENT TRIGGERED");
   bgCanvas.animate();
   initSectionHeadlineObserver();
+  initIllustrationBgBlurObserver();
 });
 
 window.addEventListener("load", (event) => {
@@ -272,22 +273,25 @@ document.querySelectorAll(".animVids").forEach(function (currentValue) {
 //////////////////////
 // GLOBAL FUNCTIONS //
 
-function initSectionHeadlineObserver() {
-  /**
-   *
-   * @param {number} [steps=15] how many entries the array should contain. default: 15
-   * @returns {number[]} an array of floats from 0 to 1 with the lenght of the array being the amount of `steps` provided.
-   * @example buildThresholdList(8) -> [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1]
-   */
-  function buildThresholdList(steps = 15) {
-    const thresholds = [];
-    for (let i = 1.0; i <= steps; i++) {
-      let ratio = i / steps;
-      thresholds.push(ratio);
-    }
-    return thresholds;
+/**
+ * building an array of thresholds for intersection observer
+ *
+ * @param {number} [steps=15] how many entries the array should contain. default: 15
+ * @returns {number[]} an array of floats from 0 to 1 with the lenght of the array being the amount of `steps` provided.
+ * @example buildThresholdList(8) -> [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1]
+ */
+function buildThresholdList(steps = 15) {
+  const thresholds = [];
+  for (let i = 1.0; i <= steps; i++) {
+    let ratio = i / steps;
+    thresholds.push(ratio);
   }
+  return thresholds;
+}
 
+/////////////////////////////
+// OBSERVER INIT FUNCTIONS //
+function initSectionHeadlineObserver() {
   const sectionHeadlineObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -295,10 +299,30 @@ function initSectionHeadlineObserver() {
         entry.target.style.fontWeight = parseInt(entry.intersectionRatio * 150 + 100);
       });
     },
-    { root: null, rootMargin: "-15% 0px -15% 0px", threshold: buildThresholdList() }
+    { root: null, rootMargin: "-15% 0px", threshold: buildThresholdList() }
   );
 
   document.querySelectorAll(".sectionHeadline").forEach((el) => {
     sectionHeadlineObserver.observe(el);
   });
+}
+
+function initIllustrationBgBlurObserver() {
+  // only if no mouse (aka no hover is available)
+  if (window.matchMedia("(pointer: coarse)").matches) {
+    const illustrationBgBlurObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const bgEl = entry.target.querySelector(".illustrationBG");
+          bgEl.style.filter = `blur(${parseFloat(entry.intersectionRatio * 5).toFixed(2)}px)`;
+          bgEl.style.scale = parseFloat(entry.intersectionRatio * 0.1 + 1.0).toFixed(3);
+        });
+      },
+      { root: null, rootMargin: "-33% 0px -25% 0px", threshold: buildThresholdList() }
+    );
+
+    document.querySelectorAll(".illustrationCont").forEach((el) => {
+      illustrationBgBlurObserver.observe(el);
+    });
+  }
 }
