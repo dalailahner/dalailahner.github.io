@@ -1,5 +1,3 @@
-"use strict";
-
 import bgCanvas from "./bgCanvas.js";
 
 ///////////////////////
@@ -28,24 +26,24 @@ window.addEventListener("resize", (event) => {
   windowResizeTimeout = setTimeout(() => {
     bgCanvas.init("#bgCanvas");
     if (document.querySelectorAll(".Bild.active").length > 0) {
-      document.querySelectorAll(".Bild.active").forEach((el) => {
+      for (const el of document.querySelectorAll(".Bild.active")) {
         switchImgResolution(el);
         el.classList.remove("active");
         el.addEventListener(
           "transitionend",
           (ev) => {
-            document.querySelectorAll(".Bild").forEach((Bild) => {
+            for (const Bild of document.querySelectorAll(".Bild")) {
               setSizeAttributes(Bild, true);
-            });
+            }
             setBilderScrollPos(getOffsetForElementCentering(ev.target));
           },
-          { once: true }
+          { once: true },
         );
-      });
+      }
     } else {
-      document.querySelectorAll(".Bild").forEach((Bild) => {
+      for (const Bild of document.querySelectorAll(".Bild")) {
         setSizeAttributes(Bild, true);
-      });
+      }
     }
   }, 100);
 });
@@ -56,14 +54,14 @@ const bilderRow = document.querySelector("#BilderRow");
 const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved", false);
 // TODO: sometimes the images don't load (caching or the lazy load implementation is shit)
 
-bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
+for (const Bild of bilderRow.querySelectorAll(".Bild")) {
   setSizeAttributes(Bild);
   Bild.addEventListener(
     "load",
     (event) => {
       setSizeAttributes(event.target);
     },
-    { once: true }
+    { once: true },
   );
   Bild.addEventListener("blur", (event) => {
     removeHover();
@@ -87,18 +85,18 @@ bilderRow.querySelectorAll(".Bild").forEach((Bild) => {
           bubbles: true,
           cancelable: true,
           view: window,
-        })
+        }),
       );
       keyEvent.target.dispatchEvent(
         new PointerEvent("pointerup", {
           bubbles: true,
           cancelable: true,
           view: window,
-        })
+        }),
       );
     }
   });
-});
+}
 
 bilderRow.addEventListener("pointerover", (event) => {
   removeHover();
@@ -116,17 +114,17 @@ bilderRow.addEventListener("pointermove", (event) => {
   event.preventDefault();
   if (event.pressure > 0.1) {
     if (!slider.get("wasMoved")) {
-      slider.set("wasMoved", event.x > slider.get("pointerPos") + 2 || event.x < slider.get("pointerPos") - 2 ? true : false);
+      slider.set("wasMoved", !!(event.x > slider.get("pointerPos") + 2 || event.x < slider.get("pointerPos") - 2));
       return;
     }
     let newPos = slider.get("scrollPos") + (slider.get("pointerPos") - event.x) * window.devicePixelRatio;
     slider.set("pointerPos", event.x);
     if (bilderRow.querySelectorAll(".Bild.active").length > 0) {
       const activeBilder = bilderRow.querySelectorAll(".Bild.active");
-      activeBilder.forEach((el) => {
+      for (const el of activeBilder) {
         switchImgResolution(el);
         el.classList.remove("active");
-      });
+      }
       newPos = getOffsetForElementCentering(activeBilder[0]);
     }
     setBilderScrollPos(newPos);
@@ -187,7 +185,7 @@ function setBilderScrollPos(value) {
 
 function getOffsetForElementCentering(targetEl) {
   const parentRect = targetEl.parentElement.getBoundingClientRect();
-  let offset = slider.get("scrollPos") + (parentRect.x - (window.innerWidth - parentRect.width) / 2);
+  const offset = slider.get("scrollPos") + (parentRect.x - (window.innerWidth - parentRect.width) / 2);
   return offset;
 }
 
@@ -199,11 +197,12 @@ function switchImgResolution(el) {
   const bilderSizes = [400, 800, 1200, 1600, 2000, 2400];
 
   function getNewSize(w, h) {
+    // querformat:
     if (imgAspectRatio >= 1) {
-      // querformat:
       return bilderSizes.find((size) => size >= w * screenPixelRatio) || bilderSizes[bilderSizes.length - 1];
-    } else {
-      // hochformat:
+    }
+    // hochformat:
+    if (imgAspectRatio < 1) {
       return bilderSizes.find((size) => size >= h * screenPixelRatio) || bilderSizes[bilderSizes.length - 1];
     }
   }
@@ -214,9 +213,9 @@ function switchImgResolution(el) {
       const height = window.innerHeight * 0.8;
       const width = height * imgAspectRatio;
       // set new img URLs:
-      sourceEls.forEach((sourceEl) => {
+      for (const sourceEl of sourceEls) {
         sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, `${getNewSize(width, height)}.`);
-      });
+      }
       el.src = el.src.replace(/\d+\./, `${getNewSize(width, height)}.`);
       // set new size for transformation:
       el.style = `width: ${width}px;height: ${height}px`;
@@ -224,9 +223,9 @@ function switchImgResolution(el) {
       const width = window.innerWidth * 0.9;
       const height = width / imgAspectRatio;
       // set new img URLs:
-      sourceEls.forEach((sourceEl) => {
+      for (const sourceEl of sourceEls) {
         sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, `${getNewSize(width, height)}.`);
-      });
+      }
       el.src = el.src.replace(/\d+\./, `${getNewSize(width, height)}.`);
       // set new size for transformation:
       el.style = `width: ${width}px;height: ${height}px`;
@@ -237,9 +236,9 @@ function switchImgResolution(el) {
   // from big to small:
   if (el.classList.contains("active")) {
     // set new img URLs:
-    sourceEls.forEach((sourceEl) => {
+    for (const sourceEl of sourceEls) {
       sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, "400.");
-    });
+    }
     el.src = el.src.replace(/\d+\./, "400.");
     // set new size for transformation:
     el.removeAttribute("style");
@@ -248,14 +247,14 @@ function switchImgResolution(el) {
 }
 
 function removeHover() {
-  bilderRow.querySelectorAll(".Bild.hover").forEach((el) => {
+  for (const el of bilderRow.querySelectorAll(".Bild.hover")) {
     el.classList.remove("hover");
-  });
+  }
 }
 
 ///////////////////////
 // ANIMATION SECTION //
-document.querySelectorAll(".animVids").forEach(function (currentValue) {
+for (const currentValue of document.querySelectorAll(".animVids")) {
   // set thumbnail time
   currentValue.currentTime = currentValue.dataset.thumbtime;
 
@@ -268,7 +267,7 @@ document.querySelectorAll(".animVids").forEach(function (currentValue) {
     this.currentTime = this.dataset.thumbtime;
     this.pause();
   });
-});
+}
 
 //////////////////////
 // GLOBAL FUNCTIONS //
@@ -283,7 +282,7 @@ document.querySelectorAll(".animVids").forEach(function (currentValue) {
 function buildThresholdList(steps = 15) {
   const thresholds = [];
   for (let i = 1.0; i <= steps; i++) {
-    let ratio = i / steps;
+    const ratio = i / steps;
     thresholds.push(ratio);
   }
   return thresholds;
@@ -294,17 +293,17 @@ function buildThresholdList(steps = 15) {
 function initSectionHeadlineObserver() {
   const sectionHeadlineObserver = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
-        entry.target.style.setProperty("--sectionHeadlineBrightness", parseFloat(entry.intersectionRatio * 0.13 + 0.45).toFixed(2));
-        entry.target.style.fontWeight = parseInt(entry.intersectionRatio * 150 + 100);
-      });
+      for (const entry of entries) {
+        entry.target.style.setProperty("--sectionHeadlineBrightness", Number.parseFloat(entry.intersectionRatio * 0.13 + 0.45).toFixed(2));
+        entry.target.style.fontWeight = Number.parseInt(entry.intersectionRatio * 150 + 100);
+      }
     },
-    { root: null, rootMargin: "-15% 0px", threshold: buildThresholdList() }
+    { root: null, rootMargin: "-15% 0px", threshold: buildThresholdList() },
   );
 
-  document.querySelectorAll(".sectionHeadline").forEach((el) => {
+  for (const el of document.querySelectorAll(".sectionHeadline")) {
     sectionHeadlineObserver.observe(el);
-  });
+  }
 }
 
 function initIllustrationBgBlurObserver() {
@@ -312,17 +311,21 @@ function initIllustrationBgBlurObserver() {
   if (window.matchMedia("(pointer: coarse)").matches) {
     const illustrationBgBlurObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           const bgEl = entry.target.querySelector(".illustrationBG");
-          bgEl.style.filter = `blur(${parseFloat(entry.intersectionRatio * 5).toFixed(2)}px)`;
-          bgEl.style.scale = parseFloat(entry.intersectionRatio * 0.1 + 1.0).toFixed(3);
-        });
+          bgEl.style.filter = `blur(${Number.parseFloat(entry.intersectionRatio * 5).toFixed(2)}px)`;
+          bgEl.style.scale = Number.parseFloat(entry.intersectionRatio * 0.1 + 1.0).toFixed(3);
+        }
       },
-      { root: null, rootMargin: "-33% 0px -25% 0px", threshold: buildThresholdList() }
+      {
+        root: null,
+        rootMargin: "-33% 0px -25% 0px",
+        threshold: buildThresholdList(),
+      },
     );
 
-    document.querySelectorAll(".illustrationCont").forEach((el) => {
+    for (const el of document.querySelectorAll(".illustrationCont")) {
       illustrationBgBlurObserver.observe(el);
-    });
+    }
   }
 }
