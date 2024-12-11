@@ -1,6 +1,7 @@
-"use strict";
-
-let bgCanvasCtx, bgCanvasEl, options, points;
+let bgCanvasCtx;
+let bgCanvasEl;
+let options;
+let points;
 
 const bgCanvas = {
   init(canvasId) {
