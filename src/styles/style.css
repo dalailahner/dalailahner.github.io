@@ -48,9 +48,9 @@
     &::after {
       content: "";
       top: calc(100% + 1px);
+      border-right: 5px solid transparent;
       border-bottom: 5px solid var(--tooltipColor);
       border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
     }
     &:hover::before,
     &:hover::after {
@@ -86,8 +86,8 @@
       content: "";
       bottom: calc(100% + 1px);
       border-top: 5px solid var(--tooltipColor);
-      border-left: 5px solid transparent;
       border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
     }
     &:hover::before,
     &:hover::after {
@@ -99,19 +99,19 @@
 
   /* MAIN: */
   body {
-    display: block;
     width: 100%;
     max-height: 100dvh;
+    display: block;
     background-color: var(--BGcolor);
     overflow: hidden;
   }
 
   #bgCanvas {
+    width: 100%;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     background-color: transparent;
     z-index: -100;
   }
@@ -121,12 +121,12 @@
     padding: var(--headerMainGap) calc(var(--headerMainGap) * 2);
     width: 100%;
     height: var(--headerHeight);
-    position: sticky;
-    top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--headerMainGap);
+    position: sticky;
+    top: 0;
     background-color: var(--lightBGcolor);
     box-shadow: 0 0 35px 0 var(--shadowColor);
     z-index: 100;
@@ -142,11 +142,11 @@
 
   .headerLogoCont {
     height: 100%;
+    grid-area: logo;
     display: flex;
     align-items: center;
     justify-content: start;
     gap: var(--headerMainGap);
-    grid-area: logo;
   }
   .headerLogoIcon {
     height: 100%;
@@ -166,11 +166,11 @@
   }
 
   .headerSocialCont {
+    grid-area: social;
     display: flex;
     align-items: center;
     justify-content: end;
     gap: calc(var(--headerMainGap) * 2);
-    grid-area: social;
 
     @media (width >= 768px) {
       gap: calc(var(--headerMainGap) * 3);
@@ -179,8 +179,8 @@
   .socialBtnLink {
     height: 41px;
     aspect-ratio: 1;
-    background-color: var(--TXTcolor);
     border-radius: var(--fullBorderRadius);
+    background-color: var(--TXTcolor);
   }
   .socialBtnImg {
     width: 100%;
@@ -205,6 +205,9 @@
     scroll-behavior: smooth;
 
     @media (width >= 768px) {
+      @supports not selector(::-webkit-scrollbar) {
+        scrollbar-color: var(--accentColor) var(--lightBGcolor);
+      }
       &::-webkit-scrollbar {
         width: 10px;
       }
@@ -212,11 +215,8 @@
         background: var(--lightBGcolor);
       }
       &::-webkit-scrollbar-thumb {
-        background: var(--accentColor);
         border-radius: var(--fullBorderRadius);
-      }
-      @supports not selector(::-webkit-scrollbar) {
-        scrollbar-color: var(--accentColor) var(--lightBGcolor);
+        background: var(--accentColor);
       }
     }
   }
@@ -226,8 +226,8 @@
     padding: 0 10%;
     width: 100%;
     max-width: 100%;
-    flex: 1 0 100dvh;
     display: flex;
+    flex: 1 0 100dvh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -247,8 +247,8 @@
   }
 
   .sectionHeadlineCont {
-    width: 75%;
     padding: 0;
+    width: 75%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -263,8 +263,8 @@
     --sectionHeadlineBrightness: 0.58;
     /* TODO: check browser support for this syntax https://caniuse.com/css-relative-colors */
     color: oklch(from var(--TXTcolor) var(--sectionHeadlineBrightness) c h);
-    font-weight: 250;
     font-size: 3rem;
+    font-weight: 250;
     letter-spacing: -0.05em;
     text-align: center;
     text-transform: uppercase;
@@ -298,9 +298,9 @@
   #BilderScroll {
     margin: 0;
     padding: 0;
-    cursor: pointer;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -309,9 +309,9 @@
     height: 100%;
     position: absolute;
     background-image: url("/svg/shelf.svg");
-    background-repeat: repeat-x;
     background-size: calc(var(--BilderSize) * 2);
     background-position-y: calc(50% + var(--BilderSize) * 0.535);
+    background-repeat: repeat-x;
     opacity: 1;
     transition: opacity 0.2s linear;
   }
@@ -338,7 +338,7 @@
 
     @media (width >= 768px) {
       gap: 5rem;
-      
+
       &:active {
         cursor: grabbing;
       }
@@ -348,20 +348,20 @@
   .BildCont {
     width: var(--BilderSize);
     height: 100%;
-    position: relative;
     display: flex;
     flex-direction: row;
     align-items: end;
     justify-content: center;
-    perspective: 100cm;
-    perspective-origin: 50% -50%;
+    position: relative;
     z-index: 1;
+    perspective-origin: 50% -50%;
+    perspective: 100cm;
 
     &:has(.Bild.active) {
       width: 100vw;
       height: var(--contentHeight);
-      top: calc(calc(var(--contentHeight) - var(--BilderSize)) / 2 * -1);
       align-items: center;
+      top: calc(calc(var(--contentHeight) - var(--BilderSize)) / 2 * -1);
       z-index: 2;
     }
   }
@@ -370,12 +370,12 @@
     max-width: 100%;
     max-height: 100%;
     border: 5px solid var(--TXTcolor);
+    outline: 1px solid transparent; /* <- antialiasing fix for chrome on android */
+    user-select: none;
     transform-origin: bottom;
     transform: rotateY(18deg) rotateX(10deg);
-    backface-visibility: hidden;
-    outline: 1px solid transparent; /* <- antialiasing fix for chrome on android */
     transition: all 0.33s var(--easeOut);
-    user-select: none;
+    backface-visibility: hidden;
 
     &.hover {
       transform: rotateY(18deg) rotateX(0deg);
@@ -405,8 +405,8 @@
     font-size: calc(var(--BilderSize) / 10);
     font-weight: 700;
     text-wrap: nowrap;
-    transform: rotate(-90deg);
     user-select: none;
+    transform: rotate(-90deg);
   }
 
   /* ILLUSTRATIONS */
@@ -418,8 +418,8 @@
 
     @media (width >= 1024px) {
       flex-direction: row;
-      justify-content: space-evenly;
       flex-wrap: wrap;
+      justify-content: space-evenly;
       gap: 5rem;
     }
   }
@@ -440,16 +440,15 @@
     }
 
     &.illustrationBG {
-      scale: 1;
       filter: blur(0);
+      scale: 1;
       transition: all 0.2s var(--easeOut);
     }
 
-
     &:is(:hover, :focus-visible) {
       &.illustrationBG {
-        scale: 1.1;
         filter: blur(5px);
+        scale: 1.1;
       }
     }
   }
@@ -470,7 +469,7 @@
   .animVids {
     width: 100%;
     height: auto;
-    
+
     @media (width >= 768px) {
       width: 25%;
     }
