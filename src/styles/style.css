@@ -6,12 +6,12 @@
 @layer main {
   /* VARIABLES: */
   :root {
-    --accentColor: oklch(60% 0.25 30);
-    --TXTcolor: oklch(95% 0.01 45);
-    --BGcolor: oklch(25% 0.015 225);
-    --lightBGcolor: oklch(30% 0.015 225);
-    --shadowColor: oklch(15% 0.015 225);
-    --tooltipColor: oklch(20% 0.015 225);
+    --accentColor: oklch(60% 0.25 30deg);
+    --TXTcolor: oklch(95% 0.01 45deg);
+    --BGcolor: oklch(25% 0.015 225deg);
+    --lightBGcolor: oklch(30% 0.015 225deg);
+    --shadowColor: oklch(15% 0.015 225deg);
+    --tooltipColor: oklch(20% 0.015 225deg);
     --headerHeight: 4.5rem;
     --headerMainGap: calc(var(--headerHeight) * 0.15);
     --contentHeight: calc(100dvh - var(--headerHeight));
@@ -130,7 +130,8 @@
     background-color: var(--lightBGcolor);
     box-shadow: 0 0 35px 0 var(--shadowColor);
     z-index: 100;
-    @media screen and (min-width: 1024px) {
+
+    @media (width >= 1024px) {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-areas: ". logo social";
@@ -153,7 +154,8 @@
   }
   .headerLogoTxt {
     display: none;
-    @media screen and (min-width: 768px) {
+
+    @media (width >= 768px) {
       display: initial;
       color: var(--TXTcolor);
       font-size: 2rem;
@@ -169,7 +171,8 @@
     justify-content: end;
     gap: calc(var(--headerMainGap) * 2);
     grid-area: social;
-    @media screen and (min-width: 768px) {
+
+    @media (width >= 768px) {
       gap: calc(var(--headerMainGap) * 3);
     }
   }
@@ -201,7 +204,7 @@
     overflow: hidden auto;
     scroll-behavior: smooth;
 
-    @media only screen and (min-width: 768px) {
+    @media (width >= 768px) {
       &::-webkit-scrollbar {
         width: 10px;
       }
@@ -251,7 +254,8 @@
     align-items: center;
     justify-content: start;
     gap: 1.5rem;
-    @media screen and (min-width: 768px) {
+
+    @media (width >= 768px) {
       flex-direction: row;
     }
   }
@@ -267,7 +271,8 @@
     text-shadow: -1px 2px 1px var(--shadowColor), -2px 4px 1px var(--shadowColor), -3px 6px 1px var(--shadowColor), -4px 8px 1px var(--shadowColor), -5px 10px 1px var(--shadowColor), -6px 12px 1px var(--shadowColor), -7px 14px 1px var(--shadowColor),
       -8px 16px 1px var(--shadowColor), -9px 18px 1px var(--shadowColor), -10px 20px 1px var(--shadowColor);
     user-select: none;
-    @media screen and (min-width: 768px) {
+
+    @media (width >= 768px) {
       font-size: 4rem;
       text-align: left;
     }
@@ -330,11 +335,10 @@
     cursor: pointer;
     transform-style: preserve-3d;
     touch-action: pan-y;
-  }
-  @media screen and (min-width: 768px) {
-    #BilderRow {
-      gap: 5rem;
 
+    @media (width >= 768px) {
+      gap: 5rem;
+      
       &:active {
         cursor: grabbing;
       }
@@ -411,9 +415,8 @@
     flex-direction: column;
     justify-content: start;
     gap: 5rem;
-  }
-  @media screen and (min-width: 1024px) {
-    .illustrations {
+
+    @media (width >= 1024px) {
       flex-direction: row;
       justify-content: space-evenly;
       flex-wrap: wrap;
@@ -428,23 +431,27 @@
     border: 5px solid var(--TXTcolor);
     overflow: hidden;
 
-    &:hover .illustrationBG,
-    &:focus-visible .illustrationBG {
-      scale: 1.1;
-      filter: blur(5px);
+    &.illustrationBG,
+    &.illustrationFG {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
     }
-  }
-  .illustrationBG {
-    scale: 1;
-    filter: blur(0);
-    transition: all 0.2s var(--easeOut);
-  }
-  .illustrationBG,
-  .illustrationFG {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
+
+    &.illustrationBG {
+      scale: 1;
+      filter: blur(0);
+      transition: all 0.2s var(--easeOut);
+    }
+
+
+    &:is(:hover, :focus-visible) {
+      &.illustrationBG {
+        scale: 1.1;
+        filter: blur(5px);
+      }
+    }
   }
 
   /* ANIMATIONS */
@@ -463,9 +470,8 @@
   .animVids {
     width: 100%;
     height: auto;
-  }
-  @media screen and (min-width: 768px) {
-    .animVids {
+    
+    @media (width >= 768px) {
       width: 25%;
     }
   }
