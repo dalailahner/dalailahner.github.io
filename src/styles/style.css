@@ -125,9 +125,8 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--headerMainGap);
-    position: sticky;
+    position: fixed;
     top: 0;
-    background-color: var(--lightBGcolor);
     box-shadow: 0 0 35px 0 var(--shadowColor);
     z-index: 100;
 
@@ -137,6 +136,32 @@
       grid-template-areas: ". logo social";
       justify-items: center;
       align-content: center;
+    }
+
+    &::before {
+      content: "";
+      width: 100%;
+      height: 200%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to bottom, var(--lightBGcolor) 0%, color-mix(in srgb, var(--lightBGcolor) 50%, transparent) 50%);
+      backdrop-filter: blur(12px);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 50%, transparent 50%);
+      z-index: -2;
+    }
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: color-mix(in srgb, var(--lightBGcolor) 50%, transparent);
+      backdrop-filter: blur(6px) brightness(200%);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%); /* 5% here */
+      z-index: -1;
+      translate: 0 calc(100% * 0.95); /* 5% here */
     }
   }
 
@@ -196,7 +221,7 @@
   /* CONTENT */
   .page-wrapper {
     width: 100%;
-    max-height: var(--contentHeight);
+    max-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -212,6 +237,7 @@
         width: 10px;
       }
       &::-webkit-scrollbar-track {
+        margin-top: var(--headerHeight);
         background: var(--lightBGcolor);
       }
       &::-webkit-scrollbar-thumb {
