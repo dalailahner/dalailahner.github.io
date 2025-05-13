@@ -1,5 +1,5 @@
 import { input, select, confirm } from "@inquirer/prompts";
-import { readdirSync, existsSync, mkdirSync } from "fs";
+import { readdirSync, existsSync, mkdirSync } from "node:fs";
 import sharp from "sharp";
 
 // USER INPUT:
@@ -24,7 +24,7 @@ const fileformat = await select(
       },
     ],
   },
-  { clearPromptOnDone: true }
+  { clearPromptOnDone: true },
 );
 
 let outputDir = await input({ message: "output path:", default: inputDir }, { clearPromptOnDone: true });
@@ -40,23 +40,24 @@ if (confirmation) {
     mkdirSync(outputDir);
   }
 
-  files.forEach((file) => {
+  for (const file of files) {
     const nameArray = file.split(".");
     nameArray.pop();
     const name = nameArray.join(".");
     sharp(inputDir + file)
       .toFormat(fileformat, getFileOptions(fileformat))
       .toFile(`${outputDir + name}.${fileformat}`);
-  });
+  }
 }
 
 // FUNCTIONS:
 function fixPathString(path) {
   const lastChar = path[path.length - 1];
+  let fixedPath = "";
   if (lastChar !== "/" && lastChar !== "\\") {
-    path = path + "/";
+    fixedPath = `${path}/`;
   }
-  return path;
+  return fixedPath;
 }
 
 function getFileOptions(format) {
