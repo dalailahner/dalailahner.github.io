@@ -253,7 +253,7 @@
     width: 100%;
     max-width: 100%;
     display: flex;
-    flex: 1 0 100dvh;
+    flex: 1 0 100lvh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
