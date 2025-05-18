@@ -12,6 +12,7 @@ bgCanvas.init("#bgCanvas");
 // GLOBAL EVENTS: //
 window.addEventListener("DOMContentLoaded", (event) => {
   console.log("DOMContentLoaded EVENT TRIGGERED");
+  addOnlyfansBtn();
   bgCanvas.animate();
   initSectionHeadlineObserver();
   initIllustrationBgBlurObserver();
@@ -271,6 +272,36 @@ for (const currentValue of document.querySelectorAll(".animVids")) {
 
 //////////////////////
 // GLOBAL FUNCTIONS //
+
+function addOnlyfansBtn() {
+  const headerSocialCont = document.querySelector(".headerSocialCont");
+  if (headerSocialCont) {
+    const onlyfansBtn = document.createElement("a");
+    onlyfansBtn.classList.add("socialBtnLink", "tooltipBottom");
+    onlyfansBtn.dataset.tooltip = "OnlyFans";
+    onlyfansBtn.href = "https://www.onlyfans.com/dalailahner";
+    onlyfansBtn.target = "_blank";
+    onlyfansBtn.rel = "noreferrer";
+
+    const onlyfansBtnImg = document.createElement("img");
+    onlyfansBtnImg.classList.add("socialBtnImg");
+    onlyfansBtnImg.src = "/svg/OnlyFansLogo.svg";
+    onlyfansBtnImg.alt = "OnlyFans";
+
+    onlyfansBtn.append(onlyfansBtnImg);
+
+    onlyfansBtn.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+      console.log("lol, gotem (¬‿¬)");
+    });
+
+    headerSocialCont.appendChild(onlyfansBtn);
+  } else {
+    console.warn('could not append Onlyfans Button. ".headerSocialCont" not found.');
+  }
+}
 
 /**
  * building an array of thresholds for intersection observer
