@@ -131,7 +131,6 @@ bilderRow.addEventListener("pointermove", (event) => {
     setBilderScrollPos(newPos);
     // remove overlay:
     if (document.querySelector(".BilderScrollOverlay")) {
-      console.log("JO IS DO");
       const overlayEl = document.querySelector(".BilderScrollOverlay");
       overlayEl.style.opacity = 0;
       overlayEl.addEventListener("transitionend", (event) => {
