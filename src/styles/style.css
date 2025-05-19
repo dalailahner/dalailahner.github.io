@@ -328,6 +328,10 @@
     overflow: hidden;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+
+    @media screen and (width < 768px) {
+      flex-basis: 100svh;
+    }
   }
 
   #BilderShelf {
@@ -353,7 +357,7 @@
     min-width: 100%;
     height: 100%;
     max-height: var(--BilderSize);
-    align-self: flex-start;
+    align-self: start;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -364,6 +368,10 @@
 
     @media (width >= 768px) {
       gap: 5rem;
+
+      &:focus-visible {
+        outline: none;
+      }
 
       &:active {
         cursor: grabbing;
@@ -384,8 +392,8 @@
     perspective: 100cm;
 
     &:has(.Bild.active) {
-      width: 100vw;
-      height: var(--contentHeight);
+      width: calc(100vw - 2rem);
+      height: calc(var(--contentHeight) - var(--headerHeight));
       align-items: center;
       top: calc(calc(var(--contentHeight) - var(--BilderSize)) / 2 * -1);
       z-index: 2;
@@ -404,6 +412,12 @@
     backface-visibility: hidden;
 
     &.hover {
+      transform: rotateY(18deg) rotateX(0deg);
+    }
+
+    &.focus {
+      outline: thick solid var(--accentColor);
+      outline-offset: 5px;
       transform: rotateY(18deg) rotateX(0deg);
     }
 

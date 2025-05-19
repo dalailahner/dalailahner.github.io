@@ -26,26 +26,7 @@ window.addEventListener("resize", (event) => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(() => {
     bgCanvas.init("#bgCanvas");
-    if (document.querySelectorAll(".Bild.active").length > 0) {
-      for (const el of document.querySelectorAll(".Bild.active")) {
-        switchImgResolution(el);
-        el.classList.remove("active");
-        el.addEventListener(
-          "transitionend",
-          (ev) => {
-            for (const Bild of document.querySelectorAll(".Bild")) {
-              setSizeAttributes(Bild, true);
-            }
-            setBilderScrollPos(getOffsetForElementCentering(ev.target));
-          },
-          { once: true },
-        );
-      }
-    } else {
-      for (const Bild of document.querySelectorAll(".Bild")) {
-        setSizeAttributes(Bild, true);
-      }
-    }
+    removeActiveFromBilder();
   }, 100);
 });
 
@@ -53,52 +34,16 @@ window.addEventListener("resize", (event) => {
 // PHOTOGRAPHY //
 const bilderRow = document.querySelector("#BilderRow");
 const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved", false);
-// TODO: sometimes the images don't load (caching or the lazy load implementation is shit)
+// TODO: check if images load and switch sizes properly (caching things or maybe the lazy load implementation is shit)
 
-for (const Bild of bilderRow.querySelectorAll(".Bild")) {
-  setSizeAttributes(Bild);
-  Bild.addEventListener(
-    "load",
-    (event) => {
-      setSizeAttributes(event.target);
-    },
-    { once: true },
-  );
-  Bild.addEventListener("blur", (event) => {
-    removeHover();
-    if (event.target.classList.contains("active")) {
-      switchImgResolution(event.target);
-      event.target.classList.remove("active");
-      setBilderScrollPos();
-    }
-  });
-  Bild.addEventListener("focus", (event) => {
-    if (event.target.matches(":focus-visible")) {
-      setBilderScrollPos(getOffsetForElementCentering(event.target));
-      event.target.classList.add("hover");
-    }
-  });
-  Bild.addEventListener("keydown", (keyEvent) => {
-    if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
-      keyEvent.preventDefault();
-      keyEvent.target.dispatchEvent(
-        new PointerEvent("pointerdown", {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-        }),
-      );
-      keyEvent.target.dispatchEvent(
-        new PointerEvent("pointerup", {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-        }),
-      );
-    }
-  });
-}
+// general event
+bilderRow.addEventListener("blur", (event) => {
+  for (const Bild of bilderRow.querySelectorAll(".Bild.focus")) {
+    Bild.classList.remove("focus");
+  }
+});
 
+// mouse navigation
 bilderRow.addEventListener("pointerover", (event) => {
   removeHover();
   if (event.target.classList.contains("Bild")) {
@@ -107,7 +52,12 @@ bilderRow.addEventListener("pointerover", (event) => {
 });
 
 bilderRow.addEventListener("pointerdown", (event) => {
-  slider.set("pointerPos", event.x);
+  if (event.isTrusted) {
+    for (const Bild of bilderRow.querySelectorAll(".Bild.focus")) {
+      Bild.classList.remove("focus");
+    }
+    slider.set("pointerPos", event.x);
+  }
   slider.set("wasMoved", false);
 });
 
@@ -118,25 +68,13 @@ bilderRow.addEventListener("pointermove", (event) => {
       slider.set("wasMoved", !!(event.x > slider.get("pointerPos") + 2 || event.x < slider.get("pointerPos") - 2));
       return;
     }
-    let newPos = slider.get("scrollPos") + (slider.get("pointerPos") - event.x) * window.devicePixelRatio;
-    slider.set("pointerPos", event.x);
-    if (bilderRow.querySelectorAll(".Bild.active").length > 0) {
-      const activeBilder = bilderRow.querySelectorAll(".Bild.active");
-      for (const el of activeBilder) {
-        switchImgResolution(el);
-        el.classList.remove("active");
-      }
-      newPos = getOffsetForElementCentering(activeBilder[0]);
+    if (!removeActiveFromBilder()) {
+      const newPos = slider.get("scrollPos") + (slider.get("pointerPos") - event.x) * window.devicePixelRatio;
+      slider.set("pointerPos", event.x);
+      setBilderScrollPos(newPos);
     }
-    setBilderScrollPos(newPos);
-    // remove overlay:
-    if (document.querySelector(".BilderScrollOverlay")) {
-      const overlayEl = document.querySelector(".BilderScrollOverlay");
-      overlayEl.style.opacity = 0;
-      overlayEl.addEventListener("transitionend", (event) => {
-        event.target.remove();
-      });
-    }
+
+    removeSwipeOverlay();
   }
 });
 
@@ -158,20 +96,73 @@ bilderRow.addEventListener("pointerleave", () => {
   slider.set("wasMoved", false);
 });
 
-// TODO: sometimes the size doesn't get set properly (results to 0)
-function setSizeAttributes(element, refresh = false) {
-  if (element.getAttribute("width") > 0 && element.getAttribute("height") > 0) {
-    if (refresh) {
-      element.removeAttribute("width");
-      element.removeAttribute("height");
-      setSizeAttributes(element, false);
-      return;
-    }
-    return;
+// keboard navigation
+bilderRow.addEventListener("focus", (event) => {
+  if (event.currentTarget.matches(":focus-visible")) {
+    const firstBild = bilderRow.querySelector(".Bild");
+    firstBild.classList.add("focus");
+    setBilderScrollPos(getOffsetForElementCentering(firstBild));
   }
-  element.setAttribute("width", element.clientWidth);
-  element.setAttribute("height", element.clientHeight);
-}
+});
+
+bilderRow.addEventListener("keydown", (keyEvent) => {
+  const BilderArr = Array.from(bilderRow.querySelectorAll(".Bild"));
+  let newFocusIndex = 0;
+
+  // enter || space
+  if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
+    if (bilderRow.querySelector(".Bild.focus")) {
+      keyEvent.preventDefault();
+
+      const focusedEl = bilderRow.querySelector(".Bild.focus");
+
+      focusedEl.dispatchEvent(
+        new PointerEvent("pointerdown", {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        }),
+      );
+      focusedEl.dispatchEvent(
+        new PointerEvent("pointerup", {
+          bubbles: true,
+          cancelable: true,
+          view: window,
+        }),
+      );
+    }
+  }
+
+  // left || right
+  if (keyEvent.code === "ArrowRight" || keyEvent.code === "KeyL" || keyEvent.code === "KeyD" || keyEvent.code === "ArrowLeft" || keyEvent.code === "KeyH" || keyEvent.code === "KeyA") {
+    const activeBild = document.querySelector(".Bild.active");
+    if (activeBild) {
+      activeBild.classList.add("focus");
+      removeActiveFromBilder();
+    }
+    if (bilderRow.querySelector(".Bild.focus")) {
+      newFocusIndex = BilderArr.findIndex((el) => el.classList.contains("focus"));
+    }
+    // right
+    if (keyEvent.code === "ArrowRight" || keyEvent.code === "KeyL" || keyEvent.code === "KeyD") {
+      if (!(newFocusIndex + 1 >= BilderArr.length)) {
+        newFocusIndex += 1;
+      }
+    }
+    // left
+    if (keyEvent.code === "ArrowLeft" || keyEvent.code === "KeyH" || keyEvent.code === "KeyA") {
+      if (!(newFocusIndex - 1 < 0)) {
+        newFocusIndex -= 1;
+      }
+    }
+
+    for (const Bild of BilderArr) {
+      Bild.classList.remove("focus");
+    }
+    BilderArr[newFocusIndex].classList.add("focus");
+    setBilderScrollPos(getOffsetForElementCentering(BilderArr[newFocusIndex]));
+  }
+});
 
 function setBilderScrollPos(value) {
   if (typeof value === "number") {
@@ -184,8 +175,18 @@ function setBilderScrollPos(value) {
 }
 
 function getOffsetForElementCentering(targetEl) {
-  const parentRect = targetEl.parentElement.getBoundingClientRect();
-  const offset = slider.get("scrollPos") + (parentRect.x - (window.innerWidth - parentRect.width) / 2);
+  let pictureRect;
+  if (targetEl.tagName === "PICTURE" && targetEl.classList.contains("BildCont")) {
+    pictureRect = targetEl.getBoundingClientRect();
+  } else {
+    const closestBildCont = targetEl.closest("picture.BildCont");
+    if (closestBildCont) {
+      pictureRect = closestBildCont.getBoundingClientRect();
+    } else {
+      console.error("no picture.BildCont element found at getOffsetForElementCentering()");
+    }
+  }
+  const offset = slider.get("scrollPos") + (pictureRect.x - (window.innerWidth - pictureRect.width) / 2);
   return offset;
 }
 
@@ -217,8 +218,6 @@ function switchImgResolution(el) {
         sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, `${getNewSize(width, height)}.`);
       }
       el.src = el.src.replace(/\d+\./, `${getNewSize(width, height)}.`);
-      // set new size for transformation:
-      el.style = `width: ${width}px;height: ${height}px`;
     } else {
       const width = window.innerWidth * 0.9;
       const height = width / imgAspectRatio;
@@ -227,8 +226,6 @@ function switchImgResolution(el) {
         sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, `${getNewSize(width, height)}.`);
       }
       el.src = el.src.replace(/\d+\./, `${getNewSize(width, height)}.`);
-      // set new size for transformation:
-      el.style = `width: ${width}px;height: ${height}px`;
     }
     return;
   }
@@ -240,15 +237,39 @@ function switchImgResolution(el) {
       sourceEl.srcset = sourceEl.srcset.replace(/\d+\./, "400.");
     }
     el.src = el.src.replace(/\d+\./, "400.");
-    // set new size for transformation:
-    el.removeAttribute("style");
     return;
   }
+}
+
+function removeActiveFromBilder() {
+  const activeImgs = document.querySelectorAll(".Bild.active");
+
+  if (activeImgs.length > 0) {
+    for (const el of activeImgs) {
+      switchImgResolution(el);
+      el.classList.remove("active");
+    }
+
+    setBilderScrollPos(getOffsetForElementCentering(activeImgs[activeImgs.length - 1]));
+
+    return true;
+  }
+  return false;
 }
 
 function removeHover() {
   for (const el of bilderRow.querySelectorAll(".Bild.hover")) {
     el.classList.remove("hover");
+  }
+}
+
+function removeSwipeOverlay() {
+  const overlayEl = document.querySelector(".BilderScrollOverlay");
+  if (overlayEl) {
+    overlayEl.style.opacity = 0;
+    overlayEl.addEventListener("transitionend", (event) => {
+      event.target.remove();
+    });
   }
 }
 
