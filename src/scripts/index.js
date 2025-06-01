@@ -148,6 +148,7 @@ bilderRow.addEventListener("keydown", (keyEvent) => {
       if (!(newFocusIndex + 1 >= BilderArr.length)) {
         newFocusIndex += 1;
       }
+      removeSwipeOverlay();
     }
     // left
     if (keyEvent.code === "ArrowLeft" || keyEvent.code === "KeyH" || keyEvent.code === "KeyA") {

@@ -442,13 +442,25 @@
     transition: all 0.15s linear;
   }
   .BilderScrollOverlayText {
+    display: none;
     color: var(--BGcolor);
     font-size: calc(var(--BilderSize) / 10);
     font-weight: 700;
     text-wrap: nowrap;
     user-select: none;
     translate: 1cap 0;
-    rotate: -90deg;
+    body:not(:has(*:focus-visible)) &.mouse {
+      display: block;
+      rotate: -90deg;
+    }
+    body:has(*:focus-visible) &.keyboard {
+      display: block;
+      & kbd {
+        padding: 0 0.25em;
+        border: 2px solid currentColor;
+        border-radius: 0.125em;
+      }
+    }
   }
 
   /* ILLUSTRATIONS */
