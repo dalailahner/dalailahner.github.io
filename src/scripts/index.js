@@ -69,7 +69,7 @@ bilderRow.addEventListener("pointermove", (event) => {
       return;
     }
     if (!removeActiveFromBilder()) {
-      const newPos = slider.get("scrollPos") + (slider.get("pointerPos") - event.x) * window.devicePixelRatio;
+      const newPos = slider.get("scrollPos") + (slider.get("pointerPos") - event.x) * Number(window.devicePixelRatio.toFixed(3));
       slider.set("pointerPos", event.x);
       setBilderScrollPos(newPos);
     }
@@ -192,7 +192,7 @@ function getOffsetForElementCentering(targetEl) {
 }
 
 function switchImgResolution(el) {
-  const screenPixelRatio = window.devicePixelRatio;
+  const screenPixelRatio = Number(window.devicePixelRatio.toFixed(3));
   const windowAspectRatio = window.innerWidth / window.innerHeight;
   const imgAspectRatio = el.clientWidth / el.clientHeight;
   const sourceEls = el.parentElement.querySelectorAll("source");
