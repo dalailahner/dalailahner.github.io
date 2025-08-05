@@ -10,7 +10,7 @@ bgCanvas.init("#bgCanvas");
 
 ////////////////////
 // GLOBAL EVENTS: //
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded EVENT TRIGGERED");
   addOnlyfansBtn();
   bgCanvas.animate();
@@ -18,11 +18,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
   initIllustrationBgBlurObserver();
 });
 
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
   console.log("LOAD EVENT TRIGGERED");
 });
 
-window.addEventListener("resize", (event) => {
+window.addEventListener("resize", () => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(() => {
     bgCanvas.init("#bgCanvas");
@@ -37,7 +37,7 @@ const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved"
 // TODO: check if images load and switch sizes properly (caching things or maybe the lazy load implementation is shit)
 
 // general event
-bilderRow.addEventListener("blur", (event) => {
+bilderRow.addEventListener("blur", () => {
   for (const Bild of bilderRow.querySelectorAll(".Bild.focus")) {
     Bild.classList.remove("focus");
   }
