@@ -271,6 +271,40 @@
     }
   }
 
+  #heroSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heroTextCont {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 2.5rem;
+
+    & .heroHeadline {
+      font-size: 5rem;
+    }
+
+    & .heroParagraph {
+      width: 50%;
+      font-family: Hack, monospace;
+      font-size: 1.5rem;
+    }
+  }
+
+  .heroImgCont {
+    width: 33%;
+    height: 50%;
+    & .heroImg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .sectionHeadlineCont {
     padding: 0;
     width: 75%;
