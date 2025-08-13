@@ -158,9 +158,9 @@
       height: 100%;
       background: color-mix(in srgb, var(--lightBGcolor) 50%, transparent);
       backdrop-filter: blur(6px) brightness(200%);
-      mask-image: linear-gradient(to bottom, #000 0%, #000 5%, transparent 5%); /* 5% here */
+      mask-image: linear-gradient(to bottom, #000 0%, #000 3%, transparent 3%); /* 3% here */
       z-index: -1;
-      translate: 0 calc(100% * 0.95); /* 5% here */
+      translate: 0 97%; /* -3% here */
     }
   }
 
