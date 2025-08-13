@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#1a2327" />
     <title>dalailahner</title>
     <link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css" />
     <link rel="stylesheet" href="./src/styles/style.css" />
     <link rel="preconnect" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
     <script src="./src/scripts/index.js" type="module" charset="utf-8"></script>
@@ -19,7 +20,7 @@
         <svg class="headerLogoIcon" alt="dalailahner Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
           <path fill="currentColor" d="m84.3 87.5-28.05-63h-12.5l-28.05 63h-3.2V0H0v100h100V87.5H84.3ZM50 41l20.65 46.5h-41.3L50 41Z" />
         </svg>
-        <h1 class="headerLogoTxt">dalailahner</h1>
+        <h2 class="headerLogoTxt">dalailahner</h2>
       </div>
       <div class="headerSocialCont">
         <a class="socialBtnLink tooltipBottom" data-tooltip="Codepen" href="https://codepen.io/dalailahner" target="_blank">
@@ -31,13 +32,15 @@
       </div>
     </header>
     <div class="page-wrapper">
-      <div class="mainCont">
-        <p style="align-self: center; color: oklch(60% 0.25 30)">
-          INTRO<br />
-          <br />
-          sowos nur bissl droopy vielleicht: <a style="color: oklch(60% 0.25 30)" href="https://codepen.io/rudtjd2548/pen/VwdoewQ?editors=1010">&gt;&gt;codepen&lt;&lt;</a>
-        </p>
-      </div>
+      <section id="heroSection" class="mainCont">
+        <div class="heroTextCont">
+          <h1 class="heroHeadline">Hi👋 my name is Philip.</h1>
+          <p class="heroParagraph">I'm a Frontend-WebDev, UX Designer, Illustrator, Photographer, Animator, Video Editor and Arch user (btw).</p>
+        </div>
+        <div class="heroImgCont">
+          <img class="heroImg" src="https://placehold.co/400x600" alt="this is what i look like" />
+        </div>
+      </section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">Photography</h2>
         <div class="toolIconsCont">
@@ -46,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div id="BilderScroll" class="mainCont">
+      <section id="BilderScroll" class="mainCont">
         <div id="BilderShelf"></div>
         <div id="BilderRow" tabindex="0">
           <picture class="BildCont">
@@ -119,7 +122,7 @@
           <span class="BilderScrollOverlayText mouse">&uarr; swipe &uarr;</span>
           <span class="BilderScrollOverlayText keyboard"><kbd>D</kbd> &rarr;<br /><kbd>L</kbd> &rarr;<br /><kbd>&rarr;</kbd> &rarr;</span>
         </div>
-      </div>
+      </section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">Illustrations</h2>
         <div class="toolIconsCont">
@@ -131,7 +134,7 @@
           </div>
         </div>
       </div>
-      <div class="mainCont illustrations">
+      <section class="mainCont illustrations">
         <div class="illustrationCont" tabindex="0">
           <img class="illustrationBG" src="/illustrations/FLCL_BG.jpg" alt="FLCL inspired side view portrait background" draggable="false" />
           <img class="illustrationFG" src="/illustrations/FLCL.png" alt="FLCL inspired side view portrait" draggable="false" />
@@ -152,7 +155,7 @@
           <img class="illustrationBG" src="/illustrations/RedHairEyesGirl_BG.jpg" alt="Girl with red hair and eyes on her skin background" draggable="false" />
           <img class="illustrationFG" src="/illustrations/RedHairEyesGirl.png" alt="Girl with red hair and eyes on her skin" draggable="false" />
         </div>
-      </div>
+      </section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">Animations</h2>
         <div class="toolIconsCont">
@@ -161,7 +164,7 @@
           </div>
         </div>
       </div>
-      <div class="mainCont">
+      <section class="mainCont">
         <p style="width: 100%; color: white; text-align: center">SN waldfoto dings, bierfloating, dirtpark, leonidas, blender zeig?</p>
         <div class="animVidsCont">
           <video class="animVids" nocontrols loop muted data-thumbtime="6">
@@ -180,7 +183,7 @@
             <source src="#" type="video/mp4" />
           </video>
         </div>
-      </div>
+      </section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">3D?</h2>
         <div class="toolIconsCont">
@@ -192,19 +195,19 @@
           </div>
         </div>
       </div>
-      <div class="mainCont" style="background-color: rgba(0, 255, 0, 0.15)"></div>
+      <section class="mainCont" style="background-color: rgba(0, 255, 0, 0.15)"></section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">VSCode theme</h2>
       </div>
-      <div class="mainCont" style="background-color: rgba(0, 0, 255, 0.15)"></div>
+      <section class="mainCont" style="background-color: rgba(0, 0, 255, 0.15)"></section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">Memes</h2>
       </div>
-      <div class="mainCont" style="background-color: rgba(255, 255, 0, 0.15)"></div>
+      <section class="mainCont" style="background-color: rgba(255, 255, 0, 0.15)"></section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline">Footer</h2>
       </div>
-      <div class="mainCont" style="background-color: rgba(255, 0, 255, 0.15)"></div>
+      <section class="mainCont" style="background-color: rgba(255, 0, 255, 0.15)"></section>
     </div>
   </body>
 </html>
