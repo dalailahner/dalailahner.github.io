@@ -22,6 +22,14 @@
 
   /* HELPERS: */
   /* TODO: maybe make some flex helpers like .frcc .frcfs ect. */
+  .textShuffle {
+    font-family: Hack, Consolas, monospace;
+
+    & span.nobreak {
+      white-space: nowrap;
+    }
+  }
+
   .tooltipBottom {
     position: relative;
 
@@ -291,8 +299,8 @@
 
     & .heroParagraph {
       width: 50%;
-      font-family: Hack, monospace;
       font-size: 1.5rem;
+      line-height: 1.333;
     }
   }
 
