@@ -17,7 +17,7 @@
   }
 
   :root {
-    font-family: InterVariable, sans-serif;
+    font-family: InterVariable, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", "Helvetica Neue", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
     font-optical-sizing: auto;
     font-feature-settings: "calt", "liga", "zero";
   }
@@ -170,6 +170,6 @@
   }
 
   :root {
-    font-family: Inter, sans-serif;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", "Helvetica Neue", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
   }
 }
