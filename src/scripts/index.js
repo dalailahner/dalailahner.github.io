@@ -36,11 +36,16 @@ window.addEventListener("resize", () => {
 
 /////////////////
 // PHOTOGRAPHY //
+const bilderScroll = document.querySelector("#BilderScroll");
 const bilderRow = document.querySelector("#BilderRow");
 const slider = new Map().set("scrollPos", 0).set("pointerPos", 0).set("wasMoved", false);
-// TODO: check if images load and switch sizes properly (caching things or maybe the lazy load implementation is shit)
+// TODO: when live: check if images load and switch sizes properly
 
 // general event
+bilderScroll.addEventListener("focusout", () => {
+  removeActiveFromBilder();
+});
+
 bilderRow.addEventListener("blur", () => {
   for (const Bild of bilderRow.querySelectorAll(".Bild.focus")) {
     Bild.classList.remove("focus");
