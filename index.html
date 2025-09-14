@@ -38,7 +38,17 @@
           <p class="heroParagraph textShuffle">I'm a Frontend Web-Developer, UX Designer, Illustrator, Photographer, Animator, Video & Audio Editor and Arch user (btw).</p>
         </div>
         <div class="heroImgCont">
-          <img class="heroImg" src="https://placehold.co/400x600" alt="this is what i look like" />
+          <div class="heroImgSelectorCont">
+            <picture>
+              <source type="image/avif" srcset="https://placehold.in/500x500.avif 1x, https://placehold.in/1000x1000.avif 2x, https://placehold.in/1500x1500.avif 3x" />
+              <source type="image/jpeg" srcset="https://placehold.in/500x500.jpeg 1x, https://placehold.in/1000x1000.jpeg 2x, https://placehold.in/1500x1500.jpeg 3x" />
+              <img class="heroImg" src="https://placehold.in/500x500.jpeg" alt="this is what i look like" />
+            </picture>
+            <div class="heroImgSelectorBtnsCont">
+              <button class="heroImgSelectorBtns" type="button">&larr;</button>
+              <button class="heroImgSelectorBtns" type="button">&rarr;</button>
+            </div>
+          </div>
         </div>
       </section>
       <div class="sectionHeadlineCont">
