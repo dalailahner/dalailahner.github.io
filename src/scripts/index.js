@@ -34,6 +34,57 @@ window.addEventListener("resize", () => {
   }, 100);
 });
 
+//////////////
+// HERO IMG //
+const heroImgs = document.querySelectorAll(".heroImgCont");
+
+for (const btn of document.querySelectorAll(".heroImgSelectorBtn")) {
+  btn.addEventListener("click", heroImgSelect);
+}
+function heroImgSelect(event) {
+  const forwardDirection = event.target.classList.contains("next");
+
+  const activeImg = Array.from(heroImgs).find((el) => el.classList.contains("active"));
+  if (activeImg) {
+    let newImg;
+    if (forwardDirection) {
+      newImg = activeImg.nextElementSibling;
+      if (!newImg) {
+        newImg = heroImgs[0];
+      }
+    }
+    if (!forwardDirection) {
+      newImg = activeImg.previousElementSibling;
+      if (!newImg) {
+        newImg = heroImgs[heroImgs.length - 1];
+      }
+    }
+
+    const fadeOutName = `fadeOut${forwardDirection ? "L" : "R"}`;
+    const fadeInName = `fadeIn${forwardDirection ? "R" : "L"}`;
+    activeImg.classList.remove("active");
+    activeImg.classList.add(fadeOutName);
+    const fadeOutEvent = activeImg.addEventListener("transitionend", (ev) => {
+      ev.target.removeEventListener("transitionend", fadeOutEvent);
+      ev.target.classList.remove(fadeOutName);
+    });
+
+    newImg.style.transitionDuration = "0.001s";
+    newImg.classList.add(fadeInName);
+    //TODO: also change the theme colors?
+    setTimeout(() => {
+      newImg.style = "";
+      newImg.classList.add("active");
+      const fadeInEvent = newImg.addEventListener("transitionend", (ev) => {
+        ev.target.removeEventListener("transitionend", fadeInEvent);
+        ev.target.classList.remove(fadeInName);
+      });
+    }, 1);
+  } else {
+    console.error("no active image found");
+    return;
+  }
+}
 /////////////////
 // PHOTOGRAPHY //
 const bilderScroll = document.querySelector("#BilderScroll");
@@ -351,6 +402,9 @@ function buildThresholdList(steps = 15) {
 
 /////////////////////////////
 // OBSERVER INIT FUNCTIONS //
+
+//TODO: also show hero img selection buttons on mobile when scrolling
+
 function initTextShuffleObserver() {
   const textShuffleObserver = new IntersectionObserver(
     (entries) => {
