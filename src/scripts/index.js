@@ -4,6 +4,7 @@ import TextShuffle from "./textShuffle.js";
 ///////////////////////
 // GLOBAL VARIABLES: //
 let windowResizeTimeout;
+const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 ///////////
 // INIT: //
@@ -16,8 +17,10 @@ window.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded EVENT TRIGGERED");
   addOnlyfansBtn();
   bgCanvas.animate();
-  textShuffle.init(".textShuffle", 150, 2, 0.9, 0.2);
-  initTextShuffleObserver();
+  if (!prefersReducedMotion) {
+    textShuffle.init(".textShuffle", 150, 2, 0.9, 0.2);
+    initTextShuffleObserver();
+  }
   initSectionHeadlineObserver();
   initIllustrationBgBlurObserver();
 });

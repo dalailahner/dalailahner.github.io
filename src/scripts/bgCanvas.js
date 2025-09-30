@@ -62,8 +62,10 @@ const bgCanvas = {
       bgCanvasCtx.arc(points[i].x, points[i].y, points[i].size, 0, Math.PI * 2, false);
     }
     bgCanvasCtx.fill();
-
-    requestAnimationFrame(bgCanvas.animate);
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!prefersReducedMotion?.matches) {
+      requestAnimationFrame(bgCanvas.animate);
+    }
   },
 };
 
