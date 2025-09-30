@@ -10,12 +10,13 @@
   },
   "devDependencies": {
     "@inquirer/prompts": "^7.8.6",
-    "browserslist": "^4.26.0",
-    "lightningcss": "^1.30.1",
-    "sharp": "^0.34.3",
-    "vite": "^7.1.5"
+    "browserslist": "^4.26.2",
+    "lightningcss": "^1.30.2",
+    "sharp": "^0.34.4",
+    "vite": "^7.1.7"
   },
   "dependencies": {
+    "noicss.reducedmotion": "^1.0.2",
     "noicss.reset": "^1.10.2"
   }
 }

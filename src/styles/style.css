@@ -1,7 +1,8 @@
-@layer font, reset, main;
+@layer font, reset, main, reducedmotion;
 
 @import url("./font.css") layer(font);
 @import url("noicss.reset") layer(reset);
+@import url("noicss.reducedmotion") layer(reducedmotion);
 
 @layer main {
   /* VARIABLES: */
