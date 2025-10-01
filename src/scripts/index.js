@@ -44,6 +44,7 @@ const heroImgs = document.querySelectorAll(".heroImgCont");
 for (const btn of document.querySelectorAll(".heroImgSelectorBtn")) {
   btn.addEventListener("click", heroImgSelect);
 }
+
 function heroImgSelect(event) {
   const forwardDirection = event.target.classList.contains("next");
 
@@ -67,6 +68,11 @@ function heroImgSelect(event) {
     const fadeInName = `fadeIn${forwardDirection ? "R" : "L"}`;
     activeImg.classList.remove("active");
     activeImg.classList.add(fadeOutName);
+    const activeImgDLC = activeImg.querySelector(".heroImgDLC");
+    if (activeImgDLC) {
+      activeImgDLC.setAttribute("tabindex", "-1");
+      activeImgDLC.setAttribute("aria-hidden", "true");
+    }
     const fadeOutEvent = activeImg.addEventListener("transitionend", (ev) => {
       ev.target.removeEventListener("transitionend", fadeOutEvent);
       ev.target.classList.remove(fadeOutName);
@@ -74,7 +80,12 @@ function heroImgSelect(event) {
 
     newImg.style.transitionDuration = "0.001s";
     newImg.classList.add(fadeInName);
-    //TODO: also change the theme colors?
+    const newImgDLC = newImg.querySelector(".heroImgDLC");
+    if (newImgDLC) {
+      newImgDLC.removeAttribute("tabindex");
+      newImgDLC.removeAttribute("aria-hidden");
+    }
+    // TODO: also change the theme colors?
     setTimeout(() => {
       newImg.style = "";
       newImg.classList.add("active");
