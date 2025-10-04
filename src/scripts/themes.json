@@ -1,0 +1,34 @@
+{
+  "Default": {
+    "--accentColor": "oklch(60% 0.25 30)",
+    "--TXTcolor": "oklch(95% 0.01 45)",
+    "--BGcolor": "oklch(25% 0.015 225)",
+    "--altBGcolor": "oklch(30% 0.015 225)",
+    "--shadowColor": "oklch(15% 0.015 225)",
+    "--tooltipColor": "oklch(20% 0.015 225)"
+  },
+  "Fosching": {
+    "--accentColor": "oklch(66% 0.2 40)",
+    "--TXTcolor": "oklch(83% 0.17 83)",
+    "--BGcolor": "oklch(33% 0.1 260)",
+    "--altBGcolor": "oklch(45% 0.1 260)",
+    "--shadowColor": "oklch(0.2 0.05 145)",
+    "--tooltipColor": "oklch(5% 0.2 8)"
+  },
+  "Whitehat": {
+    "--accentColor": "oklch(60% 0.25 30)",
+    "--TXTcolor": "oklch(15% 0.015 225)",
+    "--BGcolor": "oklch(95% 0.01 45)",
+    "--altBGcolor": "oklch(90% 0.01 45)",
+    "--shadowColor": "oklch(85% 0.01 45)",
+    "--tooltipColor": "oklch(80% 0.01 45)"
+  },
+  "Blackhat": {
+    "--accentColor": "oklch(60% 0.25 30)",
+    "--TXTcolor": "oklch(0.8 0.27 145)",
+    "--BGcolor": "oklch(0 0 0)",
+    "--altBGcolor": "oklch(0.2 0 0)",
+    "--shadowColor": "oklch(0.16 0 0)",
+    "--tooltipColor": "oklch(0.2 0 0)"
+  }
+}

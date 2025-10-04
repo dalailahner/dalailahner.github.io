@@ -1,5 +1,6 @@
 import bgCanvas from "./bgCanvas.js";
 import TextShuffle from "./textShuffle.js";
+import themes from "./themes.json" with { type: "json" };
 
 ///////////////////////
 // GLOBAL VARIABLES: //
@@ -85,7 +86,6 @@ function heroImgSelect(event) {
       newImgDLC.removeAttribute("tabindex");
       newImgDLC.removeAttribute("aria-hidden");
     }
-    // TODO: also change the theme colors?
     setTimeout(() => {
       newImg.style = "";
       newImg.classList.add("active");
@@ -94,6 +94,14 @@ function heroImgSelect(event) {
         ev.target.classList.remove(fadeInName);
       });
     }, 1);
+    const newImgFigcaption = newImg.querySelector("figcaption");
+    if (newImgFigcaption && typeof themes[newImgFigcaption.textContent] === "object") {
+      for (const [key, value] of Object.entries(themes[newImgFigcaption.textContent])) {
+        document.documentElement.style.setProperty(key, value);
+      }
+    } else {
+      console.warn("no figcaption found in newImg or no object found in themes.json with the key of figcaption.textContent");
+    }
   } else {
     console.error("no active image found");
     return;
@@ -444,7 +452,6 @@ function initSectionHeadlineObserver() {
   const sectionHeadlineObserver = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
-        entry.target.style.setProperty("--sectionHeadlineBrightness", Number.parseFloat(entry.intersectionRatio * 0.13 + 0.45).toFixed(2));
         entry.target.style.fontWeight = Number.parseInt(entry.intersectionRatio * 150 + 100, 10);
       }
     },

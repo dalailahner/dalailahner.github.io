@@ -1,0 +1,35 @@
+@property --accentColor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(60% 0.25 30deg);
+}
+
+@property --TXTcolor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(95% 0.01 45deg);
+}
+
+@property --BGcolor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(25% 0.015 225deg);
+}
+
+@property --altBGcolor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(30% 0.015 225deg);
+}
+
+@property --shadowColor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(15% 0.015 225deg);
+}
+
+@property --tooltipColor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(20% 0.015 225deg);
+}
