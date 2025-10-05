@@ -14,6 +14,7 @@
     --altBGcolor: oklch(30% 0.015 225deg);
     --shadowColor: oklch(15% 0.015 225deg);
     --tooltipColor: oklch(20% 0.015 225deg);
+    /* TODO: also put the text toggle colors here and in themes.json and in the script */
     --headerHeight: 4.5rem;
     --headerMainGap: calc(var(--headerHeight) * 0.15);
     --contentHeight: calc(100dvh - var(--headerHeight));
@@ -219,6 +220,7 @@
   .socialBtnLink {
     height: 41px;
     aspect-ratio: 1;
+    fill: var(--BGcolor);
     border-radius: var(--fullBorderRadius);
     background-color: var(--TXTcolor);
   }
@@ -341,7 +343,7 @@
 
     & .heroImgSectionCont {
       width: 100%;
-      max-width: 500px;
+      max-width: min(500px, var(--contentHeight));
       position: relative;
 
       @media (width > 1920px) {
@@ -487,6 +489,7 @@
     }
 
     /* hero image selection - hover/focus states */
+    &.hover,
     &:hover,
     &:has(:is(button, a):focus-visible) {
       & .heroImgSelectorBtn {
@@ -665,11 +668,16 @@
     justify-content: center;
     position: absolute;
     right: 0;
-    background: #fff;
-    mask-image: radial-gradient(farthest-side at right, #000 0%, #000 15%, transparent 100%);
-    opacity: 0.666;
     pointer-events: none;
     transition: all 0.15s linear;
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: var(--TXTcolor);
+      mask-image: radial-gradient(farthest-side at 100%, #000 0% 15%, #0000 100%);
+      opacity: 0.66;
+    }
   }
   .BilderScrollOverlayText {
     display: none;

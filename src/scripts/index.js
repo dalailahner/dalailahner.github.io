@@ -6,6 +6,7 @@ import themes from "./themes.json" with { type: "json" };
 // GLOBAL VARIABLES: //
 let windowResizeTimeout;
 const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isMobileOrTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || navigator.userAgent.includes("Mobi") || window.matchMedia("(pointer: coarse)").matches;
 
 ///////////
 // INIT: //
@@ -22,6 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
     textShuffle.init(".textShuffle", 150, 2, 0.9, 0.2);
     initTextShuffleObserver();
   }
+  initHeroImgSelectionObserver();
   initSectionHeadlineObserver();
   initIllustrationBgBlurObserver();
 });
@@ -389,7 +391,7 @@ function addOnlyfansBtn() {
     const onlyfansBtnImg = document.createElement("img");
     onlyfansBtnImg.classList.add("socialBtnImg");
     onlyfansBtnImg.src = "/svg/OnlyFansLogo.svg";
-    onlyfansBtnImg.alt = "OnlyFans";
+    onlyfansBtnImg.alt = "Link to OnlyFans";
 
     onlyfansBtn.append(onlyfansBtnImg);
 
@@ -425,8 +427,6 @@ function buildThresholdList(steps = 15) {
 /////////////////////////////
 // OBSERVER INIT FUNCTIONS //
 
-//TODO: also show hero img selection buttons on mobile when scrolling
-
 function initTextShuffleObserver() {
   const textShuffleObserver = new IntersectionObserver(
     (entries) => {
@@ -448,6 +448,30 @@ function initTextShuffleObserver() {
   }
 }
 
+function initHeroImgSelectionObserver() {
+  if (isMobileOrTouchDevice) {
+    let headerHeight = "8%";
+    const heroImgSelectionObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const headerEl = document.querySelector(".header");
+          if (headerEl) {
+            headerHeight = getComputedStyle(headerEl).height;
+          }
+          if (entry.intersectionRatio === 1) {
+            entry.target.classList.add("hover");
+          } else {
+            entry.target.classList.remove("hover");
+          }
+        }
+      },
+      { root: null, rootMargin: `-${headerHeight} 0px 0px 0px`, threshold: buildThresholdList() },
+    );
+
+    heroImgSelectionObserver.observe(document.querySelector(".heroImgSectionHoverTarget"));
+  }
+}
+
 function initSectionHeadlineObserver() {
   const sectionHeadlineObserver = new IntersectionObserver(
     (entries) => {
@@ -464,8 +488,7 @@ function initSectionHeadlineObserver() {
 }
 
 function initIllustrationBgBlurObserver() {
-  // only if no mouse (aka no hover is available)
-  if (window.matchMedia("(pointer: coarse)").matches) {
+  if (isMobileOrTouchDevice) {
     const illustrationBgBlurObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
