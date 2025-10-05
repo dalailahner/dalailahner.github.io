@@ -7,12 +7,13 @@ const bgCanvas = {
   init(canvasId) {
     options = {
       devicePxRatio: Math.ceil(window.devicePixelRatio),
-      // TODO: also let this color be dynamically read from the dynamic themes
-      fillColor: "oklch(45% 0 0)",
+      get fillColor() {
+        return window.getComputedStyle(document.querySelector("body")).color.replace(")", " / 0.33)");
+      },
       get amount() {
         return Math.sqrt(this.canvasWidth * this.canvasHeight) / 2;
       },
-      get backgroundColor(){
+      get backgroundColor() {
         return window.getComputedStyle(document.querySelector("body")).backgroundColor;
       },
       get canvasWidth() {

@@ -33,3 +33,5 @@
   inherits: true;
   initial-value: oklch(20% 0.015 225deg);
 }
+
+/* TODO: also put the text toggle colors here and in themes.json and in the script */
