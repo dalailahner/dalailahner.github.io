@@ -69,25 +69,17 @@ function heroImgSelect(event) {
 
     const fadeOutName = `fadeOut${forwardDirection ? "L" : "R"}`;
     const fadeInName = `fadeIn${forwardDirection ? "R" : "L"}`;
+    activeImg.inert = true;
     activeImg.classList.remove("active");
     activeImg.classList.add(fadeOutName);
-    const activeImgDLC = activeImg.querySelector(".heroImgDLC");
-    if (activeImgDLC) {
-      activeImgDLC.setAttribute("tabindex", "-1");
-      activeImgDLC.setAttribute("aria-hidden", "true");
-    }
     const fadeOutEvent = activeImg.addEventListener("transitionend", (ev) => {
       ev.target.removeEventListener("transitionend", fadeOutEvent);
       ev.target.classList.remove(fadeOutName);
     });
 
+    newImg.inert = false;
     newImg.style.transitionDuration = "0.001s";
     newImg.classList.add(fadeInName);
-    const newImgDLC = newImg.querySelector(".heroImgDLC");
-    if (newImgDLC) {
-      newImgDLC.removeAttribute("tabindex");
-      newImgDLC.removeAttribute("aria-hidden");
-    }
     setTimeout(() => {
       newImg.style = "";
       newImg.classList.add("active");
