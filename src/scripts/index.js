@@ -17,6 +17,9 @@ const textShuffle = new TextShuffle();
 // GLOBAL EVENTS: //
 window.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded EVENT TRIGGERED");
+  if (localStorage.getItem("selectedTheme")) {
+    heroImgSelect(localStorage.getItem("selectedTheme"));
+  }
   addOnlyfansBtn();
   bgCanvas.animate();
   if (!prefersReducedMotion) {
@@ -42,18 +45,31 @@ window.addEventListener("resize", () => {
 
 //////////////
 // HERO IMG //
-const heroImgs = document.querySelectorAll(".heroImgCont");
-
 for (const btn of document.querySelectorAll(".heroImgSelectorBtn")) {
-  btn.addEventListener("click", heroImgSelect);
+  btn.addEventListener("click", (event) => {
+    heroImgSelect(event.target);
+  });
 }
 
-function heroImgSelect(event) {
-  const forwardDirection = event.target.classList.contains("next");
-
+function heroImgSelect(target) {
+  const heroImgs = document.querySelectorAll(".heroImgCont");
   const activeImg = Array.from(heroImgs).find((el) => el.classList.contains("active"));
-  if (activeImg) {
-    let newImg;
+  let newImg;
+  const animated = typeof target === "object";
+  let forwardDirection;
+
+  // target is from localStorage
+  if (typeof target === "string") {
+    if (typeof themes[target] === "object") {
+      newImg = Array.from(heroImgs).find((el) => el?.querySelector("figcaption").textContent === target);
+    } else {
+      console.warn("didn't find selected theme skipping heroImgSelect(); looked for: ", target);
+      return;
+    }
+  }
+  // target is from an event
+  if (typeof target === "object") {
+    forwardDirection = target.classList.contains("next");
     if (forwardDirection) {
       newImg = activeImg.nextElementSibling;
       if (!newImg) {
@@ -66,30 +82,41 @@ function heroImgSelect(event) {
         newImg = heroImgs[heroImgs.length - 1];
       }
     }
+  }
 
-    const fadeOutName = `fadeOut${forwardDirection ? "L" : "R"}`;
-    const fadeInName = `fadeIn${forwardDirection ? "R" : "L"}`;
+  if (activeImg && newImg) {
     activeImg.inert = true;
     activeImg.classList.remove("active");
-    activeImg.classList.add(fadeOutName);
-    const fadeOutEvent = activeImg.addEventListener("transitionend", (ev) => {
-      ev.target.removeEventListener("transitionend", fadeOutEvent);
-      ev.target.classList.remove(fadeOutName);
-    });
+    if (animated) {
+      const fadeOutName = `fadeOut${forwardDirection ? "L" : "R"}`;
+      activeImg.classList.add(fadeOutName);
+      const fadeOutEvent = activeImg.addEventListener("transitionend", (ev) => {
+        ev.target.removeEventListener("transitionend", fadeOutEvent);
+        ev.target.classList.remove(fadeOutName);
+      });
+    }
 
     newImg.inert = false;
     newImg.style.transitionDuration = "0.001s";
-    newImg.classList.add(fadeInName);
+
+    const fadeInName = `fadeIn${forwardDirection ? "R" : "L"}`;
+    if (animated) {
+      newImg.classList.add(fadeInName);
+    }
     setTimeout(() => {
       newImg.style = "";
       newImg.classList.add("active");
-      const fadeInEvent = newImg.addEventListener("transitionend", (ev) => {
-        ev.target.removeEventListener("transitionend", fadeInEvent);
-        ev.target.classList.remove(fadeInName);
-      });
+      if (animated) {
+        const fadeInEvent = newImg.addEventListener("transitionend", (ev) => {
+          ev.target.removeEventListener("transitionend", fadeInEvent);
+          ev.target.classList.remove(fadeInName);
+        });
+      }
     }, 1);
+    // set new color theme
     const newImgFigcaption = newImg.querySelector("figcaption");
     if (newImgFigcaption && typeof themes[newImgFigcaption.textContent] === "object") {
+      localStorage.setItem("selectedTheme", newImgFigcaption.textContent);
       for (const [key, value] of Object.entries(themes[newImgFigcaption.textContent])) {
         document.documentElement.style.setProperty(key, value);
       }
@@ -97,7 +124,7 @@ function heroImgSelect(event) {
       console.warn("no figcaption found in newImg or no object found in themes.json with the key of figcaption.textContent");
     }
   } else {
-    console.error("no active image found");
+    console.error("no active image or new image found");
     return;
   }
 }
