@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import { browserslistToTargets } from "lightningcss";
 import browserslist from "browserslist";
+import { browserslistToTargets } from "lightningcss";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   publicDir: "static",
