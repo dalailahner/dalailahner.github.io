@@ -3,7 +3,14 @@ export default class TextShuffle {
     this.globalOptions = {
       // biome-ignore format: allow long line
       symbols : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ä', 'Ö', 'U', '!', '@', '#', '€', '¥', '$', '&', '*', '(', ')', '-', '~', '_', '+', '=', '/', '[', ']', '{', '}', ';', ':', '<', '>', ',', '#', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      colors: ["#cd231d", "#df7020", "#dfbf20"],
+      get colors() {
+        const htmlElCompStyle = getComputedStyle(document.documentElement);
+        const colors = [htmlElCompStyle.getPropertyValue("--textShuffleColor1"), htmlElCompStyle.getPropertyValue("--textShuffleColor2"), htmlElCompStyle.getPropertyValue("--textShuffleColor3")];
+        if (colors.includes("")) {
+          console.error("textShuffle: color not found; got: ", colors);
+        }
+        return colors;
+      },
       opacities: ["1", "0.6", "0.35"],
     };
     this.elMap = new Map();
