@@ -5,7 +5,10 @@
     "--BGcolor": "oklch(25% 0.015 225)",
     "--altBGcolor": "oklch(30% 0.015 225)",
     "--shadowColor": "oklch(15% 0.015 225)",
-    "--tooltipColor": "oklch(20% 0.015 225)"
+    "--tooltipColor": "oklch(20% 0.015 225)",
+    "--textShuffleColor1": "oklch(54.71% 0.2044 28.52)",
+    "--textShuffleColor2": "oklch(66.38% 0.1622 50.4)",
+    "--textShuffleColor3": "oklch(80.86% 0.1601 96.26)"
   },
   "Fosching": {
     "--accentColor": "oklch(66% 0.2 40)",
@@ -13,7 +16,10 @@
     "--BGcolor": "oklch(33% 0.1 260)",
     "--altBGcolor": "oklch(45% 0.1 260)",
     "--shadowColor": "oklch(0.2 0.05 145)",
-    "--tooltipColor": "oklch(5% 0.2 8)"
+    "--tooltipColor": "oklch(5% 0.2 8)",
+    "--textShuffleColor1": "oklch(0.6 0.22 27)",
+    "--textShuffleColor2": "oklch(0.65 0.22 6)",
+    "--textShuffleColor3": "oklch(0.8 0.22 135)"
   },
   "Whitehat": {
     "--accentColor": "oklch(60% 0.25 30)",
@@ -21,7 +27,10 @@
     "--BGcolor": "oklch(95% 0.01 45)",
     "--altBGcolor": "oklch(90% 0.01 45)",
     "--shadowColor": "oklch(85% 0.01 45)",
-    "--tooltipColor": "oklch(80% 0.01 45)"
+    "--tooltipColor": "oklch(80% 0.01 45)",
+    "--textShuffleColor1": "oklch(0.4 0.16 30)",
+    "--textShuffleColor2": "oklch(0.45 0.12 50)",
+    "--textShuffleColor3": "oklch(0.6 0.12 100)"
   },
   "Blackhat": {
     "--accentColor": "oklch(60% 0.25 30)",
@@ -29,6 +38,9 @@
     "--BGcolor": "oklch(0 0 0)",
     "--altBGcolor": "oklch(0.2 0 0)",
     "--shadowColor": "oklch(0.16 0 0)",
-    "--tooltipColor": "oklch(0.2 0 0)"
+    "--tooltipColor": "oklch(0.2 0 0)",
+    "--textShuffleColor1": "oklch(0.8 0.27 145)",
+    "--textShuffleColor2": "oklch(0.8 0.27 145)",
+    "--textShuffleColor3": "oklch(0.8 0.27 145)"
   }
 }

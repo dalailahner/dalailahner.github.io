@@ -14,7 +14,9 @@
     --altBGcolor: oklch(30% 0.015 225deg);
     --shadowColor: oklch(15% 0.015 225deg);
     --tooltipColor: oklch(20% 0.015 225deg);
-    /* TODO: also put the text toggle colors here and in themes.json and in the script */
+    --textShuffleColor1: oklch(54.71% 0.2044 28.52deg);
+    --textShuffleColor2: oklch(66.38% 0.1622 50.4deg);
+    --textShuffleColor3: oklch(80.86% 0.1601 96.26deg);
     --headerHeight: 4.5rem;
     --headerMainGap: calc(var(--headerHeight) * 0.15);
     --contentHeight: calc(100dvh - var(--headerHeight));
