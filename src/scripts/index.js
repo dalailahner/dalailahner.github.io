@@ -20,7 +20,9 @@ window.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("selectedTheme")) {
     heroImgSelect(localStorage.getItem("selectedTheme"));
   }
-  addOnlyfansBtn();
+  if (!isMobileOrTouchDevice) {
+    setupOnlyfansBtn();
+  }
   bgCanvas.animate();
   if (!prefersReducedMotion) {
     textShuffle.init(".textShuffle", 150, 2, 0.9, 0.2);
@@ -38,6 +40,7 @@ window.addEventListener("load", () => {
 window.addEventListener("resize", () => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(() => {
+    // TODO: maybe don't trigger if mobile device goes from svh to lvh, idk how tho yet
     bgCanvas.init("#bgCanvas");
     removeActiveFromBilder();
   }, 100);
@@ -397,33 +400,19 @@ for (const currentValue of document.querySelectorAll(".animVids")) {
 //////////////////////
 // GLOBAL FUNCTIONS //
 
-function addOnlyfansBtn() {
-  const headerSocialCont = document.querySelector(".headerSocialCont");
-  if (headerSocialCont) {
-    const onlyfansBtn = document.createElement("a");
-    onlyfansBtn.classList.add("socialBtnLink", "tooltipBottom");
-    onlyfansBtn.dataset.tooltip = "OnlyFans";
+function setupOnlyfansBtn() {
+  const onlyfansBtn = document.querySelector(".socialBtnLink.onlyfans");
+  if (onlyfansBtn) {
     onlyfansBtn.href = "https://www.onlyfans.com/dalailahner";
-    onlyfansBtn.target = "_blank";
-    onlyfansBtn.rel = "noreferrer";
 
-    const onlyfansBtnImg = document.createElement("img");
-    onlyfansBtnImg.classList.add("socialBtnImg");
-    onlyfansBtnImg.src = "/svg/OnlyFansLogo.svg";
-    onlyfansBtnImg.alt = "Link to OnlyFans";
-
-    onlyfansBtn.append(onlyfansBtnImg);
-
-    onlyfansBtn.addEventListener("click", (ev) => {
+    onlyfansBtn.addEventListener("pointerdown", (ev) => {
       ev.preventDefault();
       ev.stopPropagation();
       window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
       console.log("lol, gotem (¬‿¬)");
     });
-
-    headerSocialCont.appendChild(onlyfansBtn);
   } else {
-    console.warn('could not append Onlyfans Button. ".headerSocialCont" not found.');
+    console.warn('could not setup Onlyfans Button. ".socialBtnLink.onlyfans" not found.');
   }
 }
 
