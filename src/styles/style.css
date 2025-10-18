@@ -321,6 +321,39 @@
 
     & .heroHeadline {
       font-size: clamp(2rem, 3.5vw, 5rem);
+
+      & .droopyLetterCont {
+        position: relative;
+        color: transparent;
+      }
+
+      & .droopyLetterSvg {
+        padding: 0 0.033em 0 0.055em;
+        position: absolute;
+        top: -0.1em;
+        overflow: visible;
+        pointer-events: none;
+        & path {
+          fill: var(--TXTcolor);
+        }
+      }
+
+      & .droopyPath {
+        transform-origin: 50% 64.1923%;
+        transform: scaleY(1);
+        transition: transform 60s var(--easeOut);
+
+        @starting-style {
+          transform: scaleY(0);
+        }
+      }
+
+      &:hover {
+        & .droopyPath {
+          transform: scaleY(0);
+          transition-duration: 0.66s;
+        }
+      }
     }
 
     & .heroParagraph {
