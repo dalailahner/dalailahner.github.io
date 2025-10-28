@@ -9,14 +9,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@inquirer/prompts": "^7.8.6",
-    "browserslist": "^4.26.3",
+    "@inquirer/prompts": "^7.9.0",
+    "browserslist": "^4.27.0",
     "lightningcss": "^1.30.2",
     "sharp": "^0.34.4",
-    "vite": "^7.1.9"
+    "vite": "^7.1.12"
   },
   "dependencies": {
     "noicss.reducedmotion": "^1.0.2",
-    "noicss.reset": "^1.11.0"
+    "noicss.reset": "^1.12.2"
   }
 }
