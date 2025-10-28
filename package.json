@@ -16,6 +16,7 @@
     "vite": "^7.1.12"
   },
   "dependencies": {
+    "accented": "^1.2.0",
     "noicss.reducedmotion": "^1.0.2",
     "noicss.reset": "^1.12.2"
   }

@@ -35,6 +35,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("load", () => {
   console.log("LOAD EVENT TRIGGERED");
+  /* TODO: check accented when finished
+  if (import.meta.env.MODE === "development") {
+    import("accented").then(({ accented }) => {
+      accented();
+    });
+  }
+  */
 });
 
 window.addEventListener("resize", () => {
