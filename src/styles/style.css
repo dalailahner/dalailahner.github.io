@@ -10,6 +10,7 @@
   :root {
     --accentColor: oklch(60% 0.25 30deg);
     --TXTcolor: oklch(95% 0.01 45deg);
+    --blackOrWhiteFgColor: oklch(from var(--TXTcolor) calc(calc(l - 0.5) * 10) 0 0);
     --BGcolor: oklch(25% 0.015 225deg);
     --altBGcolor: oklch(30% 0.015 225deg);
     --shadowColor: oklch(15% 0.015 225deg);
@@ -603,22 +604,26 @@
     & .techstackCards {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: start;
 
       @media (width >= 768px) {
         flex-direction: row;
         flex-wrap: wrap;
+        align-items: start;
+        justify-content: center;
       }
     }
 
     & .techstackCardCont {
       padding: 2rem;
 
-      &.currentlyUsingStart {
+      &.preferredStart {
         position: relative;
         border-image: linear-gradient(135deg, var(--TXTcolor) 0%, transparent 100px) 2 / 2px 0 0 2px;
 
         &::after {
-          content: "current";
+          content: "preferred";
           padding: 0 0.25em;
           position: absolute;
           top: 0;
@@ -634,7 +639,7 @@
         }
       }
 
-      &.currentlyUsingEnd {
+      &.preferredEnd {
         border-image: linear-gradient(-45deg, var(--TXTcolor) 0%, transparent 100px) 2 / 0 2px 2px 0;
       }
 
@@ -648,6 +653,11 @@
         & svg {
           width: 100px;
           height: 100px;
+          color: var(--blackOrWhiteFgColor);
+          fill-rule: evenodd;
+          clip-rule: evenodd;
+          stroke-linejoin: round;
+          stroke-miterlimit: 2;
         }
 
         & p {
