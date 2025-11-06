@@ -7,6 +7,7 @@ import themes from "./themes.json" with { type: "json" };
 let windowResizeTimeout;
 const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobileOrTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || navigator.userAgent.includes("Mobi") || window.matchMedia("(pointer: coarse)").matches;
+const supportsCssViewportAnim = CSS.supports("animation-timeline", "view()");
 
 ///////////
 // INIT: //
@@ -29,8 +30,10 @@ window.addEventListener("DOMContentLoaded", () => {
     initTextShuffleObserver();
   }
   initHeroImgSelectionObserver();
-  initSectionHeadlineObserver();
-  initIllustrationBgBlurObserver();
+  if (!supportsCssViewportAnim) {
+    initSectionHeadlineObserver();
+    initIllustrationBgBlurObserver();
+  }
 });
 
 window.addEventListener("load", () => {
@@ -507,12 +510,11 @@ function initIllustrationBgBlurObserver() {
     const illustrationBgBlurObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const bgEl = entry.target.querySelector(".illustrationBG");
-          bgEl.style.filter = `blur(${Number.parseFloat(entry.intersectionRatio * 5).toFixed(2)}px)`;
-          bgEl.style.scale = Number.parseFloat(entry.intersectionRatio * 0.1 + 1.0).toFixed(3);
+          entry.target.style.setProperty("--illustrationBgBlur", `${Number.parseFloat(5 - entry.intersectionRatio * 5).toFixed(2)}px`);
+          entry.target.style.setProperty("--illustrationBgScale", `${Number.parseFloat(1.1 - entry.intersectionRatio * 0.1).toFixed(3)}`);
         }
       },
-      { root: null, rootMargin: "-33% 0px -25% 0px", threshold: buildThresholdList() },
+      { root: null, rootMargin: "-20% 0px -15% 0px", threshold: buildThresholdList() },
     );
 
     for (const el of document.querySelectorAll(".illustrationCont")) {

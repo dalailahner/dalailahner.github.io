@@ -368,7 +368,6 @@
     }
   }
 
-  /* ******************** */
   /* hero image selection */
   .heroImgSectionHoverTarget {
     width: 100%;
@@ -542,7 +541,6 @@
     }
   }
 
-  /* ************** */
   /* other sections */
   .sectionHeadlineCont {
     padding: 0;
@@ -565,6 +563,13 @@
     text-align: center;
     text-transform: uppercase;
     user-select: none;
+
+    @supports (animation-timeline: view()) {
+      animation: sectionHeadlineAnim;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: contain;
+    }
 
     @media (width >= 768px) {
       font-size: 4rem;
@@ -833,11 +838,40 @@
   }
 
   .illustrationCont {
+    @property --illustrationBgBlur {
+      syntax: "<length>";
+      inherits: true;
+      initial-value: 5px;
+    }
+
+    @property --illustrationBgScale {
+      syntax: "<number>";
+      inherits: true;
+      initial-value: 1.1;
+    }
+
     width: var(--BilderSize);
     aspect-ratio: 1;
     position: relative;
     border: 5px solid var(--TXTcolor);
     overflow: hidden;
+    transition: --illustrationBgBlur 0.2s var(--easeOut), --illustrationBgScale 0.2s var(--easeOut);
+
+    @media (pointer: coarse) {
+      @supports (animation-timeline: view()) {
+        animation: illustrationBgAnim;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: contain;
+      }
+    }
+
+    @media (pointer: fine) {
+      &:is(:hover, :focus-visible) {
+        --illustrationBgBlur: 0px;
+        --illustrationBgScale: 1;
+      }
+    }
 
     & .illustrationBG,
     & .illustrationFG {
@@ -848,16 +882,8 @@
     }
 
     & .illustrationBG {
-      filter: blur(0);
-      scale: 1;
-      transition: all 0.2s var(--easeOut);
-    }
-
-    &:is(:hover, :focus-visible) {
-      & .illustrationBG {
-        filter: blur(5px);
-        scale: 1.1;
-      }
+      filter: blur(var(--illustrationBgBlur));
+      scale: var(--illustrationBgScale);
     }
   }
 
@@ -880,6 +906,41 @@
 
     @media (width >= 768px) {
       width: 25%;
+    }
+  }
+
+  /* KEYFRAMES */
+  @keyframes sectionHeadlineAnim {
+    0% {
+      font-weight: 100;
+    }
+    15% {
+      font-weight: 250;
+    }
+    85% {
+      font-weight: 250;
+    }
+    100% {
+      font-weight: 100;
+    }
+  }
+
+  @keyframes illustrationBgAnim {
+    0% {
+      --illustrationBgBlur: 5px;
+      --illustrationBgScale: 1.1;
+    }
+    15% {
+      --illustrationBgBlur: 0px;
+      --illustrationBgScale: 1;
+    }
+    85% {
+      --illustrationBgBlur: 0px;
+      --illustrationBgScale: 1;
+    }
+    100% {
+      --illustrationBgBlur: 5px;
+      --illustrationBgScale: 1.1;
     }
   }
 }
