@@ -51,3 +51,15 @@
   inherits: true;
   initial-value: oklch(80.86% 0.1601 96.26deg);
 }
+
+@property --illustrationBgBlur {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 5px;
+}
+
+@property --illustrationBgScale {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1.1;
+}
