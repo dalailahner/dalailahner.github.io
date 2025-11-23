@@ -639,7 +639,7 @@
           line-height: 1;
           letter-spacing: 0.05em;
           text-transform: uppercase;
-          background-color: var(--BGcolor);
+          background-image: linear-gradient(to bottom, transparent, var(--BGcolor) 33%, var(--BGcolor) 50%, transparent);
           transform-origin: 0 0.5cap;
           transform: rotate(-90deg) translateX(-100%);
         }
@@ -650,13 +650,35 @@
       }
 
       & .techstackCard {
+        --techstackCardAccentColor: #fff; /* <- fallback */
+
         padding-block: 1rem;
         width: calc(var(--techstackSvgSize) + 2rem);
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        border: 2px solid transparent;
+        border-radius: 8px;
         background-color: var(--altBGcolor);
+        box-shadow: 0 0 0 0 transparent;
+        transition: border-color 0.15s var(--easeOut), box-shadow 0.15s linear;
+
+        @media (pointer: coarse) {
+          @supports (animation-timeline: view()) {
+            animation: techstackCardAnim;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: contain;
+          }
+        }
+
+        @media (pointer: fine) {
+          &:is(:hover, :focus-visible) {
+            border-color: var(--techstackCardAccentColor);
+            box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
+          }
+        }
 
         & svg {
           width: var(--techstackSvgSize);
@@ -934,6 +956,25 @@
     100% {
       --illustrationBgBlur: 5px;
       --illustrationBgScale: 1.1;
+    }
+  }
+
+  @keyframes techstackCardAnim {
+    0% {
+      border-color: transparent;
+      box-shadow: 0 0 0 transparent;
+    }
+    45% {
+      border-color: var(--techstackCardAccentColor);
+      box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
+    }
+    65% {
+      border-color: var(--techstackCardAccentColor);
+      box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
+    }
+    100% {
+      border-color: transparent;
+      box-shadow: 0 0 0 transparent;
     }
   }
 }
