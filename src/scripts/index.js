@@ -212,7 +212,7 @@ bilderRow.addEventListener("pointerleave", () => {
   slider.set("wasMoved", false);
 });
 
-// keboard navigation
+// keyboard navigation
 bilderRow.addEventListener("focus", (event) => {
   if (event.currentTarget.matches(":focus-visible")) {
     const firstBild = bilderRow.querySelector(".Bild");
