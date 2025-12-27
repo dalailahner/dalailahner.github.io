@@ -2,29 +2,33 @@ export default class TextShuffle {
   constructor() {
     this.globalOptions = {
       // biome-ignore format: allow long line
-      symbols : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ä', 'Ö', 'U', '!', '@', '#', '€', '¥', '$', '&', '*', '(', ')', '-', '~', '_', '+', '=', '/', '[', ']', '{', '}', ';', ':', '<', '>', ',', '#', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      get colors() {
-        const htmlElCompStyle = getComputedStyle(document.documentElement);
-        const colors = [htmlElCompStyle.getPropertyValue("--textShuffleColor1"), htmlElCompStyle.getPropertyValue("--textShuffleColor2"), htmlElCompStyle.getPropertyValue("--textShuffleColor3")];
-        if (colors.includes("")) {
-          console.error("textShuffle: color not found; got: ", colors);
-        }
-        return colors;
-      },
+      symbols: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ä', 'Ö', 'U', '!', '@', '#', '€', '¥', '$', '&', '*', '(', ')', '-', '~', '_', '+', '=', '/', '[', ']', '{', '}', ';', ':', '<', '>', ',', '#', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      colors: ["--textShuffleColor1", "--textShuffleColor2", "--textShuffleColor3"],
       opacities: ["1", "0.6", "0.35"],
     };
     this.elMap = new Map();
   }
 
   init(selector, finishRange, finishSpeed = 1, switchChance = 0.5, gradientMultiplier = 0.5) {
+    // check selector argument type
     if (typeof selector !== "string") {
       console.error(`textShuffle.init(): selector is not a string. got: ${selector} (type: ${typeof selector})`);
       return;
     }
+    // check dom elements
     const textShuffleEls = document?.querySelectorAll(`${selector}`);
     if (!textShuffleEls && textShuffleEls.length < 1) {
       console.error(`textShuffle.init(): the selector doesn't match any DOM elements. got: ${selector} (type: ${typeof selector})`);
       return;
+    }
+    // check if colors exist
+    const htmlElCompStyle = getComputedStyle(document.documentElement);
+    const colorsCheck = [];
+    for (const color of this.globalOptions.colors) {
+      colorsCheck.push(htmlElCompStyle.getPropertyValue(color));
+    }
+    if (colorsCheck.includes("")) {
+      console.error("textShuffle.init(): color not found; got: ", this.globalOptions.colors);
     }
 
     for (const textShuffleEl of textShuffleEls) {
@@ -81,16 +85,15 @@ export default class TextShuffle {
     }
     for (let i = 0; i < elValMap.get("spanArr").length; i++) {
       const span = elValMap.get("spanArr")[i];
-      if (span.getAttribute("completed") !== "yes") {
+      if (span.getAttribute("completed") !== "yes" && !/\s/.test(span.textContent)) {
         if (i < elValMap.get("finishIndex") || (elValMap.get("finishIndex") < i && i < elValMap.get("finishIndex") + elValMap.get("finishRange") && gradientMap[i - elValMap.get("finishIndex")] > 0.99)) {
           span.style = "";
           span.textContent = elValMap.get("originalText")[i];
           span.setAttribute("completed", "yes");
         } else if (changeMap[i] > elValMap.get("switchChance") || elValMap.get("firstRun")) {
-          span.style.color = this.globalOptions.colors.at(Math.random() * this.globalOptions.colors.length);
-          span.style.opacity = this.globalOptions.opacities.at(Math.random() * this.globalOptions.opacities.length);
-          // only change non-whitespace characters:
-          if (!/\s/.test(span.textContent)) span.textContent = this.globalOptions.symbols[Math.floor(Math.random() * this.globalOptions.symbols.length)];
+          span.style.color = `var(${this.globalOptions.colors[Math.floor(Math.random() * this.globalOptions.colors.length)]}`;
+          span.style.opacity = this.globalOptions.opacities[Math.floor(Math.random() * this.globalOptions.opacities.length)];
+          span.textContent = this.globalOptions.symbols[Math.floor(Math.random() * this.globalOptions.symbols.length)];
         }
       }
     }

@@ -11,25 +11,31 @@ const supportsCssViewportAnim = CSS.supports("animation-timeline", "view()");
 
 ///////////
 // INIT: //
-bgCanvas.init("#bgCanvas");
 const textShuffle = new TextShuffle();
 
 ////////////////////
 // GLOBAL EVENTS: //
 window.addEventListener("DOMContentLoaded", () => {
   console.log("DOMContentLoaded EVENT TRIGGERED");
+
   if (localStorage.getItem("selectedTheme")) {
     heroImgSelect(localStorage.getItem("selectedTheme"));
   }
+
   if (!isMobileOrTouchDevice) {
     setupOnlyfansBtn();
   }
+
+  bgCanvas.init("#bgCanvas");
   bgCanvas.animate();
+
   if (!prefersReducedMotion) {
     textShuffle.init(".textShuffle", 150, 2, 0.9, 0.2);
     initTextShuffleObserver();
   }
+
   initHeroImgSelectionObserver();
+
   if (!supportsCssViewportAnim) {
     initSectionHeadlineObserver();
     initIllustrationBgBlurObserver();
@@ -38,6 +44,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("load", () => {
   console.log("LOAD EVENT TRIGGERED");
+
   /* TODO: check accented when finished
   if (import.meta.env.MODE === "development") {
     import("accented").then(({ accented }) => {
@@ -73,6 +80,10 @@ function heroImgSelect(target) {
 
   // target is from localStorage
   if (typeof target === "string") {
+    document.documentElement.style.transitionDuration = "0.0001s";
+    document.documentElement.addEventListener("transitionend", (ev) => {
+      ev.target.style.transitionDuration = "";
+    });
     if (typeof themes[target] === "object") {
       newImg = Array.from(heroImgs).find((el) => el?.querySelector("figcaption").textContent === target);
     } else {
@@ -133,6 +144,7 @@ function heroImgSelect(target) {
       for (const [key, value] of Object.entries(themes[newImgFigcaption.textContent])) {
         document.documentElement.style.setProperty(key, value);
       }
+      bgCanvas.updateOptions();
     } else {
       console.warn("no figcaption found in newImg or no object found in themes.json with the key of figcaption.textContent");
     }
