@@ -57,8 +57,10 @@ window.addEventListener("load", () => {
 window.addEventListener("resize", () => {
   clearTimeout(windowResizeTimeout);
   windowResizeTimeout = setTimeout(() => {
-    // TODO: maybe don't trigger if mobile device goes from svh to lvh, idk how tho yet
-    bgCanvas.init("#bgCanvas");
+    if (bgCanvas.updateHeight()) {
+      bgCanvas.init("#bgCanvas");
+      alert("bgCanvas resize fired");
+    }
     removeActiveFromBilder();
   }, 100);
 });
