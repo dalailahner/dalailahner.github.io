@@ -1,5 +1,4 @@
 let bgCanvasCtx;
-let bgCanvasEl;
 let options;
 let points;
 
@@ -118,20 +117,35 @@ const bgCanvas = {
     }
   },
 
+  updateHeight() {
+    if (!options?.bgCanvasEl) {
+      console.warn("options.canvasId is not defined");
+      return;
+    }
+
+    const canvasComputedStyle = getComputedStyle(options.bgCanvasEl);
+    const newWidth = (Number.parseFloat(canvasComputedStyle.width, 10) + 1) * options.devicePxRatio;
+    const newHeight = (Number.parseFloat(canvasComputedStyle.height, 10) + 1) * options.devicePxRatio;
+
+    if (options?.canvasWidth && options?.canvasHeight) {
+      if (options.canvasWidth === newWidth && options.canvasHeight === newHeight) {
+        return false;
+      }
+    }
+    options.canvasWidth = newWidth;
+    options.canvasHeight = newHeight;
+    options.amount = Math.sqrt(newWidth * newHeight) / 2;
+    // TODO: figure out if there is a way to not have the canvas element move on mobile when the viewport changes from lvh to svh. you have to offset the top thing that is coming in.
+    return true;
+  },
+
   init(canvasId) {
     options = {
+      bgCanvasEl: document.querySelector(canvasId),
       prefersReducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)")?.matches,
       devicePxRatio: Math.ceil(window.devicePixelRatio),
-      get canvasWidth() {
-        return window.innerWidth * options.devicePxRatio;
-      },
-      get canvasHeight() {
-        return window.innerHeight * options.devicePxRatio;
-      },
-      get amount() {
-        return Math.sqrt(options.canvasWidth * options.canvasHeight) / 2;
-      },
     };
+    bgCanvas.updateHeight();
     bgCanvas.updateOptions();
 
     points = [];
@@ -145,24 +159,21 @@ const bgCanvas = {
           return this.z / 2 + 0.5;
         },
         get velocity() {
-          return this.z * this.pointConstRand * options.devicePxRatio * 0.1;
+          return this.z * this.pointConstRand * 0.1;
         },
       };
       points.push(point);
     }
 
-    bgCanvasEl = document.querySelector(canvasId);
-    bgCanvasEl.width = options.canvasWidth;
-    bgCanvasEl.height = options.canvasHeight;
-    bgCanvasEl.style.width = `${window.innerWidth}px`;
-    bgCanvasEl.style.height = `${window.innerHeight}px`;
-    bgCanvasCtx = bgCanvasEl.getContext("2d", { alpha: false });
+    options.bgCanvasEl.width = options.canvasWidth;
+    options.bgCanvasEl.height = options.canvasHeight;
+    bgCanvasCtx = options.bgCanvasEl.getContext("2d", { alpha: false });
     bgCanvasCtx.setTransform(options.devicePxRatio, 0, 0, options.devicePxRatio, 0, 0);
   },
 
   animate() {
     bgCanvasCtx.fillStyle = options.backgroundColor;
-    bgCanvasCtx.fillRect(0, 0, bgCanvasEl.width, bgCanvasEl.height);
+    bgCanvasCtx.fillRect(0, 0, options.bgCanvasEl.width, options.bgCanvasEl.height);
 
     bgCanvasCtx.fillStyle = options.fillColor;
     bgCanvasCtx.beginPath();
