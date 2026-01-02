@@ -135,7 +135,6 @@ const bgCanvas = {
     options.canvasWidth = newWidth;
     options.canvasHeight = newHeight;
     options.amount = Math.sqrt(newWidth * newHeight) / 2;
-    // TODO: figure out if there is a way to not have the canvas element move on mobile when the viewport changes from lvh to svh. you have to offset the top thing that is coming in.
     return true;
   },
 
