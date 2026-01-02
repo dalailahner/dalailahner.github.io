@@ -59,7 +59,6 @@ window.addEventListener("resize", () => {
   windowResizeTimeout = setTimeout(() => {
     if (bgCanvas.updateHeight()) {
       bgCanvas.init("#bgCanvas");
-      alert("bgCanvas resize fired");
     }
     removeActiveFromBilder();
   }, 100);
