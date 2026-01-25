@@ -3,8 +3,11 @@ import { readdirSync, existsSync, mkdirSync } from "node:fs";
 import sharp from "sharp";
 
 // USER INPUT:
-let inputDir = await input({ message: "source images path:" }, { clearPromptOnDone: true });
-inputDir = fixPathString(inputDir);
+const inputDir = await input({ message: "source images path:" }, { clearPromptOnDone: true });
+if (!existsSync(inputDir)) {
+  console.error(`inputDir "${inputDir} does not exist!"`);
+  process.exit(1);
+}
 
 const fileformat = await select(
   {
@@ -27,8 +30,11 @@ const fileformat = await select(
   { clearPromptOnDone: true },
 );
 
-let outputDir = await input({ message: "output path:", default: inputDir }, { clearPromptOnDone: true });
-outputDir = fixPathString(outputDir);
+const outputDir = await input({ message: "output path:", default: inputDir }, { clearPromptOnDone: true });
+if (!existsSync(outputDir)) {
+  console.error(`outputDir "${outputDir} does not exist!"`);
+  process.exit(1);
+}
 
 const confirmation = await confirm({ message: `Convert files in ${inputDir} to .${fileformat} and save them to ${outputDir}?` }, { clearPromptOnDone: true });
 
@@ -36,30 +42,17 @@ const confirmation = await confirm({ message: `Convert files in ${inputDir} to .
 if (confirmation) {
   const files = readdirSync(inputDir);
 
-  if (!existsSync(outputDir)) {
-    mkdirSync(outputDir);
-  }
-
   for (const file of files) {
     const nameArray = file.split(".");
     nameArray.pop();
     const name = nameArray.join(".");
-    sharp(inputDir + file)
+    sharp(`${inputDir}/${file}`)
       .toFormat(fileformat, getFileOptions(fileformat))
-      .toFile(`${outputDir + name}.${fileformat}`);
+      .toFile(`${outputDir}/${name}.${fileformat}`);
   }
 }
 
 // FUNCTIONS:
-function fixPathString(path) {
-  const lastChar = path[path.length - 1];
-  let fixedPath = "";
-  if (lastChar !== "/" && lastChar !== "\\") {
-    fixedPath = `${path}/`;
-  }
-  return fixedPath;
-}
-
 function getFileOptions(format) {
   if (format === "avif") {
     return { quality: 60, effort: 6 };
