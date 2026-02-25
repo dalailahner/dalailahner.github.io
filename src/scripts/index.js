@@ -72,6 +72,7 @@ for (const btn of document.querySelectorAll(".heroImgSelectorBtn")) {
   });
 }
 
+// TODO: fix the buggy image transition (soometimes the next image "hangs")
 function heroImgSelect(target) {
   const heroImgs = document.querySelectorAll(".heroImgCont");
   const activeImg = Array.from(heroImgs).find((el) => el.classList.contains("active"));
