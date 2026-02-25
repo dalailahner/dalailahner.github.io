@@ -378,12 +378,8 @@
 
     & .heroImgSectionCont {
       width: 100%;
-      max-width: min(500px, var(--contentHeight));
+      max-width: var(--contentHeight);
       position: relative;
-
-      @media (width > 1920px) {
-        width: 50%;
-      }
     }
 
     & .heroImgs {
@@ -420,6 +416,9 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      mask-composite: intersect;
+      mask-image: linear-gradient(#fff 90%, #000 100%), radial-gradient(farthest-side, #fff 90%, #000 120%);
+      mask-mode: luminance;
 
       .heroImgCont:has(.heroImgDLC) & {
         filter: grayscale(1);
