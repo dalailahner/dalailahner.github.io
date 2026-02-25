@@ -10,7 +10,7 @@
   :root {
     --accentColor: oklch(60% 0.25 30deg);
     --TXTcolor: oklch(95% 0.01 45deg);
-    --blackOrWhiteFgColor: oklch(from var(--TXTcolor) calc(calc(l - 0.5) * 10) 0 0);
+    --blackOrWhiteFgColor: oklch(from var(--TXTcolor) calc(calc(l - 0.5) * 10) 0 0deg);
     --BGcolor: oklch(25% 0.015 225deg);
     --altBGcolor: oklch(30% 0.015 225deg);
     --shadowColor: oklch(15% 0.015 225deg);
@@ -581,8 +581,17 @@
       position: absolute;
       inset: 0;
       color: var(--shadowColor);
-      text-shadow: -1px 2px 1px var(--shadowColor), -2px 4px 1px var(--shadowColor), -3px 6px 1px var(--shadowColor), -4px 8px 1px var(--shadowColor), -5px 10px 1px var(--shadowColor), -6px 12px 1px var(--shadowColor),
-        -7px 14px 1px var(--shadowColor), -8px 16px 1px var(--shadowColor), -9px 18px 1px var(--shadowColor), -10px 20px 1px var(--shadowColor);
+      text-shadow:
+        -1px 2px 1px var(--shadowColor),
+        -2px 4px 1px var(--shadowColor),
+        -3px 6px 1px var(--shadowColor),
+        -4px 8px 1px var(--shadowColor),
+        -5px 10px 1px var(--shadowColor),
+        -6px 12px 1px var(--shadowColor),
+        -7px 14px 1px var(--shadowColor),
+        -8px 16px 1px var(--shadowColor),
+        -9px 18px 1px var(--shadowColor),
+        -10px 20px 1px var(--shadowColor);
       z-index: -1;
     }
   }
@@ -662,7 +671,9 @@
         border-radius: 8px;
         background-color: var(--altBGcolor);
         box-shadow: 0 0 0 0 transparent;
-        transition: border-color 0.15s var(--easeOut), box-shadow 0.15s linear;
+        transition:
+          border-color 0.15s var(--easeOut),
+          box-shadow 0.15s linear;
 
         @media (pointer: coarse) {
           @supports (animation-timeline: view()) {
@@ -870,7 +881,9 @@
     position: relative;
     border: 5px solid var(--TXTcolor);
     overflow: hidden;
-    transition: --illustrationBgBlur 0.2s var(--easeOut), --illustrationBgScale 0.2s var(--easeOut);
+    transition:
+      --illustrationBgBlur 0.2s var(--easeOut),
+      --illustrationBgScale 0.2s var(--easeOut);
 
     @media (pointer: coarse) {
       @supports (animation-timeline: view()) {
