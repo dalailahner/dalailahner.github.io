@@ -10,7 +10,7 @@
     "--textShuffleColor2": "oklch(66.38% 0.1622 50.4)",
     "--textShuffleColor3": "oklch(80.86% 0.1601 96.26)"
   },
-  "off-white": {
+  "offwhite": {
     "--accentColor": "oklch(60% 0.25 30)",
     "--TXTcolor": "oklch(45% 0.0175 200)",
     "--BGcolor": "oklch(90% 0.07 60)",
@@ -21,7 +21,7 @@
     "--textShuffleColor2": "oklch(45% 0.0175 200)",
     "--textShuffleColor3": "oklch(45% 0.0175 200)"
   },
-  "Urlaub": {
+  "urlaub": {
     "--accentColor": "oklch(70% 0.23 39)",
     "--TXTcolor": "oklch(85% 0.18 95)",
     "--BGcolor": "oklch(22% 0.067 330)",
@@ -32,7 +32,7 @@
     "--textShuffleColor2": "oklch(70% 0.23 39)",
     "--textShuffleColor3": "oklch(85% 0.18 95)"
   },
-  "Fosching": {
+  "fosching": {
     "--accentColor": "oklch(60% 0.25 30)",
     "--TXTcolor": "oklch(85% 0.15 83)",
     "--BGcolor": "oklch(33% 0.1 260)",
@@ -43,7 +43,7 @@
     "--textShuffleColor2": "oklch(60% 0.25 335)",
     "--textShuffleColor3": "oklch(80% 0.22 135)"
   },
-  "Whitehat": {
+  "whitehat": {
     "--accentColor": "oklch(60% 0.25 30)",
     "--TXTcolor": "oklch(15% 0.015 225)",
     "--BGcolor": "oklch(95% 0.01 45)",
@@ -54,7 +54,7 @@
     "--textShuffleColor2": "oklch(65% 0.1452 64.33)",
     "--textShuffleColor3": "oklch(59% 0.1015 219.89)"
   },
-  "Blackhat": {
+  "blackhat": {
     "--accentColor": "oklch(60% 0.25 30)",
     "--TXTcolor": "oklch(80% 0.27 145)",
     "--BGcolor": "oklch(0% 0 0)",

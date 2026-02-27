@@ -87,7 +87,7 @@ function heroImgSelect(target) {
       ev.target.style.transitionDuration = "";
     });
     if (typeof themes[target] === "object") {
-      newImg = Array.from(heroImgs).find((el) => el?.querySelector("figcaption").textContent === target);
+      newImg = Array.from(heroImgs).find((el) => el?.querySelector("figcaption").dataset.theme === target);
     } else {
       console.warn("didn't find selected theme skipping heroImgSelect(); looked for: ", target);
       return;
@@ -141,14 +141,14 @@ function heroImgSelect(target) {
     }, 1);
     // set new color theme
     const newImgFigcaption = newImg.querySelector("figcaption");
-    if (newImgFigcaption && typeof themes[newImgFigcaption.textContent] === "object") {
-      localStorage.setItem("selectedTheme", newImgFigcaption.textContent);
-      for (const [key, value] of Object.entries(themes[newImgFigcaption.textContent])) {
+    if (newImgFigcaption && typeof themes[newImgFigcaption.dataset.theme] === "object") {
+      localStorage.setItem("selectedTheme", newImgFigcaption.dataset.theme);
+      for (const [key, value] of Object.entries(themes[newImgFigcaption.dataset.theme])) {
         document.documentElement.style.setProperty(key, value);
       }
       bgCanvas.updateOptions();
     } else {
-      console.warn("no figcaption found in newImg or no object found in themes.json with the key of figcaption.textContent");
+      console.warn("no figcaption found in newImg or no object found in themes.json with the key of figcaption.dataset.theme");
     }
   } else {
     console.error("no active image or new image found");
