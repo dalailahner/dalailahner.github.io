@@ -632,6 +632,13 @@
     & .techstackCardCont {
       padding: 1rem;
 
+      @supports (animation-timeline: view()) {
+        animation: techstackCardContReveal;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+
       &.preferredStart {
         position: relative;
         border-image: linear-gradient(135deg, var(--TXTcolor) 0%, transparent 100px) 2 / 2px 0 0 2px;
@@ -674,7 +681,7 @@
           border-color 0.15s var(--easeOut),
           box-shadow 0.15s linear;
 
-        @media (pointer: coarse) {
+        @media not (hover: hover) {
           @supports (animation-timeline: view()) {
             animation: techstackCardAnim;
             animation-fill-mode: both;
@@ -683,7 +690,7 @@
           }
         }
 
-        @media (pointer: fine) {
+        @media (hover: hover) {
           &:is(:hover, :focus-visible) {
             border-color: var(--techstackCardAccentColor);
             box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
@@ -968,6 +975,18 @@
     100% {
       --illustrationBgBlur: 5px;
       --illustrationBgScale: 1.1;
+    }
+  }
+
+  @keyframes techstackCardContReveal {
+    0% {
+      opacity: 0;
+      translate: 0 50px;
+    }
+    50%,
+    100% {
+      opacity: 1;
+      translate: 0 0;
     }
   }
 
