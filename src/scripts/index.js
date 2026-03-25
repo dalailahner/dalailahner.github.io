@@ -409,6 +409,22 @@ function removeSwipeOverlay() {
 
 ///////////////////////
 // ANIMATION SECTION //
+for (const animationSVG of document.querySelectorAll(".animationSVG")) {
+  loopSVG(animationSVG);
+}
+
+function loopSVG(svg) {
+  const restartAfterSeconds = Number.parseFloat(svg.dataset.restartAfterSeconds);
+  if (Number.isFinite(restartAfterSeconds)) {
+    const clone = svg.cloneNode(true);
+    svg.insertAdjacentElement("beforebegin", clone);
+    svg.remove();
+    setTimeout(() => {
+      loopSVG(clone)
+    }, restartAfterSeconds * 1e3);
+  }
+}
+
 for (const currentValue of document.querySelectorAll(".animVids")) {
   // set thumbnail time
   currentValue.currentTime = currentValue.dataset.thumbtime;
