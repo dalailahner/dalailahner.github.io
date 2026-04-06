@@ -930,14 +930,20 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     gap: 5rem;
+
+    @media (width >= 768px) {
+      /* TODO: maybe use a grid on bigger screens */
+      justify-content: space-evenly;
+    }
   }
 
   .animationSVG,
   .animationVid {
     width: 100%;
     height: auto;
+    max-height: 50svh;
 
     @media (width >= 768px) {
       width: 25%;
