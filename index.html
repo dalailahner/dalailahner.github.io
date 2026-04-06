@@ -1097,8 +1097,7 @@
       <section class="mainCont">
         <div class="animationCont">
           <svg
-            class="animationSVG"
-            data-restart-after-seconds="5.5"
+            class="animationSVG paused"
             role="img"
             aria-label="a combination of SVG SMIL and CSS animation of a padlock unlocking itself and disappearing in an explosion of particles"
             xmlns="http://www.w3.org/2000/svg"
@@ -1109,13 +1108,21 @@
                 #unlockAnimationCircle {
                   stroke-dasharray: 100;
                   stroke-dashoffset: 100;
-                  animation: unlockAnimationCircleAnim 1.8s 0s cubic-bezier(0.61, 0, 0, 1) forwards;
+                  animation: unlockAnimationCircleAnim 1.8s 0s cubic-bezier(0.61, 0, 0, 1) running forwards;
+
+                  .paused & {
+                    animation: none;
+                  }
                 }
 
                 #unlockAnimationParticles path {
                   stroke-dasharray: 50 150;
                   stroke-dashoffset: 100;
-                  animation: unlockAnimationParticleAnim 0.5s 4.3s ease-out forwards;
+                  animation: unlockAnimationParticleAnim 0.5s 4.3s ease-out running forwards;
+
+                  .paused & {
+                    animation: none;
+                  }
                 }
 
                 @keyframes unlockAnimationCircleAnim {
@@ -1262,17 +1269,22 @@
             <source src="/animations/Boo.webm" type="video/webm; codecs=av01" />
             <source src="/animations/Boo.mp4" type="video/mp4" />
           </video>
-          <video class="animationVid" nocontrols muted loop data-thumbtime="0">
+          <video class="animationVid" nocontrols muted loop data-thumbtime="3">
             <source src="/animations/SNPlus.webm" type="video/webm; codecs=av01" />
             <source src="/animations/SNPlus.mp4" type="video/mp4" />
           </video>
-          <video class="animationVid" nocontrols muted loop data-thumbtime="3">
+          <iframe class="animationIframe" title="Salzburger Nachrichten Sommer Image Kampagne" src="/static/animations/SommerImageKampagne-MR-300x250/index.html" width="300" height="250" frameborder="0"></iframe>
+          <video class="animationVid" nocontrols muted loop data-thumbtime="0">
             <source src="/animations/RocksAndMud.webm" type="video/webm; codecs=av01" />
             <source src="/animations/RocksAndMud.mp4" type="video/mp4" />
           </video>
-          <video class="animationVid" nocontrols muted loop data-thumbtime="3">
+          <video class="animationVid" nocontrols muted loop data-thumbtime="0">
             <source src="/animations/Landtagswahl.webm" type="video/webm; codecs=av01" />
             <source src="/animations/Landtagswahl.mp4" type="video/mp4" />
+          </video>
+          <video class="animationVid" nocontrols muted loop data-thumbtime="0">
+            <source src="/animations/Waldvielfalt.webm" type="video/webm; codecs=av01" />
+            <source src="/animations/Waldvielfalt.mp4" type="video/mp4" />
           </video>
         </div>
       </section>

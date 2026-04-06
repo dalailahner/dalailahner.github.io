@@ -409,34 +409,57 @@ function removeSwipeOverlay() {
 
 ///////////////////////
 // ANIMATION SECTION //
+
+// SVG
 for (const animationSVG of document.querySelectorAll(".animationSVG")) {
-  loopSVG(animationSVG);
-}
+  // init
+  pauseSVG(animationSVG);
 
-function loopSVG(svg) {
-  const restartAfterSeconds = Number.parseFloat(svg.dataset.restartAfterSeconds);
-  if (Number.isFinite(restartAfterSeconds)) {
-    const clone = svg.cloneNode(true);
-    svg.insertAdjacentElement("beforebegin", clone);
-    svg.remove();
-    setTimeout(() => {
-      loopSVG(clone)
-    }, restartAfterSeconds * 1e3);
-  }
-}
-
-for (const currentValue of document.querySelectorAll(".animVids")) {
-  // set thumbnail time
-  currentValue.currentTime = currentValue.dataset.thumbtime;
-
-  currentValue.addEventListener("mouseover", function () {
-    this.currentTime = 0;
-    this.play();
+  // events
+  animationSVG.addEventListener("mouseover", () => {
+    unpauseSVG(animationSVG);
   });
 
-  currentValue.addEventListener("mouseleave", function () {
-    this.currentTime = this.dataset.thumbtime;
-    this.pause();
+  animationSVG.addEventListener("mouseleave", () => {
+    pauseSVG(animationSVG);
+  });
+}
+
+function pauseSVG(svg) {
+  svg.classList.add("paused");
+  svg.pauseAnimations();
+  svg.setCurrentTime(0);
+}
+function unpauseSVG(svg) {
+  svg.classList.remove("paused");
+  svg.unpauseAnimations();
+}
+
+// VIDEO
+for (const animationVid of document.querySelectorAll(".animationVid")) {
+  // set thumbnail time
+  animationVid.currentTime = animationVid.dataset.thumbtime;
+
+  animationVid.addEventListener("mouseover", () => {
+    animationVid.currentTime = 0;
+    animationVid.play();
+  });
+
+  animationVid.addEventListener("mouseleave", () => {
+    animationVid.currentTime = animationVid.dataset.thumbtime;
+    animationVid.pause();
+  });
+}
+
+// IFRAME
+for (const animationIframe of document.querySelectorAll(".animationIframe")) {
+  let animationIframeBaseURL = animationIframe.src.split("/");
+  animationIframeBaseURL.pop();
+  animationIframeBaseURL = animationIframeBaseURL.join("/");
+  const animationIframeDocument = animationIframe.contentDocument.documentElement;
+  animationIframeDocument.insertAdjacentHTML("afterbegin", `<base href="${animationIframeBaseURL}/">`);
+  animationIframe.addEventListener("mouseover", () => {
+    animationIframe.srcdoc = animationIframeDocument.outerHTML;
   });
 }
 
