@@ -36,6 +36,8 @@ User-agent: GoogleAgent-Mariner
 Disallow: /
 User-agent: Gemini-Deep-Research
 Disallow: /
+User-agent: Google-CloudVertexBot
+Disallow: /
 User-agent: Google-NotebookLM
 Disallow: /
 User-agent: GoogleOther
@@ -51,7 +53,9 @@ Disallow: /
 User-agent: Bytespider
 Disallow: /
 
-# Anthropics
+# Anthropic
+User-agent: anthropic-ai
+Disallow: /
 User-agent: ClaudeBot
 Disallow: /
 User-agent: Claude-User
@@ -72,9 +76,9 @@ User-agent: NovaAct
 Disallow: /
 
 # Meta (Facebook/Instagram)
-User-agent: meta-externalagent
+User-agent: Meta-ExternalAgent
 Disallow: /
-User-agent: meta-externalfetcher
+User-agent: Meta-ExternalFetcher
 Disallow: /
 User-agent: FacebookBot
 Disallow: /
@@ -96,6 +100,8 @@ User-agent: CCBot
 Disallow: /
 
 # Ai2Bot
+User-agent: Ai2Bot
+Disallow: /
 User-agent: Ai2Bot-Dolma
 Disallow: /
 
@@ -113,6 +119,8 @@ Disallow: /
 
 # Cohere
 User-agent: cohere-ai
+Disallow: /
+User-agent: cohere-training-data-crawler
 Disallow: /
 
 # Diffbot
@@ -141,6 +149,12 @@ Disallow: /
 User-agent: PetalBot
 Disallow: /
 
+# Omgili
+User-agent: Omgili
+Disallow: /
+User-agent: Omgilibot
+Disallow: /
+
 # Image Sift
 User-agent: ImagesiftBot
 Disallow: /
@@ -155,4 +169,8 @@ Disallow: /
 
 # Webzio
 User-agent: Webzio-Extended
+Disallow: /
+
+# Kangaroo
+User-agent: Kangaroo Bot
 Disallow: /
