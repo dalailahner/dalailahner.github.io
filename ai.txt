@@ -1,8 +1,17 @@
+# It is prohibited to use any contents of this website/repo and/or of this websites/repos data for the purpose of data mining mentioned in § 42h (6) of the Austrian Copyright Act with the goal of training AI, LLMs, diffusion models and/or other ancillary AI based technologies.
+
 # Spawning AI
 # Prevent datasets from using the following file types
 
 User-Agent: *
 Disallow: *.txt
+Disallow: *.md
+Disallow: *.yaml
+Disallow: *.toml
+Disallow: *.otf
+Disallow: *.ttf
+Disallow: *.woff
+Disallow: *.woff2
 Disallow: *.pdf
 Disallow: *.doc
 Disallow: *.docx
@@ -13,6 +22,7 @@ Disallow: *.wks
 Disallow: *.wpd
 Disallow: *.wps
 Disallow: *.html
+Disallow: *.avif
 Disallow: *.bmp
 Disallow: *.gif
 Disallow: *.ico

@@ -1,3 +1,5 @@
+# It is prohibited to use any contents of this website/repo and/or of this websites/repos data for the purpose of data mining mentioned in § 42h (6) of the Austrian Copyright Act with the goal of training AI, LLMs, diffusion models and/or other ancillary AI based technologies.
+
 User-agent: *
 Disallow: /
 
