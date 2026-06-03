@@ -945,7 +945,7 @@
     height: auto;
     max-height: 50svh;
 
-    @media (width >= 768px) {
+    @media (width >= 1024px) {
       width: 25%;
     }
   }
