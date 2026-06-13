@@ -17,7 +17,7 @@ const fileformat = await select(
         value: "avif",
       },
       {
-        value: "jpg",
+        value: "jpeg",
       },
       {
         value: "png",
@@ -57,7 +57,7 @@ function getFileOptions(format) {
   if (format === "avif") {
     return { quality: 60, effort: 6 };
   }
-  if (format === "jpg") {
+  if (format === "jpeg") {
     return { quality: 60 };
   }
   if (format === "png") {
