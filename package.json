@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "test": "./tests/memes.sh && echo 'all good'",
+    "build": "pnpm run test && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
