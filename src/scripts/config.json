@@ -1,0 +1,71 @@
+{
+  "memes": 31,
+  "themes": {
+    "default": {
+      "--accentColor": "oklch(60% 0.25 30)",
+      "--TXTcolor": "oklch(95% 0.01 45)",
+      "--BGcolor": "oklch(25% 0.015 225)",
+      "--altBGcolor": "oklch(30% 0.015 225)",
+      "--shadowColor": "oklch(15% 0.015 225)",
+      "--tooltipColor": "oklch(20% 0.015 225)",
+      "--textShuffleColor1": "oklch(54.71% 0.2044 28.52)",
+      "--textShuffleColor2": "oklch(66.38% 0.1622 50.4)",
+      "--textShuffleColor3": "oklch(80.86% 0.1601 96.26)"
+    },
+    "offwhite": {
+      "--accentColor": "oklch(60% 0.25 30)",
+      "--TXTcolor": "oklch(45% 0.0175 200)",
+      "--BGcolor": "oklch(90% 0.07 60)",
+      "--altBGcolor": "oklch(95% 0.07 60)",
+      "--shadowColor": "oklch(75% 0.07 60)",
+      "--tooltipColor": "oklch(100% 0 0)",
+      "--textShuffleColor1": "oklch(54.71% 0.2044 28.52)",
+      "--textShuffleColor2": "oklch(45% 0.0175 200)",
+      "--textShuffleColor3": "oklch(45% 0.0175 200)"
+    },
+    "urlaub": {
+      "--accentColor": "oklch(70% 0.23 39)",
+      "--TXTcolor": "oklch(85% 0.18 95)",
+      "--BGcolor": "oklch(22% 0.067 330)",
+      "--altBGcolor": "oklch(65% 0.25 348.5)",
+      "--shadowColor": "oklch(65% 0.25 348.5)",
+      "--tooltipColor": "oklch(57% 0.13 273)",
+      "--textShuffleColor1": "oklch(57% 0.13 273)",
+      "--textShuffleColor2": "oklch(70% 0.23 39)",
+      "--textShuffleColor3": "oklch(85% 0.18 95)"
+    },
+    "fosching": {
+      "--accentColor": "oklch(60% 0.25 30)",
+      "--TXTcolor": "oklch(85% 0.15 83)",
+      "--BGcolor": "oklch(33% 0.1 260)",
+      "--altBGcolor": "oklch(45% 0.1 260)",
+      "--shadowColor": "oklch(20% 0.05 145)",
+      "--tooltipColor": "oklch(5% 0.2 8)",
+      "--textShuffleColor1": "oklch(66% 0.2 40)",
+      "--textShuffleColor2": "oklch(60% 0.25 335)",
+      "--textShuffleColor3": "oklch(80% 0.22 135)"
+    },
+    "whitehat": {
+      "--accentColor": "oklch(60% 0.25 30)",
+      "--TXTcolor": "oklch(15% 0.015 225)",
+      "--BGcolor": "oklch(95% 0.01 45)",
+      "--altBGcolor": "oklch(90% 0.01 45)",
+      "--shadowColor": "oklch(85% 0.01 45)",
+      "--tooltipColor": "oklch(80% 0.01 45)",
+      "--textShuffleColor1": "oklch(62% 0.192 6.57)",
+      "--textShuffleColor2": "oklch(65% 0.1452 64.33)",
+      "--textShuffleColor3": "oklch(59% 0.1015 219.89)"
+    },
+    "blackhat": {
+      "--accentColor": "oklch(60% 0.25 30)",
+      "--TXTcolor": "oklch(80% 0.27 145)",
+      "--BGcolor": "oklch(0% 0 0)",
+      "--altBGcolor": "oklch(20% 0 0)",
+      "--shadowColor": "oklch(16% 0 0)",
+      "--tooltipColor": "oklch(20% 0 0)",
+      "--textShuffleColor1": "oklch(80% 0.27 145)",
+      "--textShuffleColor2": "oklch(80% 0.27 145)",
+      "--textShuffleColor3": "oklch(80% 0.27 145)"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import bgCanvas from "./bgCanvas.js";
+import config from "./config.json" with { type: "json" };
 import TextShuffle from "./textShuffle.js";
-import themes from "./themes.json" with { type: "json" };
 
 ///////////////////////
 // GLOBAL VARIABLES: //
@@ -8,6 +8,8 @@ let windowResizeTimeout;
 const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobileOrTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || navigator.userAgent.includes("Mobi") || window.matchMedia("(pointer: coarse)").matches;
 const supportsCssViewportAnim = CSS.supports("animation-timeline", "view()");
+const themes = config?.themes;
+const memes = config?.memes;
 
 ///////////
 // INIT: //
