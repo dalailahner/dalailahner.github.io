@@ -8,8 +8,6 @@ let windowResizeTimeout;
 const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobileOrTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || navigator.userAgent.includes("Mobi") || window.matchMedia("(pointer: coarse)").matches;
 const supportsCssViewportAnim = CSS.supports("animation-timeline", "view()");
-const themes = config?.themes;
-const memes = config?.memes;
 
 ///////////
 // INIT: //
@@ -91,7 +89,7 @@ function heroImgSelect(target) {
     document.documentElement.addEventListener("transitionend", (ev) => {
       ev.target.style.transitionDuration = "";
     });
-    if (typeof themes[target] === "object") {
+    if (typeof config.themes[target] === "object") {
       newImg = Array.from(heroImgs).find((el) => el?.querySelector("figcaption").dataset.theme === target);
     } else {
       console.warn("didn't find selected theme skipping heroImgSelect(); looked for: ", target);
@@ -146,9 +144,9 @@ function heroImgSelect(target) {
     }, 1);
     // set new color theme
     const newImgFigcaption = newImg.querySelector("figcaption");
-    if (newImgFigcaption && typeof themes[newImgFigcaption.dataset.theme] === "object") {
+    if (newImgFigcaption && typeof config.themes[newImgFigcaption.dataset.theme] === "object") {
       localStorage.setItem("selectedTheme", newImgFigcaption.dataset.theme);
-      for (const [key, value] of Object.entries(themes[newImgFigcaption.dataset.theme])) {
+      for (const [key, value] of Object.entries(config.themes[newImgFigcaption.dataset.theme])) {
         document.documentElement.style.setProperty(key, value);
       }
       bgCanvas.updateOptions();
@@ -463,6 +461,51 @@ for (const animationIframe of document.querySelectorAll(".animationIframe")) {
   animationIframe.addEventListener("mouseover", () => {
     animationIframe.srcdoc = animationIframeDocument.outerHTML;
   });
+}
+
+//////////////////
+// MEME SECTION //
+document.querySelector(".memeBtn").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button");
+  const oldImgEl = document.querySelector(".memeImg");
+
+  btn.classList.add("loading");
+  btn.disabled = true;
+
+  const newImage = new Image();
+  newImage.src = getNewMemeSrc(oldImgEl.src);
+  newImage.classList.add("memeImg");
+  newImage
+    .decode()
+    .then(() => {
+      oldImgEl.insertAdjacentElement("beforebegin", newImage);
+      oldImgEl.remove();
+    })
+    .catch((err) => {
+      console.error("FAILED DECODING NEW IMAGE: ", err);
+    })
+    .finally(() => {
+      btn.classList.remove("loading");
+      btn.disabled = false;
+    });
+});
+
+function getNewMemeSrc(oldMemeSrc) {
+  const oldMemeSrcArr = oldMemeSrc.split("/");
+  const oldMemeNumber = Number.parseInt(oldMemeSrcArr.at(-1), 10);
+
+  let newMemeNumber = Math.ceil(Math.random() * config.memes);
+  if (newMemeNumber === oldMemeNumber) {
+    newMemeNumber += 1;
+    if (newMemeNumber > config.memes) {
+      newMemeNumber = 1;
+    }
+  }
+
+  const newMemeSrcArr = oldMemeSrcArr.slice(0, -1);
+  newMemeSrcArr.push(`${newMemeNumber}.avif`);
+
+  return newMemeSrcArr.join("/");
 }
 
 //////////////////////

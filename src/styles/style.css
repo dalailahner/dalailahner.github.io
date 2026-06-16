@@ -9,10 +9,10 @@
   /* VARIABLES: */
   :root {
     --accentColor: oklch(60% 0.25 30deg);
-    --TXTcolor: oklch(95% 0.01 45deg);
-    --blackOrWhiteFgColor: oklch(from var(--TXTcolor) calc(calc(l - 0.5) * 10) 0 0deg);
     --BGcolor: oklch(25% 0.015 225deg);
     --altBGcolor: oklch(30% 0.015 225deg);
+    --TXTcolor: oklch(95% 0.01 45deg);
+    --bgContrastColor: contrast-color(var(--BGcolor));
     --shadowColor: oklch(15% 0.015 225deg);
     --tooltipColor: oklch(20% 0.015 225deg);
     --textShuffleColor1: oklch(54.71% 0.2044 28.52deg);
@@ -278,7 +278,7 @@
     align-items: center;
     justify-content: center;
 
-    &:first-of-type {
+    &:nth-child(1 of .mainCont) {
       margin-top: 0;
       /* TODO: laggt mobil, idk */
       /* background-image: url("/svg/HeroBG.svg"); */
@@ -287,7 +287,7 @@
       background-repeat: no-repeat;
     }
 
-    &:last-of-type {
+    &:nth-last-child(1 of .mainCont) {
       margin-bottom: 0;
     }
   }
@@ -700,7 +700,7 @@
         & svg {
           width: var(--techstackSvgSize);
           height: var(--techstackSvgSize);
-          color: var(--blackOrWhiteFgColor);
+          color: var(--bgContrastColor);
           fill-rule: evenodd;
           clip-rule: evenodd;
           stroke-linejoin: round;
@@ -947,6 +947,107 @@
 
     @media (width >= 1024px) {
       width: 25%;
+    }
+  }
+
+  /* MEMES */
+  .memes {
+    flex-basis: auto;
+  }
+
+  .memeImgCont {
+    width: auto;
+    height: calc(var(--contentHeight) * 0.66);
+  }
+
+  .memeImg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .memeBtn {
+    margin-block: 2.5rem;
+    padding: 0.33em 0.75em;
+    width: fit-content;
+    min-height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* TODO: set a new color variable in the config for btn fg color for every theme and use it here and in the hover/active states */
+    color: color-mix(in oklch shorter hue, var(--bgContrastColor) 75%, var(--accentColor));
+    font-size: 1.125rem;
+    font-weight: 700;
+    border-radius: var(--fullBorderRadius);
+    background-color: var(--accentColor);
+    cursor: pointer;
+    transition:
+      color 0.15s var(--easeOut),
+      background-color 0.15s var(--easeOut);
+    @supports (corner-shape: superellipse(1)) {
+      transition:
+        color 0.15s var(--easeOut),
+        background-color 0.15s var(--easeOut),
+        corner-shape 0.15s var(--easeOut);
+      corner-shape: superellipse(2);
+
+      &:is(:hover, :focus-visible) {
+        corner-shape: superellipse(1.5);
+      }
+    }
+
+    &:active {
+      color: color-mix(in oklch shorter hue, var(--bgContrastColor) 66%, var(--accentColor));
+      background-color: color-mix(in oklch shorter hue, var(--accentColor) 92%, var(--BGcolor));
+      @supports (corner-shape: superellipse(1)) {
+        corner-shape: superellipse(1.33);
+      }
+    }
+
+    &:disabled {
+      pointer-events: none;
+    }
+
+    & .memeBtnText {
+      filter: blur(0);
+      opacity: 1;
+      transition:
+        opacity 0.25s 0s ease-out,
+        filter 0.125s 0.125s ease-out;
+    }
+
+    & .memeBtnSvg {
+      height: 80%;
+      aspect-ratio: 1;
+      position: absolute;
+      top: 10%;
+      right: 50%;
+      fill: currentColor;
+      filter: blur(0.33em);
+      opacity: 0;
+      transform: translateX(50%);
+      transition:
+        opacity 0.25s 0s ease-in,
+        filter 0.125s 0s ease-in;
+    }
+
+    &.loading {
+      & .memeBtnText {
+        filter: blur(0.33em);
+        opacity: 0;
+        transition:
+          opacity 0s 0s linear,
+          filter 0s 0s linear;
+      }
+
+      & .memeBtnSvg {
+        filter: blur(0);
+        opacity: 1;
+        transition:
+          opacity 0s 0s linear,
+          filter 0s 0s linear;
+      }
     }
   }
 
