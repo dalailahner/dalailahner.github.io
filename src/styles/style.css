@@ -280,11 +280,6 @@
 
     &:nth-child(1 of .mainCont) {
       margin-top: 0;
-      /* TODO: laggt mobil, idk */
-      /* background-image: url("/svg/HeroBG.svg"); */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
     }
 
     &:nth-last-child(1 of .mainCont) {
@@ -539,6 +534,19 @@
         transform: rotate(0deg) skewX(0deg) skewY(0deg) translate(-50%, 50%);
       }
     }
+  }
+
+  .heroBgSmokeSvg {
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    mask-image: radial-gradient(closest-side, #fff 90%, #000 100%);
+    mask-mode: luminance;
+    z-index: -10;
+    pointer-events: none;
+    transform: translate(33%, 48%);
   }
 
   /* other sections */
