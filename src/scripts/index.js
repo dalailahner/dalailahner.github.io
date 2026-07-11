@@ -468,9 +468,23 @@ for (const animationIframe of document.querySelectorAll(".animationIframe")) {
 document.querySelector(".memeBtn").addEventListener("click", (ev) => {
   const btn = ev.target.closest("button");
   const oldImgEl = document.querySelector(".memeImg");
+  const memeBtnVideo = document.querySelector(".memeBtnVideo");
 
   btn.classList.add("loading");
   btn.disabled = true;
+
+  if (memeBtnVideo.duration) {
+    const transitionDuration = Number.parseFloat(getComputedStyle(memeBtnVideo).transitionDuration);
+    memeBtnVideo.classList.add("active");
+    memeBtnVideo.play();
+
+    setTimeout(
+      () => {
+        memeBtnVideo.classList.remove("active");
+      },
+      (memeBtnVideo.duration - transitionDuration) * 1000,
+    );
+  }
 
   const newImage = new Image();
   newImage.src = getNewMemeSrc(oldImgEl.src);

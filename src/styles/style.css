@@ -397,6 +397,7 @@
       transition-duration: 0.33s;
       transition-timing-function: var(--easeOut);
 
+      /* stylelint-disable-next-line no-descending-specificity */
       &.active {
         opacity: 1;
         z-index: 1;
@@ -816,6 +817,7 @@
       transform: rotateY(18deg) rotateX(0deg);
     }
 
+    /* stylelint-disable-next-line no-descending-specificity */
     &.active {
       border: 10px solid var(--TXTcolor);
       transform: rotateY(0deg) rotateX(0deg);
@@ -974,6 +976,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    anchor-name: --memeBtnAnchor;
     position: relative;
     /* TODO: set a new color variable in the config for btn fg color for every theme and use it here and in the hover/active states */
     color: color-mix(in oklch shorter hue, var(--bgContrastColor) 75%, var(--accentColor));
@@ -981,16 +984,17 @@
     font-weight: 700;
     border-radius: var(--fullBorderRadius);
     background-color: var(--accentColor);
+    z-index: 10;
     cursor: pointer;
     transition:
       color 0.15s var(--easeOut),
       background-color 0.15s var(--easeOut);
     @supports (corner-shape: superellipse(1)) {
+      corner-shape: superellipse(2);
       transition:
         color 0.15s var(--easeOut),
-        background-color 0.15s var(--easeOut),
-        corner-shape 0.15s var(--easeOut);
-      corner-shape: superellipse(2);
+        corner-shape 0.15s var(--easeOut),
+        background-color 0.15s var(--easeOut);
 
       &:is(:hover, :focus-visible) {
         corner-shape: superellipse(1.5);
@@ -1048,6 +1052,29 @@
           opacity 0s 0s linear,
           filter 0s 0s linear;
       }
+    }
+  }
+
+  .memeBtnVideo {
+    width: 100%;
+    position: absolute;
+    position-anchor: --memeBtnAnchor;
+    position-area: top center;
+    clip-path: inset(0 0 calc(100% - 20px) 0);
+    pointer-events: none;
+    transform: translateY(100%);
+    transition:
+      transform 0.5s var(--easeOut),
+      clip-path 0.5s var(--easeOut);
+
+    @supports not (position-anchor: --memeBtnAnchor) {
+      display: none;
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    &.active {
+      clip-path: inset(0 0 -20px 0);
+      transform: translateY(0%);
     }
   }
 
