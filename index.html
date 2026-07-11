@@ -1378,7 +1378,6 @@
         <div class="memeImgCont">
           <img src="/memes/1.avif" class="memeImg" alt="now that's a good meme" />
         </div>
-        <!-- TODO: put dj khaled "another one" transparent gif (or whatever is smallest) with .ogg (opus codec) sound on klick there -->
         <button class="memeBtn" type="button">
           <span class="memeBtnText">another one</span>
           <svg class="memeBtnSvg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -1387,6 +1386,8 @@
             </path>
           </svg>
         </button>
+        <!-- biome-ignore lint/a11y/useMediaCaption: not important -->
+        <video class="memeBtnVideo" src="/another_one.webm" loading="lazy" preload="metadata" aria-hidden="true" playsinline disablepictureinpicture disableremoteplayback></video>
       </section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline" data-shadowtext="Footer">Footer</h2>
