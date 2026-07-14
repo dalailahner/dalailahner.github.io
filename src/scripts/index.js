@@ -465,47 +465,29 @@ for (const animationIframe of document.querySelectorAll(".animationIframe")) {
 
 //////////////////
 // MEME SECTION //
+
+// TODO: rename the "active" class to something like "popOut" and manually add a "isActive" attribute for checks to the element, so when transitioning out, there is still the "isActive" attribute on it
 document.querySelector(".memeBtn").addEventListener("click", (ev) => {
-  const btn = ev.target.closest("button");
-  const oldImgEl = document.querySelector(".memeImg");
-  const memeBtnVideo = document.querySelector(".memeBtnVideo");
+  const btnEl = ev.target.closest("button");
+  btnEl.classList.add("loading");
+  btnEl.disabled = true;
+  getNewMeme(document.querySelector(".memeImg"), btnEl);
 
-  btn.classList.add("loading");
-  btn.disabled = true;
-
-  if (memeBtnVideo.duration) {
-    const transitionDuration = Number.parseFloat(getComputedStyle(memeBtnVideo).transitionDuration);
-    memeBtnVideo.classList.add("active");
-    memeBtnVideo.play();
-
-    setTimeout(
-      () => {
-        memeBtnVideo.classList.remove("active");
-      },
-      (memeBtnVideo.duration - transitionDuration) * 1000,
-    );
-  }
-
-  const newImage = new Image();
-  newImage.src = getNewMemeSrc(oldImgEl.src);
-  newImage.classList.add("memeImg");
-  newImage
-    .decode()
-    .then(() => {
-      oldImgEl.insertAdjacentElement("beforebegin", newImage);
-      oldImgEl.remove();
-    })
-    .catch((err) => {
-      console.error("FAILED DECODING NEW IMAGE: ", err);
-    })
-    .finally(() => {
-      btn.classList.remove("loading");
-      btn.disabled = false;
+  const allMemeBtnVideoEls = document.querySelectorAll(".memeBtnVideo");
+  if (document.querySelector(".memeBtnVideo.active")) {
+    const newMemeBtnVideoEl = allMemeBtnVideoEls[0].cloneNode(true);
+    newMemeBtnVideoEl.classList.remove("active");
+    newMemeBtnVideoEl.addEventListener("loadedmetadata", () => {
+      playMemeBtnVideo(newMemeBtnVideoEl);
     });
+    allMemeBtnVideoEls[allMemeBtnVideoEls.length - 1].insertAdjacentElement("afterend", newMemeBtnVideoEl);
+    return;
+  }
+  playMemeBtnVideo(allMemeBtnVideoEls[0]);
 });
 
-function getNewMemeSrc(oldMemeSrc) {
-  const oldMemeSrcArr = oldMemeSrc.split("/");
+function getNewMeme(oldImgEl, btnEl) {
+  const oldMemeSrcArr = oldImgEl.src.split("/");
   const oldMemeNumber = Number.parseInt(oldMemeSrcArr.at(-1), 10);
 
   let newMemeNumber = Math.ceil(Math.random() * config.memes);
@@ -515,11 +497,49 @@ function getNewMemeSrc(oldMemeSrc) {
       newMemeNumber = 1;
     }
   }
-
   const newMemeSrcArr = oldMemeSrcArr.slice(0, -1);
   newMemeSrcArr.push(`${newMemeNumber}.avif`);
+  const newMemeSrc = newMemeSrcArr.join("/");
 
-  return newMemeSrcArr.join("/");
+  const newImageEl = new Image();
+  newImageEl.src = newMemeSrc;
+  newImageEl.classList.add("memeImg");
+  newImageEl
+    .decode()
+    .then(() => {
+      oldImgEl.insertAdjacentElement("beforebegin", newImageEl);
+      oldImgEl.remove();
+    })
+    .catch((err) => {
+      console.error("FAILED DECODING NEW IMAGE: ", err);
+    })
+    .finally(() => {
+      btnEl.classList.remove("loading");
+      btnEl.disabled = false;
+    });
+}
+
+function playMemeBtnVideo(memeVideoEl) {
+  if (memeVideoEl.duration) {
+    const transitionDuration = Number.parseFloat(getComputedStyle(memeVideoEl).transitionDuration);
+    memeVideoEl.classList.add("active");
+    memeVideoEl.play();
+
+    setTimeout(
+      () => {
+        memeVideoEl.classList.remove("active");
+        function removeFirstMemeBtnVideoEl(event) {
+          const allMemeBtnVideoEls = document.querySelectorAll(".memeBtnVideo");
+          if (allMemeBtnVideoEls.length > 1) {
+            allMemeBtnVideoEls[0].remove();
+          }
+          event.target.removeEventListener("transitionend", removeFirstMemeBtnVideoEl);
+        }
+        memeVideoEl.addEventListener("transitionend", removeFirstMemeBtnVideoEl);
+      },
+      (memeVideoEl.duration - transitionDuration) * 1000,
+    );
+  }
 }
 
 //////////////////////
