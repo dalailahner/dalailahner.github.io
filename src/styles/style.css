@@ -1068,12 +1068,12 @@
     position: absolute;
     position-anchor: --memeBtnAnchor;
     position-area: top center;
-    clip-path: inset(0 0 calc(100% - 20px) 0);
+    clip-path: inset(0 0 calc(100% - 10px) 0);
     pointer-events: none;
     transform: translateY(100%);
     transition:
       transform 0.5s var(--easeOut),
-      clip-path 0.5s var(--easeOut);
+      clip-path 0.4s var(--easeOut);
 
     @supports not (position-anchor: --memeBtnAnchor) {
       display: none;
@@ -1081,7 +1081,7 @@
 
     /* stylelint-disable-next-line no-descending-specificity */
     &.active {
-      clip-path: inset(0 0 -20px 0);
+      clip-path: inset(0 0 -10px 0);
       transform: translateY(0%);
     }
   }
