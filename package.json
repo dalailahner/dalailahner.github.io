@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "test": "./tests/memes.sh && echo 'all good'",
+    "test": ".git/hooks/pre-commit",
     "build": "pnpm run test && vite build",
     "preview": "vite preview"
   },
