@@ -465,8 +465,6 @@ for (const animationIframe of document.querySelectorAll(".animationIframe")) {
 
 //////////////////
 // MEME SECTION //
-
-// TODO: rename the "active" class to something like "popOut" and manually add a "isActive" attribute for checks to the element, so when transitioning out, there is still the "isActive" attribute on it
 document.querySelector(".memeBtn").addEventListener("click", (ev) => {
   const btnEl = ev.target.closest("button");
   btnEl.classList.add("loading");
@@ -474,10 +472,11 @@ document.querySelector(".memeBtn").addEventListener("click", (ev) => {
   getNewMeme(document.querySelector(".memeImg"), btnEl);
 
   const allMemeBtnVideoEls = document.querySelectorAll(".memeBtnVideo");
-  if (document.querySelector(".memeBtnVideo.active")) {
+  if (document.querySelector(".memeBtnVideo[is_active]")) {
     const newMemeBtnVideoEl = allMemeBtnVideoEls[0].cloneNode(true);
-    newMemeBtnVideoEl.classList.remove("active");
-    newMemeBtnVideoEl.addEventListener("loadedmetadata", () => {
+    newMemeBtnVideoEl.classList.remove("poppedOut");
+    newMemeBtnVideoEl.removeAttribute("is_active");
+    newMemeBtnVideoEl.addEventListener("canplay", () => {
       playMemeBtnVideo(newMemeBtnVideoEl);
     });
     allMemeBtnVideoEls[allMemeBtnVideoEls.length - 1].insertAdjacentElement("afterend", newMemeBtnVideoEl);
@@ -522,23 +521,27 @@ function getNewMeme(oldImgEl, btnEl) {
 function playMemeBtnVideo(memeVideoEl) {
   if (memeVideoEl.duration) {
     const transitionDuration = Number.parseFloat(getComputedStyle(memeVideoEl).transitionDuration);
-    memeVideoEl.classList.add("active");
+    memeVideoEl.setAttribute("is_active", "");
+    memeVideoEl.classList.add("poppedOut");
     memeVideoEl.play();
 
     setTimeout(
       () => {
-        memeVideoEl.classList.remove("active");
+        memeVideoEl.classList.remove("poppedOut");
         function removeFirstMemeBtnVideoEl(event) {
           const allMemeBtnVideoEls = document.querySelectorAll(".memeBtnVideo");
           if (allMemeBtnVideoEls.length > 1) {
             allMemeBtnVideoEls[0].remove();
           }
+          event.target.removeAttribute("is_active");
           event.target.removeEventListener("transitionend", removeFirstMemeBtnVideoEl);
         }
         memeVideoEl.addEventListener("transitionend", removeFirstMemeBtnVideoEl);
       },
       (memeVideoEl.duration - transitionDuration) * 1000,
     );
+  } else {
+    console.error("no duration property on the memeBtnVideo:", memeVideoEl);
   }
 }
 

@@ -1079,8 +1079,7 @@
       display: none;
     }
 
-    /* stylelint-disable-next-line no-descending-specificity */
-    &.active {
+    &.poppedOut {
       clip-path: inset(0 0 -10px 0);
       transform: translateY(0%);
     }
