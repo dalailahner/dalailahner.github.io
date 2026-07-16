@@ -8,6 +8,7 @@ let windowResizeTimeout;
 const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isMobileOrTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || navigator.userAgent.includes("Mobi") || window.matchMedia("(pointer: coarse)").matches;
 const supportsCssViewportAnim = CSS.supports("animation-timeline", "view()");
+let headerElHeight = getComputedStyle(document.querySelector(".header")).height;
 
 ///////////
 // INIT: //
@@ -60,6 +61,7 @@ window.addEventListener("resize", () => {
     if (bgCanvas.updateHeight()) {
       bgCanvas.init("#bgCanvas");
     }
+    headerElHeight = getComputedStyle(document.querySelector(".header")).height;
     removeActiveFromBilder();
   }, 100);
 });
@@ -72,12 +74,11 @@ for (const btn of document.querySelectorAll(".heroImgSelectorBtn")) {
   });
 }
 
-// TODO: fix the buggy image transition (soometimes the next image "hangs")
+// TODO: sometimes i get these errors:
+//   index.js Uncaught TypeError: Cannot read properties of undefined (reading 'nextElementSibling')
+//   index.js Uncaught TypeError: Cannot read properties of undefined (reading 'previousElementSibling')
 function heroImgSelect(target) {
   const heroImgs = document.querySelectorAll(".heroImgCont");
-  // TODO: TEMP VARIABLE, DELETE!
-  const ACTIVEIMAGES = document.querySelectorAll(".heroImgCont.active");
-  console.log("ACTIVE IMAGES: ", ACTIVEIMAGES.length);
   const activeImg = Array.from(heroImgs).find((el) => el.classList.contains("active"));
   let newImg;
   const animated = typeof target === "object";
@@ -619,14 +620,9 @@ function initTextShuffleObserver() {
 
 function initHeroImgSelectionObserver() {
   if (isMobileOrTouchDevice) {
-    let headerHeight = "8%";
     const heroImgSelectionObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const headerEl = document.querySelector(".header");
-          if (headerEl) {
-            headerHeight = getComputedStyle(headerEl).height;
-          }
           if (entry.intersectionRatio === 1) {
             entry.target.classList.add("hover");
           } else {
@@ -634,7 +630,7 @@ function initHeroImgSelectionObserver() {
           }
         }
       },
-      { root: null, rootMargin: `-${headerHeight} 0px 0px 0px`, threshold: buildThresholdList() },
+      { root: null, rootMargin: `-${headerElHeight} 0px 0px 0px`, threshold: buildThresholdList() },
     );
 
     heroImgSelectionObserver.observe(document.querySelector(".heroImgSectionHoverTarget"));
