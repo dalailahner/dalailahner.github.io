@@ -944,20 +944,24 @@
     gap: 5rem;
 
     @media (width >= 768px) {
-      /* TODO: maybe use a grid on bigger screens */
       justify-content: space-evenly;
     }
   }
 
   .animationSVG,
   .animationVid {
-    width: 100%;
+    width: auto;
+    max-width: 50svh;
     height: auto;
     max-height: 50svh;
 
     @media (width >= 1024px) {
-      width: 25%;
+      max-width: 25%;
     }
+  }
+
+  .animationVid {
+    border: 5px solid var(--TXTcolor);
   }
 
   /* MEMES */
