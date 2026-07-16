@@ -415,7 +415,6 @@ for (const animationSVG of document.querySelectorAll(".animationSVG")) {
   // init
   pauseSVG(animationSVG);
 
-  // events
   animationSVG.addEventListener("mouseover", () => {
     unpauseSVG(animationSVG);
   });
@@ -440,14 +439,27 @@ for (const animationVid of document.querySelectorAll(".animationVid")) {
   // set thumbnail time
   animationVid.currentTime = animationVid.dataset.thumbtime;
 
-  animationVid.addEventListener("mouseover", () => {
-    animationVid.currentTime = 0;
-    animationVid.play();
+  animationVid.addEventListener("pointerover", () => {
+    if (event.pointerType === "mouse") {
+      if (animationVid.paused || animationVid.ended) {
+        animationVid.currentTime = 0;
+        animationVid.play();
+      }
+    }
   });
 
-  animationVid.addEventListener("mouseleave", () => {
-    animationVid.currentTime = animationVid.dataset.thumbtime;
-    animationVid.pause();
+  animationVid.addEventListener("click", () => {
+    if (animationVid.paused || animationVid.ended) {
+      if (event.pointerType !== "mouse") {
+        animationVid.currentTime = 0;
+      }
+      animationVid.play();
+      return;
+    }
+    if (!animationVid.paused) {
+      animationVid.pause();
+      return;
+    }
   });
 }
 
@@ -458,6 +470,7 @@ for (const animationIframe of document.querySelectorAll(".animationIframe")) {
   animationIframeBaseURL = animationIframeBaseURL.join("/");
   const animationIframeDocument = animationIframe.contentDocument.documentElement;
   animationIframeDocument.insertAdjacentHTML("afterbegin", `<base href="${animationIframeBaseURL}/">`);
+
   animationIframe.addEventListener("mouseover", () => {
     animationIframe.srcdoc = animationIframeDocument.outerHTML;
   });
