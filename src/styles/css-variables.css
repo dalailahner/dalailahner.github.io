@@ -1,3 +1,4 @@
+/* MAIN */
 @property --accentColor {
   syntax: "<color>";
   inherits: true;
@@ -34,6 +35,7 @@
   initial-value: oklch(20% 0.015 225deg);
 }
 
+/* TEXT SHUFFLE EFFECT */
 @property --textShuffleColor1 {
   syntax: "<color>";
   inherits: true;
@@ -52,6 +54,14 @@
   initial-value: oklch(80.86% 0.1601 96.26deg);
 }
 
+/* TECH STACK SECTION */
+@property --techstackCardAccentColor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(60% 0.25 30deg);
+}
+
+/* ILLUSTRATION SECTION */
 @property --illustrationBgBlur {
   syntax: "<length>";
   inherits: true;
