@@ -674,7 +674,7 @@
       }
 
       & .techstackCard {
-        --techstackCardAccentColor: #fff; /* <- fallback */
+        --techstackCardAccentColor: var(--bgContrastColor); /* <- fallback */
 
         padding-block: 1rem;
         width: calc(var(--techstackSvgSize) + 2rem);
