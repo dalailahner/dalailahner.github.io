@@ -14,7 +14,7 @@
     --TXTcolor: oklch(95% 0.01 45deg);
     --bgContrastColor: contrast-color(var(--BGcolor));
     --shadowColor: oklch(15% 0.015 225deg);
-    --tooltipColor: oklch(20% 0.015 225deg);
+    --tooltipBgColor: oklch(20% 0.015 225deg);
     --textShuffleColor1: oklch(54.71% 0.2044 28.52deg);
     --textShuffleColor2: oklch(66.38% 0.1622 50.4deg);
     --textShuffleColor3: oklch(80.86% 0.1601 96.26deg);
@@ -25,13 +25,50 @@
     --fullBorderRadius: calc(infinity * 1px);
     --easeOut: cubic-bezier(0.22, 1, 0.35, 1);
 
-    transition-property: --accentColor, --TXTcolor, --BGcolor, --altBGcolor, --shadowColor, --tooltipColor;
+    transition-property: --accentColor, --TXTcolor, --BGcolor, --altBGcolor, --primaryBtnFgColor, --primaryBtnBgColor, --shadowColor, --tooltipFgColor, --tooltipBgColor;
     transition-duration: 0.2s;
     transition-timing-function: var(--easeOut);
   }
 
   /* HELPERS: */
   /* TODO: maybe make some flex helpers like .frcc .frcfs ect. */
+  .btn {
+    padding-inline: 1em;
+    width: max-content;
+    min-height: 41px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: var(--primaryBtnFgColor);
+    font-weight: 700;
+    border-radius: var(--fullBorderRadius);
+    background-color: var(--primaryBtnBgColor);
+    transition:
+      color 0.15s var(--easeOut),
+      background-color 0.15s var(--easeOut);
+    -webkit-tap-highlight-color: transparent;
+
+    @supports (corner-shape: superellipse(1)) {
+      corner-shape: superellipse(2);
+      transition:
+        color 0.15s var(--easeOut),
+        corner-shape 0.15s var(--easeOut),
+        background-color 0.15s var(--easeOut);
+
+      &:is(:hover, :focus-visible) {
+        corner-shape: superellipse(1.5);
+      }
+    }
+
+    &:active {
+      color: color-mix(in oklch shorter hue, var(--primaryBtnFgColor) 60%, var(--primaryBtnBgColor));
+      background-color: color-mix(in oklch shorter hue, var(--primaryBtnBgColor) 92%, var(--BGcolor));
+      @supports (corner-shape: superellipse(1)) {
+        corner-shape: superellipse(1.33);
+      }
+    }
+  }
 
   .textShuffle {
     font-family: Hack, Consolas, monospace;
@@ -58,17 +95,17 @@
       padding: 0.3em 0.5em;
       width: fit-content;
       top: calc(100% + 5px);
-      color: var(--TXTcolor);
+      color: var(--tooltipFgColor);
       font-size: 0.875rem;
-      font-weight: 400;
+      font-weight: 700;
       border-radius: 4px;
-      background-color: var(--tooltipColor);
+      background-color: var(--tooltipBgColor);
     }
     &::after {
       content: "";
       top: calc(100% + 1px);
       border-right: 5px solid transparent;
-      border-bottom: 5px solid var(--tooltipColor);
+      border-bottom: 5px solid var(--tooltipBgColor);
       border-left: 5px solid transparent;
     }
     &:hover::before,
@@ -95,16 +132,16 @@
       padding: 0.3em 0.5em;
       width: fit-content;
       bottom: calc(100% + 5px);
-      color: var(--TXTcolor);
+      color: var(--tooltipFgColor);
       font-size: 0.875rem;
-      font-weight: 400;
+      font-weight: 700;
       border-radius: 4px;
-      background-color: var(--tooltipColor);
+      background-color: var(--tooltipBgColor);
     }
     &::after {
       content: "";
       bottom: calc(100% + 1px);
-      border-top: 5px solid var(--tooltipColor);
+      border-top: 5px solid var(--tooltipBgColor);
       border-right: 5px solid transparent;
       border-left: 5px solid transparent;
     }
@@ -452,24 +489,13 @@
     }
 
     & .heroImgDLC {
-      padding: 0.5em 0.75em;
-      width: max-content;
       position: absolute;
       bottom: 25%;
       left: 50%;
-      color: var(--tooltipColor);
       font-size: 1.2rem;
-      font-weight: 700;
       text-decoration: none;
-      background-color: var(--TXTcolor);
       z-index: 2;
       transform: translateX(-50%);
-      transition: all 0.25s var(--easeOut);
-
-      &:is(:hover, :focus-visible) {
-        color: var(--TXTcolor);
-        background-color: var(--accentColor);
-      }
     }
 
     & .heroImgSelectorBtnsCont {
@@ -982,44 +1008,11 @@
 
   .memeBtn {
     margin-block: 2.5rem;
-    padding: 0.33em 0.75em;
-    width: fit-content;
-    min-height: 41px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     anchor-name: --memeBtnAnchor;
     position: relative;
-    /* TODO: set a new color variable in the config for btn fg color for every theme and use it here and in the hover/active states */
-    color: color-mix(in oklch shorter hue, var(--bgContrastColor) 75%, var(--accentColor));
     font-size: 1.125rem;
-    font-weight: 700;
-    border-radius: var(--fullBorderRadius);
-    background-color: var(--accentColor);
     z-index: 10;
     cursor: pointer;
-    transition:
-      color 0.15s var(--easeOut),
-      background-color 0.15s var(--easeOut);
-    @supports (corner-shape: superellipse(1)) {
-      corner-shape: superellipse(2);
-      transition:
-        color 0.15s var(--easeOut),
-        corner-shape 0.15s var(--easeOut),
-        background-color 0.15s var(--easeOut);
-
-      &:is(:hover, :focus-visible) {
-        corner-shape: superellipse(1.5);
-      }
-    }
-
-    &:active {
-      color: color-mix(in oklch shorter hue, var(--bgContrastColor) 66%, var(--accentColor));
-      background-color: color-mix(in oklch shorter hue, var(--accentColor) 92%, var(--BGcolor));
-      @supports (corner-shape: superellipse(1)) {
-        corner-shape: superellipse(1.33);
-      }
-    }
 
     &:disabled {
       pointer-events: none;
