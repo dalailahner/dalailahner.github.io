@@ -41,6 +41,8 @@ window.addEventListener("DOMContentLoaded", () => {
     initSectionHeadlineObserver();
     initIllustrationBgBlurObserver();
   }
+
+  initVideoMuteObserver();
 });
 
 window.addEventListener("load", () => {
@@ -667,5 +669,24 @@ function initIllustrationBgBlurObserver() {
     for (const el of document.querySelectorAll(".illustrationCont")) {
       illustrationBgBlurObserver.observe(el);
     }
+  }
+}
+
+function initVideoMuteObserver() {
+  const videoMuteObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.intersectionRatio === 0) {
+          if (!entry.target?.paused) {
+            entry.target.pause();
+          }
+        }
+      }
+    },
+    { root: null, rootMargin: `-${headerElHeight} 0px 0px 0px`, threshold: [0, 1] },
+  );
+
+  for (const el of document.querySelectorAll(".animationVid")) {
+    videoMuteObserver.observe(el);
   }
 }
