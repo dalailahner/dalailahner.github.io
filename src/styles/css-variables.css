@@ -79,6 +79,12 @@
   initial-value: oklch(60% 0.25 30deg);
 }
 
+@property --animatedTechstackCardAccentColor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 /* ILLUSTRATION SECTION */
 @property --illustrationBgBlur {
   syntax: "<length>";
