@@ -503,6 +503,7 @@ document.querySelector(".memeBtn").addEventListener("click", (ev) => {
     allMemeBtnVideoEls[allMemeBtnVideoEls.length - 1].insertAdjacentElement("afterend", newMemeBtnVideoEl);
     return;
   }
+  allMemeBtnVideoEls[0].currentTime = 0;
   playMemeBtnVideo(allMemeBtnVideoEls[0]);
 });
 
