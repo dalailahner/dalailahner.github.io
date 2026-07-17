@@ -31,7 +31,6 @@
   }
 
   /* HELPERS: */
-  /* TODO: maybe make some flex helpers like .frcc .frcfs ect. */
   .btn {
     padding-inline: 1em;
     width: max-content;
@@ -67,14 +66,6 @@
       @supports (corner-shape: superellipse(1)) {
         corner-shape: superellipse(1.33);
       }
-    }
-  }
-
-  .textShuffle {
-    font-family: Hack, Consolas, monospace;
-
-    & span.nobreak {
-      white-space: nowrap;
     }
   }
 
@@ -150,6 +141,14 @@
       visibility: visible;
       opacity: 1;
       transform: translate(-50%, 0);
+    }
+  }
+
+  .textShuffle {
+    font-family: Hack, Consolas, monospace;
+
+    & span.nobreak {
+      white-space: nowrap;
     }
   }
 
