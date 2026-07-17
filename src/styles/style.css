@@ -9,12 +9,15 @@
   /* VARIABLES: */
   :root {
     --accentColor: oklch(60% 0.25 30deg);
+    --TXTcolor: oklch(95% 0.01 45deg);
     --BGcolor: oklch(25% 0.015 225deg);
     --altBGcolor: oklch(30% 0.015 225deg);
-    --TXTcolor: oklch(95% 0.01 45deg);
     --bgContrastColor: contrast-color(var(--BGcolor));
+    --primaryBtnFgColor: oklch(12% 0.01 45deg);
+    --primaryBtnBgColor: oklch(60% 0.25 30deg);
     --shadowColor: oklch(15% 0.015 225deg);
-    --tooltipBgColor: oklch(20% 0.015 225deg);
+    --tooltipFgColor: oklch(92% 0.0222 30deg);
+    --tooltipBgColor: oklch(10% 0.03 30deg);
     --textShuffleColor1: oklch(54.71% 0.2044 28.52deg);
     --textShuffleColor2: oklch(66.38% 0.1622 50.4deg);
     --textShuffleColor3: oklch(80.86% 0.1601 96.26deg);
@@ -25,7 +28,7 @@
     --fullBorderRadius: calc(infinity * 1px);
     --easeOut: cubic-bezier(0.22, 1, 0.35, 1);
 
-    transition-property: --accentColor, --TXTcolor, --BGcolor, --altBGcolor, --primaryBtnFgColor, --primaryBtnBgColor, --shadowColor, --tooltipFgColor, --tooltipBgColor;
+    transition-property: --accentColor, --TXTcolor, --BGcolor, --altBGcolor, --bgContrastColor, --primaryBtnFgColor, --primaryBtnBgColor, --shadowColor, --tooltipFgColor, --tooltipBgColor;
     transition-duration: 0.2s;
     transition-timing-function: var(--easeOut);
   }
@@ -69,6 +72,7 @@
     }
   }
 
+  .tooltipTop,
   .tooltipBottom {
     position: relative;
 
@@ -78,14 +82,14 @@
       left: 50%;
       visibility: hidden;
       opacity: 0;
-      transform: translate(-50%, -5px);
-      transition: all 0.15s var(--easeOut);
+      transition:
+        opacity 0.33s var(--easeOut),
+        transform 0.15s linear;
     }
     &::before {
       content: attr(data-tooltip);
       padding: 0.3em 0.5em;
       width: fit-content;
-      top: calc(100% + 5px);
       color: var(--tooltipFgColor);
       font-size: 0.875rem;
       font-weight: 700;
@@ -94,11 +98,10 @@
     }
     &::after {
       content: "";
-      top: calc(100% + 1px);
       border-right: 5px solid transparent;
-      border-bottom: 5px solid var(--tooltipBgColor);
       border-left: 5px solid transparent;
     }
+
     &:hover::before,
     &:hover::after {
       visibility: visible;
@@ -106,41 +109,30 @@
       transform: translate(-50%, 0);
     }
   }
-  .tooltipTop {
-    position: relative;
-
+  .tooltipBottom {
     &::before,
     &::after {
-      position: absolute;
-      left: 50%;
-      visibility: hidden;
-      opacity: 0;
-      transform: translate(-50%, 5px);
-      transition: all 0.15s var(--easeOut);
+      transform: translate(-50%, -5px);
     }
     &::before {
-      content: attr(data-tooltip);
-      padding: 0.3em 0.5em;
-      width: fit-content;
-      bottom: calc(100% + 5px);
-      color: var(--tooltipFgColor);
-      font-size: 0.875rem;
-      font-weight: 700;
-      border-radius: 4px;
-      background-color: var(--tooltipBgColor);
+      top: calc(100% + 5px);
     }
     &::after {
-      content: "";
+      top: calc(100% + 1px);
+      border-bottom: 5px solid var(--tooltipBgColor);
+    }
+  }
+  .tooltipTop {
+    &::before,
+    &::after {
+      transform: translate(-50%, 5px);
+    }
+    &::before {
+      bottom: calc(100% + 5px);
+    }
+    &::after {
       bottom: calc(100% + 1px);
       border-top: 5px solid var(--tooltipBgColor);
-      border-right: 5px solid transparent;
-      border-left: 5px solid transparent;
-    }
-    &:hover::before,
-    &:hover::after {
-      visibility: visible;
-      opacity: 1;
-      transform: translate(-50%, 0);
     }
   }
 
@@ -522,7 +514,9 @@
       opacity: 0;
       cursor: pointer;
       transform: translateY(300%);
-      transition: all 0.15s 0s var(--easeOut);
+      transition:
+        opacity 0.15s 0s var(--easeOut),
+        transform 0.15s 0s var(--easeOut);
 
       &::before {
         content: "";
@@ -532,7 +526,9 @@
         background-color: var(--BGcolor);
         z-index: -1;
         transform: skewX(-12deg) skewY(3deg) rotate(0deg) scale(1);
-        transition: all 0.15s var(--easeOut);
+        transition:
+          background-color 0.15s 0s var(--easeOut),
+          transform 0.15s 0s var(--easeOut);
       }
 
       &:is(:hover, :focus-visible) {
@@ -599,6 +595,7 @@
 
     @supports (animation-timeline: view()) {
       animation: sectionHeadlineAnim;
+      animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: view();
       animation-range: contain;
@@ -668,6 +665,7 @@
 
       @supports (animation-timeline: view()) {
         animation: techstackCardContReveal;
+        animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: view();
         animation-range: cover;
@@ -699,7 +697,8 @@
       }
 
       & .techstackCard {
-        --techstackCardAccentColor: var(--bgContrastColor); /* <- fallback */
+        --techstackCardAccentColor: var(--bgContrastColor); /* <- fallback (black or white) */
+        --animatedTechstackCardAccentColor: transparent;
 
         padding-block: 1rem;
         width: calc(var(--techstackSvgSize) + 2rem);
@@ -707,17 +706,16 @@
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        border: 2px solid transparent;
+        border: 2px solid var(--animatedTechstackCardAccentColor);
         border-radius: 8px;
         background-color: var(--altBGcolor);
-        box-shadow: 0 0 0 0 transparent;
-        transition:
-          border-color 0.15s var(--easeOut),
-          box-shadow 0.15s linear;
+        box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--animatedTechstackCardAccentColor) 25%, transparent);
+        transition: --animatedTechstackCardAccentColor 0.15s var(--easeOut);
 
         @media not (hover: hover) {
           @supports (animation-timeline: view()) {
             animation: techstackCardAnim;
+            animation-timing-function: linear;
             animation-fill-mode: both;
             animation-timeline: view();
             animation-range: contain;
@@ -726,8 +724,7 @@
 
         @media (hover: hover) {
           &:is(:hover, :focus-visible) {
-            border-color: var(--techstackCardAccentColor);
-            box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
+            --animatedTechstackCardAccentColor: var(--techstackCardAccentColor);
           }
         }
 
@@ -737,8 +734,6 @@
           color: var(--bgContrastColor);
           fill-rule: evenodd;
           clip-rule: evenodd;
-          stroke-linejoin: round;
-          stroke-miterlimit: 2;
         }
 
         & p {
@@ -837,8 +832,12 @@
     user-select: none;
     transform-origin: bottom;
     transform: rotateY(18deg) rotateX(10deg);
-    transition: all 0.33s var(--easeOut);
+    transition:
+      transform 0.33s var(--easeOut),
+      border 0.33s var(--easeOut);
     backface-visibility: hidden;
+    interpolate-size: allow-keywords;
+    transition-behavior: allow-discrete;
 
     &.hover {
       transform: rotateY(18deg) rotateX(0deg);
@@ -866,7 +865,7 @@
     position: absolute;
     right: 0;
     pointer-events: none;
-    transition: all 0.15s linear;
+    transition: opacity 0.15s linear;
     &::before {
       content: "";
       position: absolute;
@@ -929,6 +928,7 @@
     @media (pointer: coarse) {
       @supports (animation-timeline: view()) {
         animation: illustrationBgAnim;
+        animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: view();
         animation-range: contain;
@@ -1130,20 +1130,16 @@
 
   @keyframes techstackCardAnim {
     0% {
-      border-color: transparent;
-      box-shadow: 0 0 0 transparent;
+      --animatedTechstackCardAccentColor: transparent;
     }
     45% {
-      border-color: var(--techstackCardAccentColor);
-      box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
+      --animatedTechstackCardAccentColor: var(--techstackCardAccentColor);
     }
     65% {
-      border-color: var(--techstackCardAccentColor);
-      box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--techstackCardAccentColor) 25%, transparent);
+      --animatedTechstackCardAccentColor: var(--techstackCardAccentColor);
     }
     100% {
-      border-color: transparent;
-      box-shadow: 0 0 0 transparent;
+      --animatedTechstackCardAccentColor: transparent;
     }
   }
 }
