@@ -6,8 +6,13 @@ import TextShuffle from "./textShuffle.js";
 // GLOBAL VARIABLES: //
 let windowResizeTimeout;
 const prefersReducedMotion = window?.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isMobileOrTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || navigator.userAgent.includes("Mobi") || window.matchMedia("(pointer: coarse)").matches;
-const supportsCssViewportAnim = CSS.supports("animation-timeline", "view()");
+const isMobileOrTouchDevice = "ontouchstart" in window || navigator?.maxTouchPoints > 0 || navigator?.msMaxTouchPoints > 0 || navigator?.userAgent.includes("Mobi") || window?.matchMedia("(pointer: coarse)").matches;
+const supportsCssViewportAnim = CSS?.supports("animation-timeline", "view()");
+/**
+ * the height of the header in pixel
+ * @example "69420px"
+ * @type {string(/^\\d+px$/)}
+ */
 let headerElHeight = getComputedStyle(document.querySelector(".header")).height;
 
 ///////////
