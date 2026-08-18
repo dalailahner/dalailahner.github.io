@@ -836,8 +836,6 @@
       transform 0.33s var(--easeOut),
       border 0.33s var(--easeOut);
     backface-visibility: hidden;
-    interpolate-size: allow-keywords;
-    transition-behavior: allow-discrete;
 
     &.hover {
       transform: rotateY(18deg) rotateX(0deg);
