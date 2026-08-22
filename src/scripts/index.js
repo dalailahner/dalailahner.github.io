@@ -42,6 +42,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   initHeroImgSelectionObserver();
 
+  setArticlesCut();
+
+  if (window.matchMedia("(pointer: coarse)").matches) {
+    initArticleObserver();
+  }
+
   if (!supportsCssViewportAnim) {
     initSectionHeadlineObserver();
     initIllustrationBgBlurObserver();
@@ -69,6 +75,7 @@ window.addEventListener("resize", () => {
       bgCanvas.init("#bgCanvas");
     }
     headerElHeight = getComputedStyle(document.querySelector(".header")).height;
+    setArticlesCut();
     removeActiveFromBilder();
   }, 100);
 });
@@ -586,6 +593,28 @@ function setupOnlyfansBtn() {
   }
 }
 
+function setArticlesCut() {
+  for (const articleCont of document.querySelectorAll(".articleCont")) {
+    setArticleCardAngle(articleCont);
+  }
+
+  function setArticleCardAngle(articleCont) {
+    const cardHeight = articleCont.querySelector(":scope .articleCard").offsetHeight;
+    const textHeight = articleCont.querySelector(":scope .articleText").clientHeight;
+
+    const cutSize = Number.parseFloat(Math.tan((Math.PI / 180) * 12) * cardHeight).toFixed(2);
+
+    articleCont.setAttribute("style", `--articleCutSize: ${cutSize}px; --articleTextHeight: ${textHeight}px`);
+
+    requestAnimationFrame(() => {
+      const updatedCardHeight = articleCont.querySelector(":scope .articleCard").offsetHeight;
+      if (updatedCardHeight > cardHeight) {
+        setArticleCardAngle(articleCont);
+      }
+    });
+  }
+}
+
 /**
  * building an array of thresholds for intersection observer
  *
@@ -660,6 +689,25 @@ function initSectionHeadlineObserver() {
   }
 }
 
+function initArticleObserver() {
+  const articleObserver = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.intersectionRatio === 1) {
+          entry.target.classList.add("inView");
+        } else {
+          entry.target.classList.remove("inView");
+        }
+      }
+    },
+    { root: null, rootMargin: "-20% 0px -15% 0px", threshold: [0, 1] },
+  );
+
+  for (const el of document.querySelectorAll(".articleCont")) {
+    articleObserver.observe(el);
+  }
+}
+
 function initIllustrationBgBlurObserver() {
   if (isMobileOrTouchDevice) {
     const illustrationBgBlurObserver = new IntersectionObserver(
@@ -669,7 +717,7 @@ function initIllustrationBgBlurObserver() {
           entry.target.style.setProperty("--illustrationBgScale", `${Number.parseFloat(1.1 - entry.intersectionRatio * 0.1).toFixed(3)}`);
         }
       },
-      { root: null, rootMargin: "-20% 0px -15% 0px", threshold: buildThresholdList() },
+      { root: null, rootMargin: "-33% 0px -15% 0px", threshold: buildThresholdList() },
     );
 
     for (const el of document.querySelectorAll(".illustrationCont")) {
