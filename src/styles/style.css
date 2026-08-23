@@ -29,7 +29,7 @@
     --easeOut: cubic-bezier(0.22, 1, 0.35, 1);
 
     transition-property: --accentColor, --TXTcolor, --BGcolor, --altBGcolor, --bgContrastColor, --primaryBtnFgColor, --primaryBtnBgColor, --shadowColor, --tooltipFgColor, --tooltipBgColor;
-    transition-duration: 0.2s;
+    transition-duration: 0.33s;
     transition-timing-function: var(--easeOut);
   }
 
@@ -44,6 +44,7 @@
     justify-content: center;
     color: var(--primaryBtnFgColor);
     font-weight: 700;
+    text-decoration: none;
     border-radius: var(--fullBorderRadius);
     background-color: var(--primaryBtnBgColor);
     transition:
@@ -55,7 +56,7 @@
       corner-shape: superellipse(2);
       transition:
         color 0.15s var(--easeOut),
-        corner-shape 0.15s var(--easeOut),
+        corner-shape 0.33s var(--easeOut),
         background-color 0.15s var(--easeOut);
 
       &:is(:hover, :focus-visible) {
@@ -152,6 +153,10 @@
     color: var(--TXTcolor);
     background-color: var(--BGcolor);
     overflow: hidden;
+
+    & #openInNewTabIcon {
+      display: none;
+    }
   }
 
   #bgCanvas {
@@ -416,9 +421,9 @@
       inset: 0;
       opacity: 0;
       z-index: 0;
-      transition: opacity, transform;
-      transition-duration: 0.33s;
-      transition-timing-function: var(--easeOut);
+      transition:
+        opacity 0.33s var(--easeOut),
+        transform 0.33s var(--easeOut);
 
       /* stylelint-disable-next-line no-descending-specificity */
       &.active {
@@ -464,9 +469,9 @@
       z-index: 2;
       transform-origin: 50% 250%;
       transform: rotate(-8deg) skewX(6deg) skewY(8deg) translate(-50%, 150%);
-      transition: opacity, transform;
-      transition-duration: 0.33s;
-      transition-timing-function: var(--easeOut);
+      transition:
+        opacity 0.33s var(--easeOut),
+        transform 0.33s var(--easeOut);
 
       &::before {
         content: "";
@@ -744,6 +749,69 @@
     }
   }
 
+  /* VSCODE */
+  .vscode {
+    flex-basis: auto;
+    gap: 2.5rem;
+
+    & .vscodeImgBtn {
+      width: 100%;
+      max-width: 80vw;
+      height: 100%;
+      max-height: calc(var(--contentHeight) * 0.8);
+      aspect-ratio: 16 / 9;
+      position: relative;
+      border: none;
+      background: transparent;
+
+      & .vscodeImg {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: absolute;
+        inset: 0;
+        filter: drop-shadow(0 0.5rem 3rem var(--shadowColor));
+      }
+    }
+
+    & #vscodeImgDialog {
+      display: none;
+      transition:
+        opacity 0.33s var(--easeOut),
+        display 0.33s var(--easeOut);
+
+      &:open {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+      }
+
+      & .vscodeImgBtn {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      @starting-style {
+        &:open {
+          opacity: 0;
+        }
+      }
+    }
+
+    & .vscodeLinkBtn {
+      isolation: isolate;
+
+      & .vscodeOpenInNewTabIcon {
+        width: 1lh;
+        height: 1lh;
+        vertical-align: middle;
+      }
+    }
+  }
+
   /* ARTICLES */
   .articles {
     padding: 0 10%;
@@ -881,7 +949,7 @@
     background-position-y: calc(50% + var(--BilderSize) * 0.535);
     background-repeat: repeat-x;
     opacity: 1;
-    transition: opacity 0.2s linear;
+    transition: opacity 0.33s linear;
   }
   #BilderScroll:has(.Bild.active) {
     & #BilderShelf {
@@ -1034,8 +1102,8 @@
     border: 5px solid var(--TXTcolor);
     overflow: hidden;
     transition:
-      --illustrationBgBlur 0.2s var(--easeOut),
-      --illustrationBgScale 0.2s var(--easeOut);
+      --illustrationBgBlur 0.33s var(--easeOut),
+      --illustrationBgScale 0.33s var(--easeOut);
 
     @media (pointer: coarse) {
       @supports (animation-timeline: view()) {
