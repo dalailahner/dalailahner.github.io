@@ -18,6 +18,10 @@
   </head>
 
   <body>
+    <svg id="openInNewTabIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <title>open in new tab</title>
+      <path fill="currentColor" fill-rule="evenodd" d="M213.3 128v42.7H128V384h213.3v-85.3H384v128H85.3V128zM448 64v170.7h-42.7v-97.9l-176.9 177-30.2-30.2 177-177h-97.9V64z" />
+    </svg>
     <canvas id="bgCanvas" aria-hidden="true"></canvas>
     <header class="header">
       <div class="headerLogoCont">
@@ -583,13 +587,39 @@
         </div>
       </section>
       <div class="sectionHeadlineCont">
+        <h2 class="sectionHeadline" data-shadowtext="VSCode theme">VSCode theme</h2>
+      </div>
+      <section class="mainCont vscode">
+        <button class="vscodeImgBtn" command="show-modal" commandfor="vscodeImgDialog" type="button">
+          <picture>
+            <source type="image/avif" srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w" sizes="auto" />
+            <source type="image/png" srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w" sizes="auto" />
+            <img class="vscodeImg" src="/vscode/vscodeThemePreview_640.png" alt="VSCode theme preview" loading="lazy" draggable="false" />
+          </picture>
+        </button>
+        <dialog id="vscodeImgDialog" closedby="any">
+          <button class="vscodeImgBtn" command="close" commandfor="vscodeImgDialog" type="button">
+            <picture>
+              <source type="image/avif" srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w" sizes="auto" />
+              <source type="image/png" srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w" sizes="auto" />
+              <img class="vscodeImg" src="/vscode/vscodeThemePreview_640.png" alt="VSCode theme preview" loading="lazy" draggable="false" />
+            </picture>
+          </button>
+        </dialog>
+        <a class="btn vscodeLinkBtn" href="https://marketplace.visualstudio.com/items?itemName=dalailahner.dalailahner-dark" target="_blank">
+          get theme
+          <span>
+            <svg class="vscodeOpenInNewTabIcon">
+              <title>open in new tab</title>
+              <use href="#openInNewTabIcon"></use>
+            </svg>
+          </span>
+        </a>
+      </section>
+      <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline" data-shadowtext="Fav Articles">Fav Articles</h2>
       </div>
       <section class="mainCont articles">
-        <svg id="openInNewTabIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <title>open in new tab</title>
-          <path fill="currentColor" fill-rule="evenodd" d="M213.3 128v42.7H128V384h213.3v-85.3H384v128H85.3V128zM448 64v170.7h-42.7v-97.9l-176.9 177-30.2-30.2 177-177h-97.9V64z" />
-        </svg>
         <a class="articleCont" href="https://daverupert.com/2024/12/css-wants-to-be-a-system/" target="_blank">
           <div class="articleCard">
             <p class="articleText">
@@ -598,7 +628,7 @@
               <span class="articleAuthor">Dave Rupert</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/daverupert.avif" alt="Dave Rupert Logo" />
+          <img class="articleLogo" src="/articles/daverupert.avif" alt="Dave Rupert Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -612,7 +642,7 @@
               <span class="articleAuthor">Carson Gross</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/htmx.avif" alt="HTMX Logo" />
+          <img class="articleLogo" src="/articles/htmx.avif" alt="HTMX Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -626,7 +656,7 @@
               <span class="articleAuthor">Terry Godier</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/terrygodier.avif" alt="Terry Godier Logo" />
+          <img class="articleLogo" src="/articles/terrygodier.avif" alt="Terry Godier Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -640,7 +670,7 @@
               <span class="articleAuthor">Frank Chimero</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/frankchimero.avif" alt="Frank Chimero Logo" />
+          <img class="articleLogo" src="/articles/frankchimero.avif" alt="Frank Chimero Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -656,7 +686,7 @@
               <span class="articleAuthor">grug (Carson Gross)</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/grugbrain.avif" alt="grugbrain Logo" />
+          <img class="articleLogo" src="/articles/grugbrain.avif" alt="grugbrain Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -670,7 +700,7 @@
               <span class="articleAuthor">David Bushell</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/davidbushell.avif" alt="David Bushell Logo" />
+          <img class="articleLogo" src="/articles/davidbushell.avif" alt="David Bushell Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -686,7 +716,7 @@
               <span class="articleAuthor">David Poblador</span>
             </p>
           </div>
-          <img class="articleLogo" src="/articles/davidpoblador.avif" alt="David Poblador i Garcia Logo" />
+          <img class="articleLogo" src="/articles/davidpoblador.avif" alt="David Poblador i Garcia Logo" loading="lazy" />
           <svg class="articleOpenInNewTabIcon">
             <title>open in new tab</title>
             <use href="#openInNewTabIcon"></use>
@@ -1064,10 +1094,6 @@
           </video>
         </div>
       </section>
-      <div class="sectionHeadlineCont">
-        <h2 class="sectionHeadline" data-shadowtext="VSCode theme">VSCode theme</h2>
-      </div>
-      <section class="mainCont" style="background-color: rgba(0, 0, 255, 0.15)"></section>
       <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline" data-shadowtext="Memes">Memes</h2>
       </div>
