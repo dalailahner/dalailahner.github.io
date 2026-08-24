@@ -16,7 +16,7 @@ for meme in ./static/memes/*; do
 done
 
 if (( ${#nonAvifArr[@]} > 0 )); then
-  echo -e "\e[33mWARNING:\e[0m found non .avif files in memes folder:"
+  printf "\033[0;33mWARNING:\033[0m found non .avif files in memes folder:\n"
   for nonAvifFile in "${nonAvifArr[@]}"; do
     echo "$nonAvifFile"
   done
@@ -26,6 +26,6 @@ fi
 if [[ "$totalFiles" == "$configMemes" ]]; then
   exit 0
 else
-  echo -e "\e[31mERROR: found $totalFiles in memes folder, but only $configMemes in config\e[0m\n"
+  printf "\033[0;31mERROR: found %s in memes folder, but only %s in config\033[0m\n" "$totalFiles" "$configMemes"
   exit 1
 fi
