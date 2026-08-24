@@ -163,7 +163,7 @@
               <button class="heroImgSelectorBtn prev" title="previous  image" type="button">&larr;</button>
               <button class="heroImgSelectorBtn next" title="next image" type="button">&rarr;</button>
             </div>
-            <svg class="heroBgSmokeSvg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1000 1000" width="1000" height="1000">
+            <svg class="heroBgSmokeSvg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
               <defs>
                 <radialGradient id="heroBgSmokeSvgGradient">
                   <stop stop-color="var(--accentColor)" stop-opacity="1" offset="0%"></stop>
@@ -590,7 +590,7 @@
         <h2 class="sectionHeadline" data-shadowtext="VSCode theme">VSCode theme</h2>
       </div>
       <section class="mainCont vscode">
-        <button class="vscodeImgBtn" command="show-modal" commandfor="vscodeImgDialog" type="button">
+        <button class="vscodeImgBtn" command="show-modal" commandfor="vscodeImgDialog" aria-label="open VSCode theme preview" type="button">
           <picture>
             <source type="image/avif" srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w" sizes="auto" />
             <source type="image/png" srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w" sizes="auto" />
@@ -598,7 +598,7 @@
           </picture>
         </button>
         <dialog id="vscodeImgDialog" closedby="any">
-          <button class="vscodeImgBtn" command="close" commandfor="vscodeImgDialog" type="button">
+          <button class="vscodeImgBtn" command="close" commandfor="vscodeImgDialog" aria-label="close VSCode theme preview" type="button">
             <picture>
               <source type="image/avif" srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w" sizes="auto" />
               <source type="image/png" srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w" sizes="auto" />

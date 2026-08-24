@@ -47,6 +47,7 @@
     text-decoration: none;
     border-radius: var(--fullBorderRadius);
     background-color: var(--primaryBtnBgColor);
+    cursor: pointer;
     transition:
       color 0.15s var(--easeOut),
       background-color 0.15s var(--easeOut);
@@ -637,7 +638,6 @@
   }
   .toolIconCont {
     width: 3rem;
-    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
   .toolIconImg {
@@ -750,6 +750,10 @@
   }
 
   /* VSCODE */
+  html:has(#vscodeImgDialog:open) {
+    scrollbar-width: none;
+  }
+
   .vscode {
     flex-basis: auto;
     gap: 2.5rem;
@@ -763,6 +767,7 @@
       position: relative;
       border: none;
       background: transparent;
+      cursor: pointer;
 
       & .vscodeImg {
         width: 100%;
@@ -776,6 +781,7 @@
 
     & #vscodeImgDialog {
       display: none;
+      background-color: var(--shadowColor);
       transition:
         opacity 0.33s var(--easeOut),
         display 0.33s var(--easeOut);
@@ -932,7 +938,6 @@
     padding: 0;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 
     @media (width < 768px) {
@@ -1192,7 +1197,6 @@
     position: relative;
     font-size: 1.125rem;
     z-index: 10;
-    cursor: pointer;
 
     &:disabled {
       pointer-events: none;
