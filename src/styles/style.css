@@ -750,10 +750,6 @@
   }
 
   /* VSCODE */
-  html:has(#vscodeImgDialog:open) {
-    scrollbar-width: none;
-  }
-
   .vscode {
     flex-basis: auto;
     gap: 2.5rem;
