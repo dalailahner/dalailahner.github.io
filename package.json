@@ -10,15 +10,15 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@inquirer/prompts": "^8.5.2",
-    "browserslist": "^4.28.6",
-    "lightningcss": "^1.32.0",
+    "@inquirer/prompts": "^8.6.0",
+    "browserslist": "^4.28.8",
+    "lightningcss": "^1.33.0",
     "sharp": "^0.35.3",
-    "vite": "^8.1.4"
+    "vite": "^8.2.2"
   },
   "dependencies": {
     "accented": "^1.4.0",
     "noicss.reducedmotion": "^1.0.2",
-    "noicss.reset": "^1.16.0"
+    "noicss.reset": "^1.16.2"
   }
 }
