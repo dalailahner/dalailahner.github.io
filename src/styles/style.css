@@ -819,6 +819,7 @@
     padding: 0 10%;
     flex-direction: row;
     flex-wrap: wrap;
+    flex-wrap: balance;
     flex-basis: auto;
     align-content: start;
     gap: 5rem;
