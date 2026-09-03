@@ -592,16 +592,28 @@
       <section class="mainCont vscode">
         <button class="vscodeImgBtn" command="show-modal" commandfor="vscodeImgDialog" aria-label="open VSCode theme preview" type="button">
           <picture>
-            <source type="image/avif" srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w" sizes="auto" />
-            <source type="image/png" srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w" sizes="auto" />
+            <source
+              type="image/avif"
+              srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w"
+              sizes="auto, (min-aspect-ratio: 3/2) 120vh, 80vw" />
+            <source
+              type="image/png"
+              srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w"
+              sizes="auto, (min-aspect-ratio: 3/2) 120vh, 80vw" />
             <img class="vscodeImg" src="/vscode/vscodeThemePreview_640.png" alt="VSCode theme preview" loading="lazy" draggable="false" />
           </picture>
         </button>
         <dialog id="vscodeImgDialog" closedby="any">
           <button class="vscodeImgBtn" command="close" commandfor="vscodeImgDialog" aria-label="close VSCode theme preview" type="button">
             <picture>
-              <source type="image/avif" srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w" sizes="auto" />
-              <source type="image/png" srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w" sizes="auto" />
+              <source
+                type="image/avif"
+                srcset="/vscode/vscodeThemePreview_640.avif 640w, /vscode/vscodeThemePreview_1280.avif 1280w, /vscode/vscodeThemePreview_1920.avif 1920w, /vscode/vscodeThemePreview_2560.avif 2560w"
+                sizes="auto, (min-aspect-ratio: 16/9) 177.777vh, 100vw" />
+              <source
+                type="image/png"
+                srcset="/vscode/vscodeThemePreview_640.png 640w, /vscode/vscodeThemePreview_1280.png 1280w, /vscode/vscodeThemePreview_1920.png 1920w, /vscode/vscodeThemePreview_2560.png 2560w"
+                sizes="auto, (min-aspect-ratio: 16/9) 177.777vh, 100vw" />
               <img class="vscodeImg" src="/vscode/vscodeThemePreview_640.png" alt="VSCode theme preview" loading="lazy" draggable="false" />
             </picture>
           </button>
