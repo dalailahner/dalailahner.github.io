@@ -1,5 +1,5 @@
-import { input, select, confirm } from "@inquirer/prompts";
-import { readdirSync, existsSync, mkdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
+import { confirm, input, select } from "@inquirer/prompts";
 import sharp from "sharp";
 
 // USER INPUT:
@@ -46,9 +46,7 @@ if (confirmation) {
     const nameArray = file.split(".");
     nameArray.pop();
     const name = nameArray.join(".");
-    sharp(`${inputDir}/${file}`)
-      .toFormat(fileformat, getFileOptions(fileformat))
-      .toFile(`${outputDir}/${name}.${fileformat}`);
+    sharp(`${inputDir}/${file}`).toFormat(fileformat, getFileOptions(fileformat)).toFile(`${outputDir}/${name}.${fileformat}`);
   }
 }
 
