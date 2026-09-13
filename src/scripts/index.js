@@ -59,6 +59,32 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("load", () => {
   console.log("LOAD EVENT TRIGGERED");
 
+  // animation videos
+  for (const animationVid of document.querySelectorAll(".animationVid")) {
+    const thumbtime = Number.parseInt(animationVid.dataset.thumbtime, 10);
+    if (Number.isSafeInteger(thumbtime)) {
+      animationVid.currentTime = thumbtime;
+    }
+  }
+
+  // animation svgs
+  for (const animationSVG of document.querySelectorAll(".animationSVG")) {
+    animationSVG.classList.add("paused");
+    animationSVG.pauseAnimations();
+    animationSVG.setCurrentTime(0);
+  }
+
+  // animation iframes
+  for (const iframe of document.querySelectorAll(".animationIframe")) {
+    let iframeBaseURL = iframe.src.split("/");
+    iframeBaseURL.pop();
+    iframeBaseURL = iframeBaseURL.join("/");
+    const iframeHead = iframe?.contentDocument.documentElement.querySelector("head");
+    if (iframeHead) {
+      iframeHead.insertAdjacentHTML("afterbegin", `<base href="${iframeBaseURL}/">`);
+    }
+  }
+
   /* TODO: check accented when finished
   if (import.meta.env.MODE === "development") {
     import("accented").then(({ accented }) => {
@@ -424,70 +450,91 @@ function removeSwipeOverlay() {
 
 ///////////////////////
 // ANIMATION SECTION //
+for (const animationContBtn of document.querySelectorAll(".animationContBtn")) {
+  animationContBtn.addEventListener("click", (ev) => {
+    const animationEl = ev.currentTarget.querySelector(":scope :is(video, svg, iframe)");
 
-// SVG
-for (const animationSVG of document.querySelectorAll(".animationSVG")) {
-  // init
-  pauseSVG(animationSVG);
+    if (animationEl) {
+      // the tagName of svg's is apparently lowercase while every other fucking element's tagName is uppercase...
+      switch (animationEl.tagName.toLowerCase()) {
+        case "video": {
+          if (animationEl.dataset?.timeoutId) {
+            clearTimeout(Number.parseInt(animationEl.dataset.timeoutId, 10));
+          }
 
-  animationSVG.addEventListener("mouseover", () => {
-    unpauseSVG(animationSVG);
-  });
+          if (animationEl.dataset?.doubleclickReady === "true") {
+            animationEl.currentTime = animationEl.dataset?.thumbtime || 0;
+            animationEl.pause();
+          } else {
+            if (animationEl.paused || animationEl.ended) {
+              animationEl.play();
+            } else {
+              animationEl.pause();
+            }
+          }
 
-  animationSVG.addEventListener("mouseleave", () => {
-    pauseSVG(animationSVG);
-  });
-}
+          animationEl.dataset.doubleclickReady = "true";
+          animationEl.dataset.timeoutId = setTimeout(() => {
+            animationEl.dataset.doubleclickReady = "false";
+          }, 200);
+          break;
+        }
 
-function pauseSVG(svg) {
-  svg.classList.add("paused");
-  svg.pauseAnimations();
-  svg.setCurrentTime(0);
-}
-function unpauseSVG(svg) {
-  svg.classList.remove("paused");
-  svg.unpauseAnimations();
-}
+        case "svg": {
+          if (animationEl.dataset?.timeoutId) {
+            clearTimeout(Number.parseInt(animationEl.dataset.timeoutId, 10));
+          }
 
-// VIDEO
-for (const animationVid of document.querySelectorAll(".animationVid")) {
-  // set thumbnail time
-  animationVid.currentTime = animationVid.dataset.thumbtime;
+          if (animationEl.classList.contains("paused")) {
+            animationEl.setCurrentTime(0);
+            animationEl.unpauseAnimations();
+            animationEl.classList.remove("paused");
+          } else {
+            animationEl.classList.add("paused");
+            window.requestAnimationFrame(() => {
+              animationEl.classList.remove("paused");
+              animationEl.setCurrentTime(0);
+              animationEl.unpauseAnimations();
+            });
+          }
 
-  animationVid.addEventListener("pointerover", () => {
-    if (event.pointerType === "mouse") {
-      if (animationVid.paused || animationVid.ended) {
-        animationVid.currentTime = 0;
-        animationVid.play();
+          const duration = Number.parseInt(animationEl.dataset?.duration, 10);
+          if (Number.isSafeInteger(duration)) {
+            animationEl.dataset.timeoutId = setTimeout(() => {
+              animationEl.classList.add("paused");
+              animationEl.pauseAnimations();
+              animationEl.setCurrentTime(0);
+            }, duration);
+          }
+          break;
+        }
+
+        case "iframe": {
+          const iframe = animationEl;
+          const contBtn = iframe.closest("button");
+          contBtn.disabled = true;
+
+          iframe.srcdoc = iframe.contentDocument.documentElement.outerHTML;
+
+          iframe.addEventListener(
+            "load",
+            () => {
+              contBtn.disabled = false;
+              contBtn.focus();
+            },
+            { once: true },
+          );
+
+          break;
+        }
+
+        default:
+          console.warn("got unknown element type from:", animationEl);
+          break;
       }
+    } else {
+      console.error("Element not found, got:", animationEl);
     }
-  });
-
-  animationVid.addEventListener("click", () => {
-    if (animationVid.paused || animationVid.ended) {
-      if (event.pointerType !== "mouse") {
-        animationVid.currentTime = 0;
-      }
-      animationVid.play();
-      return;
-    }
-    if (!animationVid.paused) {
-      animationVid.pause();
-      return;
-    }
-  });
-}
-
-// IFRAME
-for (const animationIframe of document.querySelectorAll(".animationIframe")) {
-  let animationIframeBaseURL = animationIframe.src.split("/");
-  animationIframeBaseURL.pop();
-  animationIframeBaseURL = animationIframeBaseURL.join("/");
-  const animationIframeDocument = animationIframe.contentDocument.documentElement;
-  animationIframeDocument.insertAdjacentHTML("afterbegin", `<base href="${animationIframeBaseURL}/">`);
-
-  animationIframe.addEventListener("mouseover", () => {
-    animationIframe.srcdoc = animationIframeDocument.outerHTML;
   });
 }
 
