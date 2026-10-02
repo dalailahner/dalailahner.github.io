@@ -85,6 +85,13 @@
   initial-value: transparent;
 }
 
+/* NOICSS SECTION */
+@property --noicssPreviewCodeLightness {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.8;
+}
+
 /* ILLUSTRATION SECTION */
 @property --illustrationBgBlur {
   syntax: "<length>";

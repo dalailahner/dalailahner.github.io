@@ -590,6 +590,71 @@
         </div>
       </section>
       <div class="sectionHeadlineCont">
+        <h2 class="sectionHeadline" data-shadowtext="NOICSS">NOICSS</h2>
+      </div>
+      <section class="mainCont noicss">
+        <div class="noicssDesc">
+          <a href="https://github.com/dalailahner/noicss" target="_blank"
+            >noicss<span
+              ><svg class="nocissOpenInNewTabIcon">
+                <title>open in new tab</title>
+                <use href="#openInNewTabIcon"></use></svg></span
+          ></a>
+          <p class="textShuffle">is a collection of modern vanilla CSS "modules" you can plug together in a modular fashion, so you can choose and ship only what you really need.</p>
+          <br />
+          <p class="textShuffle">Choose below how you want to install and use it:</p>
+        </div>
+        <label class="noicssPreviewSwitcher" for="noicssPreviewStyleCheckbox" title="installation type" aria-describedby="noicssPreviewStyleCheckbox">
+          <input type="checkbox" id="noicssPreviewStyleCheckbox" name="noicssPreviewStyleCheckbox" aria-label="switch preview to modular installation style" />
+          <span class="switcherInactiveCont">
+            <span class="switcherText">full</span>
+            <span class="switcherText">modular</span>
+          </span>
+          <span class="switcherActiveCont">
+            <span class="switcherText">full</span>
+            <span class="switcherText">modular</span>
+          </span>
+        </label>
+        <pre class="noicssPreviewCode full">
+<span class="comment">/* install the full collection, ready to use whatever you need: */
+/* npm i noicss */</span>
+<span class="at-keyword">@layer</span> <span class="layername">reset</span>, <span class="layername">colors</span>, <span class="layername">toggle</span>, <span class="layername">main</span>, <span class="layername">reducedmotion</span>;
+
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss/reset"</span>) layer(<span class="layername">reset</span>);
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss/colors"</span>) layer(<span class="layername">colors</span>);
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss/toggle"</span>) layer(<span class="layername">toggle</span>);
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss/reducedmotion"</span>) layer(<span class="layername">reducedmotion</span>);
+
+<span class="comment">/* YOUR OWN CSS: */</span>
+<span class="at-keyword">@layer</span> <span class="layername">main</span> {
+
+}</pre>
+        <pre class="noicssPreviewCode modular">
+<span class="comment">/* install the individual modules separately: */
+/* npm i noicss.reset noicss.colors noicss.toggle noicss.reducedmotion */</span>
+<span class="at-keyword">@layer</span> <span class="layername">reset</span>, <span class="layername">colors</span>, <span class="layername">toggle</span>, <span class="layername">main</span>, <span class="layername">reducedmotion</span>;
+
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss.reset"</span>) layer(<span class="layername">reset</span>);
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss.colors"</span>) layer(<span class="layername">colors</span>);
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss.toggle"</span>) layer(<span class="layername">toggle</span>);
+<span class="at-keyword">@import</span> <span class="keyword">url</span>(<span class="string">"noicss.reducedmotion"</span>) layer(<span class="layername">reducedmotion</span>);
+
+<span class="comment">/* YOUR OWN CSS: */</span>
+<span class="at-keyword">@layer</span> <span class="layername">main</span> {
+
+}</pre>
+        <div class="noicssDesc">
+          <p class="textShuffle">Visit</p>
+          <a href="https://github.com/dalailahner/noicss" target="_blank"
+            >noicss<span
+              ><svg class="nocissOpenInNewTabIcon">
+                <title>open in new tab</title>
+                <use href="#openInNewTabIcon"></use></svg></span
+          ></a>
+          <p class="textShuffle">to see all available modules and how to use them.</p>
+        </div>
+      </section>
+      <div class="sectionHeadlineCont">
         <h2 class="sectionHeadline" data-shadowtext="VSCode theme">VSCode theme</h2>
       </div>
       <section class="mainCont vscode">

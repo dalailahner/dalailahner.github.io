@@ -13,7 +13,8 @@
       "--tooltipBgColor": "oklch(10% 0.03 30)",
       "--textShuffleColor1": "oklch(54.71% 0.2044 28.52)",
       "--textShuffleColor2": "oklch(66.38% 0.1622 50.4)",
-      "--textShuffleColor3": "oklch(80.86% 0.1601 96.26)"
+      "--textShuffleColor3": "oklch(80.86% 0.1601 96.26)",
+      "--noicssPreviewCodeLightness": 0.8
     },
     "offwhite": {
       "--accentColor": "oklch(60% 0.25 30)",
@@ -27,7 +28,8 @@
       "--tooltipBgColor": "oklch(10% 0.03 60)",
       "--textShuffleColor1": "oklch(54.71% 0.2044 28.52)",
       "--textShuffleColor2": "oklch(45% 0.0175 200)",
-      "--textShuffleColor3": "oklch(45% 0.0175 200)"
+      "--textShuffleColor3": "oklch(45% 0.0175 200)",
+      "--noicssPreviewCodeLightness": 0.5
     },
     "urlaub": {
       "--accentColor": "oklch(70% 0.23 39)",
@@ -41,7 +43,8 @@
       "--tooltipBgColor": "oklch(0.666 0.2 235)",
       "--textShuffleColor1": "oklch(57% 0.13 273)",
       "--textShuffleColor2": "oklch(70% 0.23 39)",
-      "--textShuffleColor3": "oklch(85% 0.18 95)"
+      "--textShuffleColor3": "oklch(85% 0.18 95)",
+      "--noicssPreviewCodeLightness": 0.7
     },
     "fosching": {
       "--accentColor": "oklch(60% 0.25 30)",
@@ -55,7 +58,8 @@
       "--tooltipBgColor": "oklch(20% 0.05 145)",
       "--textShuffleColor1": "oklch(66% 0.2 40)",
       "--textShuffleColor2": "oklch(60% 0.25 335)",
-      "--textShuffleColor3": "oklch(80% 0.22 135)"
+      "--textShuffleColor3": "oklch(80% 0.22 135)",
+      "--noicssPreviewCodeLightness": 0.8
     },
     "whitehat": {
       "--accentColor": "oklch(60% 0.25 30)",
@@ -69,7 +73,8 @@
       "--tooltipBgColor": "oklch(60% 0.25 30)",
       "--textShuffleColor1": "oklch(62% 0.192 6.57)",
       "--textShuffleColor2": "oklch(65% 0.1452 64.33)",
-      "--textShuffleColor3": "oklch(59% 0.1015 219.89)"
+      "--textShuffleColor3": "oklch(59% 0.1015 219.89)",
+      "--noicssPreviewCodeLightness": 0.45
     },
     "blackhat": {
       "--accentColor": "oklch(80% 0.27 145)",
@@ -83,7 +88,8 @@
       "--tooltipBgColor": "oklch(80% 0.27 145)",
       "--textShuffleColor1": "oklch(80% 0.27 145)",
       "--textShuffleColor2": "oklch(80% 0.27 145)",
-      "--textShuffleColor3": "oklch(80% 0.27 145)"
+      "--textShuffleColor3": "oklch(80% 0.27 145)",
+      "--noicssPreviewCodeLightness": 0.666
     }
   }
 }
