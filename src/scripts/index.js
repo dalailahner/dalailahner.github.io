@@ -61,8 +61,8 @@ window.addEventListener("load", () => {
 
   // animation videos
   for (const animationVid of document.querySelectorAll(".animationVid")) {
-    const thumbtime = Number.parseInt(animationVid.dataset.thumbtime, 10);
-    if (Number.isSafeInteger(thumbtime)) {
+    const thumbtime = Number.parseFloat(animationVid.dataset.thumbtime);
+    if (!Number.isNaN(thumbtime)) {
       animationVid.currentTime = thumbtime;
     }
   }
