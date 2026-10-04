@@ -1460,6 +1460,7 @@
       align-items: center;
       justify-content: start;
       gap: 20svh;
+      color: var(--BGcolor);
       font-size: 1.25rem;
       transform-origin: 50% 200%;
 
@@ -1479,7 +1480,6 @@
       align-items: center;
       justify-content: start;
       gap: 1lh;
-      color: var(--TXTcolor);
 
       @media (width >= 768px) {
         flex-direction: row;
