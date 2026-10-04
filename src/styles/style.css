@@ -1236,7 +1236,7 @@
 
   .illustrationCont {
     --illustrationBgBlur: 5px;
-    --illustrationBgScale: 1.1;
+    --illustrationBgScale: 1.05;
 
     width: var(--BilderSize);
     aspect-ratio: 1;
@@ -1260,7 +1260,7 @@
     @media (pointer: fine) {
       &:is(:hover, :focus-visible) {
         --illustrationBgBlur: 0px;
-        --illustrationBgScale: 1;
+        --illustrationBgScale: 1.1;
       }
     }
 
@@ -1461,6 +1461,15 @@
       justify-content: start;
       gap: 20svh;
       font-size: 1.25rem;
+      transform-origin: 50% 200%;
+
+      @supports (animation-timeline: view()) {
+        animation: footerContentAnim;
+        animation-timeline: view();
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-range: entry;
+      }
     }
 
     & .footerLinksCont {
@@ -1522,19 +1531,19 @@
   @keyframes illustrationBgAnim {
     0% {
       --illustrationBgBlur: 5px;
-      --illustrationBgScale: 1.1;
+      --illustrationBgScale: 1.05;
     }
     15% {
       --illustrationBgBlur: 0px;
-      --illustrationBgScale: 1;
+      --illustrationBgScale: 1.1;
     }
     85% {
       --illustrationBgBlur: 0px;
-      --illustrationBgScale: 1;
+      --illustrationBgScale: 1.1;
     }
     100% {
       --illustrationBgBlur: 5px;
-      --illustrationBgScale: 1.1;
+      --illustrationBgScale: 1.05;
     }
   }
 
@@ -1562,6 +1571,19 @@
     }
     100% {
       --animatedTechstackCardAccentColor: transparent;
+    }
+  }
+
+  @keyframes footerContentAnim {
+    from {
+      filter: blur(1rem);
+      opacity: 0;
+      scale: 0.8;
+    }
+    to {
+      filter: blur(0);
+      opacity: 1;
+      scale: 1;
     }
   }
 }
