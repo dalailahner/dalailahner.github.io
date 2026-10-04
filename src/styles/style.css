@@ -895,7 +895,7 @@
       width: 100%;
       max-width: 80vw;
       height: 100%;
-      max-height: calc(var(--contentHeight) * 0.8);
+      max-height: calc((100svh - var(--headerHeight)) * 0.8);
       aspect-ratio: 16 / 9;
       position: relative;
       border: none;
@@ -1333,7 +1333,7 @@
 
   .memeImgCont {
     width: auto;
-    height: calc(var(--contentHeight) * 0.66);
+    height: calc((100svh - var(--headerHeight)) * 0.66);
   }
 
   .memeImg {
