@@ -34,6 +34,14 @@
     transition-timing-function: var(--easeOut);
   }
 
+  /* REMOVE TAP HIGHLIGHT */
+  button,
+  .btn,
+  .noicssPreviewSwitcher,
+  #BilderScroll {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* HELPERS: */
   .btn {
     padding-inline: 1em;
@@ -52,7 +60,6 @@
     transition:
       color 0.15s var(--easeOut),
       background-color 0.15s var(--easeOut);
-    -webkit-tap-highlight-color: transparent;
 
     @supports (corner-shape: superellipse(1)) {
       corner-shape: superellipse(2);
@@ -637,7 +644,6 @@
   }
   .toolIconCont {
     width: 3rem;
-    -webkit-tap-highlight-color: transparent;
   }
   .toolIconImg {
     width: 100%;
@@ -1068,7 +1074,6 @@
     padding: 0;
     position: relative;
     overflow: hidden;
-    -webkit-tap-highlight-color: transparent;
 
     @media (width < 768px) {
       flex-basis: 100svh;
@@ -1305,7 +1310,6 @@
     border: none;
     background: transparent;
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
 
     @media (width >= 1024px) {
       max-width: 25%;
