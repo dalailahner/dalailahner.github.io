@@ -1477,6 +1477,25 @@
       }
     }
 
+    & .footerTextCont {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+
+      @media (width >= 768px) {
+        display: inline;
+      }
+
+      & .markerOnMobile::before {
+        content: "- ";
+        display: inline;
+
+        @media (width >= 768px) {
+          display: none;
+        }
+      }
+    }
+
     & .footerLinksCont {
       width: 100%;
       display: flex;
