@@ -716,7 +716,7 @@
         box-shadow: 0 3px 24px 4px color-mix(in oklch, var(--animatedTechstackCardAccentColor) 25%, transparent);
         transition: --animatedTechstackCardAccentColor 0.15s var(--easeOut);
 
-        @media not (hover: hover) {
+        @media not (any-hover: hover) {
           @supports (animation-timeline: view()) {
             animation: techstackCardAnim;
             animation-timeline: view();
@@ -726,7 +726,7 @@
           }
         }
 
-        @media (hover: hover) {
+        @media (any-hover: hover) {
           &:is(:hover, :focus-visible) {
             --animatedTechstackCardAccentColor: var(--techstackCardAccentColor);
           }
@@ -1247,7 +1247,7 @@
       --illustrationBgBlur 0.33s var(--easeOut),
       --illustrationBgScale 0.33s var(--easeOut);
 
-    @media (pointer: coarse) {
+    @media not (any-hover: hover) {
       @supports (animation-timeline: view()) {
         animation: illustrationBgAnim;
         animation-timeline: view();
@@ -1257,7 +1257,7 @@
       }
     }
 
-    @media (pointer: fine) {
+    @media (any-hover: hover) {
       &:is(:hover, :focus-visible) {
         --illustrationBgBlur: 0px;
         --illustrationBgScale: 1.1;

@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   setArticlesCut();
 
-  if (window.matchMedia("(pointer: coarse)").matches) {
+  if (!window.matchMedia("(any-hover: hover)").matches) {
     initArticleObserver();
   }
 
