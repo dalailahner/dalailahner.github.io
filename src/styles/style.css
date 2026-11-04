@@ -170,6 +170,12 @@
     }
   }
 
+  .llms {
+    position: absolute;
+    z-index: calc(infinity * -1);
+    user-select: none;
+  }
+
   #bgCanvas {
     width: 100%;
     height: 100lvh;
