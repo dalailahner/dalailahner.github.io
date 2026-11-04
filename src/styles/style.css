@@ -1010,10 +1010,13 @@
       & .articleSubtitle {
         font-size: 0.875em;
         font-style: italic;
+        font-weight: 400;
         line-height: 1.2;
+        opacity: 0.66;
       }
 
       & .articleAuthor {
+        font-size: 0.875em;
         line-height: 2;
         &::before {
           content: "― ";
