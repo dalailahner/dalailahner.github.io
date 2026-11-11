@@ -280,11 +280,15 @@ bilderRow.addEventListener("focus", (event) => {
 });
 
 bilderRow.addEventListener("keydown", (keyEvent) => {
+  const enter = ["Enter", "Space", "NumpadEnter"].includes(keyEvent.code);
+  const left = ["ArrowLeft", "KeyH", "KeyA"].includes(keyEvent.code);
+  const right = ["ArrowRight", "KeyL", "KeyD"].includes(keyEvent.code);
+  const esc = ["Escape", "Backspace"].includes(keyEvent.code);
+
   const BilderArr = Array.from(bilderRow.querySelectorAll(".Bild"));
   let newFocusIndex = 0;
 
-  // enter || space
-  if (keyEvent.code === "Enter" || keyEvent.code === "Space") {
+  if (enter) {
     if (bilderRow.querySelector(".Bild.focus")) {
       keyEvent.preventDefault();
 
@@ -305,10 +309,10 @@ bilderRow.addEventListener("keydown", (keyEvent) => {
         }),
       );
     }
+    return;
   }
 
-  // left || right
-  if (keyEvent.code === "ArrowRight" || keyEvent.code === "KeyL" || keyEvent.code === "KeyD" || keyEvent.code === "ArrowLeft" || keyEvent.code === "KeyH" || keyEvent.code === "KeyA") {
+  if (left || right) {
     const activeBild = document.querySelector(".Bild.active");
     if (activeBild) {
       activeBild.classList.add("focus");
@@ -317,18 +321,16 @@ bilderRow.addEventListener("keydown", (keyEvent) => {
     if (bilderRow.querySelector(".Bild.focus")) {
       newFocusIndex = BilderArr.findIndex((el) => el.classList.contains("focus"));
     }
-    // right
-    if (keyEvent.code === "ArrowRight" || keyEvent.code === "KeyL" || keyEvent.code === "KeyD") {
+    if (left) {
+      if (!(newFocusIndex - 1 < 0)) {
+        newFocusIndex -= 1;
+      }
+    }
+    if (right) {
       if (!(newFocusIndex + 1 >= BilderArr.length)) {
         newFocusIndex += 1;
       }
       removeSwipeOverlay();
-    }
-    // left
-    if (keyEvent.code === "ArrowLeft" || keyEvent.code === "KeyH" || keyEvent.code === "KeyA") {
-      if (!(newFocusIndex - 1 < 0)) {
-        newFocusIndex -= 1;
-      }
     }
 
     for (const Bild of BilderArr) {
@@ -336,6 +338,16 @@ bilderRow.addEventListener("keydown", (keyEvent) => {
     }
     BilderArr[newFocusIndex].classList.add("focus");
     setBilderScrollPos(getOffsetForElementCentering(BilderArr[newFocusIndex]));
+    return;
+  }
+
+  if (esc) {
+    const activeBild = document.querySelector(".Bild.active");
+    if (activeBild) {
+      activeBild.classList.add("focus");
+      removeActiveFromBilder();
+    }
+    return;
   }
 });
 
