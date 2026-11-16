@@ -28,6 +28,8 @@
     --BilderSize: min(400px, 60vw, 60svh);
     --fullBorderRadius: calc(infinity * 1px);
     --easeOut: cubic-bezier(0.22, 1, 0.35, 1);
+    --btnBorderShape: polygon(2% 4%, 33.33% 0%, 33% 13%, 97% 8%, 100% 100%, 66% 97%, 66% 97%, 33% 94%, 33% 94%, 0% 91%);
+    --btnBorderShapeHover: polygon(2% 4%, 35% 4%, 33% 4%, 97% 4%, 100% 100%, 68% 100%, 66% 92%, 33% 92%, 31% 100%, 0% 100%);
 
     transition-property: --accentColor, --TXTcolor, --BGcolor, --altBGcolor, --bgContrastColor, --primaryBtnFgColor, --primaryBtnBgColor, --shadowColor, --tooltipFgColor, --tooltipBgColor;
     transition-duration: 0.33s;
@@ -54,31 +56,27 @@
     color: var(--primaryBtnFgColor);
     font-weight: 700;
     text-decoration: none;
-    border-radius: var(--fullBorderRadius);
     background-color: var(--primaryBtnBgColor);
     cursor: pointer;
     transition:
       color 0.15s var(--easeOut),
       background-color 0.15s var(--easeOut);
 
-    @supports (corner-shape: superellipse(1)) {
-      corner-shape: superellipse(2);
+    @supports (border-shape: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)) {
+      border-shape: var(--btnBorderShape);
       transition:
         color 0.15s var(--easeOut),
-        corner-shape 0.33s var(--easeOut),
+        border-shape 0.33s var(--easeOut),
         background-color 0.15s var(--easeOut);
 
       &:is(:hover, :focus-visible) {
-        corner-shape: superellipse(1.5);
+        border-shape: var(--btnBorderShapeHover);
       }
     }
 
     &:active {
       color: color-mix(in oklch shorter hue, var(--primaryBtnFgColor) 60%, var(--primaryBtnBgColor));
       background-color: color-mix(in oklch shorter hue, var(--primaryBtnBgColor) 92%, var(--BGcolor));
-      @supports (corner-shape: superellipse(1)) {
-        corner-shape: superellipse(1.33);
-      }
     }
   }
 
